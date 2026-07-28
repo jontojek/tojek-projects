@@ -1,0 +1,14 @@
+# Raw/source media stays out of the repo (media policy: web-ready assets only).
+# Keep originals in a _sources/ folder inside any project; it will be ignored.
+_sources/
+
+# Claude Code session config
+.claude/
+
+# OS junk
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Python
+__pycache__/

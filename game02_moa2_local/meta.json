@@ -1,0 +1,12 @@
+{
+  "title": "VFX Space Shooter",
+  "blurb": "A single-file canvas game with no dependencies — frame-rate-independent physics, offscreen-canvas post-processing, and chromatic aberration on hit.",
+  "tags": ["HTML5 Canvas", "Vanilla JS"],
+  "date": "2026-07-13",
+  "cta": "Play it",
+  "thumb": {
+    "video": "assets/thumb_shooter.mp4",
+    "poster": "assets/thumb_shooter_poster.jpg",
+    "alt": "VFX Space Shooter gameplay — dashing ship and shockwave explosion"
+  }
+}

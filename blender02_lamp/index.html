@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>test02_lamp — Blender MCP Build Report</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2230; --line:#2a313c;
+    --txt:#e6edf3; --mut:#8b949e; --acc:#58a6ff; --good:#3fb950; --warn:#d29922;
+    --bad:#f85149; --mono:'SFMono-Regular',Consolas,'Liberation Mono',monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;font-size:15px}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 22px 64px}
+  header{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:8px;
+    position:relative;overflow:visible}
+  header::before{content:"";position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%);width:760px;height:260px;pointer-events:none;
+    filter:blur(30px);z-index:0;
+    background:radial-gradient(ellipse at center,rgba(88,166,255,.45),
+      rgba(163,113,247,.30) 40%,transparent 70%)}
+  header>*{position:relative;z-index:1}
+  header h1{font-size:32px;margin:0 0 10px;letter-spacing:.5px;color:#9fd0ff;
+    background:linear-gradient(90deg,#58a6ff,#a371f7,#3fb950,#58a6ff);
+    background-size:300% 100%;-webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;animation:flow 8s linear infinite;
+    text-shadow:0 0 30px rgba(88,166,255,.5)}
+  header h1::after{content:"";display:block;width:160px;height:4px;margin-top:14px;
+    border-radius:4px;background:linear-gradient(90deg,#58a6ff,#a371f7,#3fb950);
+    box-shadow:0 0 16px rgba(88,166,255,.8);animation:flow 6s linear infinite;
+    background-size:300% 100%}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:.3px}
+  .sub{color:var(--mut);font-size:14px}
+  h2{font-size:18px;margin:38px 0 14px;padding-left:10px;border-left:3px solid var(--acc)}
+  h3{font-size:15px;color:var(--acc);margin:20px 0 8px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:18px 20px;margin:14px 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:8px 0}
+  .stat{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+  .stat .k{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+  .stat .v{font-size:20px;font-weight:600;margin-top:2px}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--mut);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.4px;
+    background:var(--panel2)}
+  tr:hover td{background:var(--panel2)}
+  code,.mono{font-family:var(--mono);font-size:12.5px;background:#0b0f14;padding:1px 5px;
+    border-radius:4px;color:#c9d1d9}
+  pre{background:#0b0f14;border:1px solid var(--line);border-radius:8px;padding:12px 14px;
+    overflow:auto;font-family:var(--mono);font-size:12px;color:#c9d1d9;white-space:pre-wrap}
+  .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600}
+  .t-ok{background:rgba(63,185,80,.15);color:var(--good);border:1px solid rgba(63,185,80,.4)}
+  .t-warn{background:rgba(210,153,34,.15);color:var(--warn);border:1px solid rgba(210,153,34,.4)}
+  .t-bad{background:rgba(248,81,73,.15);color:var(--bad);border:1px solid rgba(248,81,73,.4)}
+  .t-mod{background:rgba(88,166,255,.15);color:var(--acc);border:1px solid rgba(88,166,255,.4)}
+  .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:12px 0}
+  .shot{background:var(--panel2);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .shot img{width:100%;display:block;background:#000}
+  .shot .cap{padding:10px 12px;font-size:13px;color:var(--mut)}
+  .shot .cap b{color:var(--txt)}
+  .note{font-size:13.5px;color:var(--mut)}
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
+  ul{margin:8px 0;padding-left:20px}
+  li{margin:4px 0}
+  .find{border-left:3px solid var(--warn);background:var(--panel2);padding:10px 14px;
+    border-radius:0 8px 8px 0;margin:8px 0}
+  .find.good{border-color:var(--good)}
+  .find.bad{border-color:var(--bad)}
+  footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);
+    color:var(--mut);font-size:12.5px}
+  @keyframes flow{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+  .hero-bar{height:3px;border-radius:3px;margin:0 0 26px;
+    background:linear-gradient(90deg,#58a6ff,#a371f7,#3fb950,#d29922,#58a6ff);
+    background-size:300% 100%;animation:flow 6s linear infinite;
+    box-shadow:0 0 18px rgba(88,166,255,.45)}
+  .hero-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0 30px}
+  .hero-strip figure{margin:0;background:var(--panel2);border:1px solid var(--line);
+    border-radius:10px;overflow:hidden;aspect-ratio:4/3}
+  .hero-strip img{width:100%;height:100%;object-fit:cover;display:block;
+    transition:transform .4s ease}
+  .hero-strip figure:hover img{transform:scale(1.06)}
+  .hero-strip figcaption{font-size:11px;color:var(--mut);padding:6px 8px;
+    border-top:1px solid var(--line);text-align:center}
+  .find.bad{border-color:var(--bad)}
+  .lb-img{cursor:zoom-in;transition:transform .35s ease}
+  .lb-img:hover{transform:scale(1.03)}
+  #lightbox{position:fixed;inset:0;background:rgba(3,6,12,.92);display:none;
+    align-items:center;justify-content:center;z-index:9999;padding:4vh 4vw;
+    flex-direction:column;cursor:zoom-out;backdrop-filter:blur(4px)}
+  #lightbox.open{display:flex;animation:lbIn .25s ease}
+  @keyframes lbIn{from{opacity:0}to{opacity:1}}
+  #lightbox img{max-width:92vw;max-height:82vh;border-radius:10px;
+    box-shadow:0 10px 60px rgba(0,0,0,.7);background:#000}
+  #lightbox .lb-cap{color:var(--mut);font-size:14px;margin-top:14px;text-align:center;
+    max-width:90vw}
+  #lightbox .lb-hint{color:var(--mut);font-size:12px;margin-top:6px;opacity:.7}
+  @media(max-width:680px){.hero-strip{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>test02_lamp — Blender MCP Build Report</h1>
+  <div class="sub">Articulated desk lamp · studio HDRI lighting (Cycles) · high-poly + bevels · build + metrics log</div>
+  <div class="sub" style="margin-top:6px">Folder: <span class="mono">D:\AI_software\Hermes_agent_outputs\blender02_deepseek</span> · Date: 2026-07-16</div>
+</header>
+
+<div class="hero-bar"></div>
+<div class="hero-strip">
+  <figure><img class="lb-img" src="test02_lamp_screencap_02.jpg" alt="Hero finished lamp" data-cap="Hero · finished lamp"><figcaption>Hero · finished lamp</figcaption></figure>
+  <figure><img class="lb-img" src="test02_lamp_screencap_01.jpg" alt="Lamp in Blender UI" data-cap="UI · outliner + MCP"><figcaption>UI · outliner + MCP</figcaption></figure>
+  <figure><img class="lb-img" src="test02_lamp_C_final_material.png" alt="Material preview" data-cap="Materials live"><figcaption>Materials live</figcaption></figure>
+  <figure><img class="lb-img" src="test02_lamp_B_arms.png" alt="Arms and joints" data-cap="Arms + joints"><figcaption>Arms + joints</figcaption></figure>
+  <figure><img class="lb-img" src="test02_lamp_A_base_column.png" alt="Base and column" data-cap="Base + column"><figcaption>Base + column</figcaption></figure>
+</div>
+
+<!-- ===== OVERVIEW ===== -->
+<h2>Experiment Overview</h2>
+<div class="card">
+  <p><b>Goal.</b> Build a high-quality articulated desk lamp through the Blender MCP, using Claude's
+  handoff doc as a structural guide but supersizing it per Jon's direction: <b>LOTS of polygons</b>,
+  <b>beveled edges</b>, a <b>ground plane</b>, <b>studio HDRI</b> lighting, and <b>reflective metal</b>
+  surfaces. Compare against the <code>test01_sphere</code> run on metrics (tokens, cost, round-trips,
+  errors, screenshots, object count/naming).</p>
+  <div class="pill-row">
+    <span class="tag t-ok">Studio HDRI ✓</span>
+    <span class="tag t-ok">Cycles 128s ✓</span>
+    <span class="tag t-ok">Ground plane ✓</span>
+    <span class="tag t-ok">Bevels + high-poly ✓</span>
+    <span class="tag t-ok">9 meshes built ✓</span>
+    <span class="tag t-warn">Final Cycles render excluded</span>
+  </div>
+  <p class="note">The lamp geometry, materials, lighting, parenting, and <code>.blend</code> file were all
+  completed and verified during the build session. The only artifact not delivered at the time was this
+  report (the previous agent failed to emit the file write). This document reconstructs the full record
+  from on-disk evidence: scene inventory, round-trip metrics log, and viewport captures.</p>
+</div>
+
+<!-- ===== ORIGINAL KICKOFF PROMPT ===== -->
+<h2>Original Kickoff Prompt</h2>
+<div class="card">
+  <p class="note">The exact text Jon sent to start the test02_lamp build (reconstructed from the session log).
+  The structural skeleton came from a Claude-authored handoff note:</p>
+  <p><a class="tag t-mod" href="test02_hermes_handoff_desk_lamp_v1.0.md" style="text-decoration:none">📄 Claude Handoff Document — test02_hermes_handoff_desk_lamp_v1.0.md</a></p>
+  <h3>Message 1 — scope (first message)</h3>
+  <pre>Do not begin any work, but we are going to build something with the Blender MCP</pre>
+  <h3>Message 2 — the build directive (the original prompt)</h3>
+  <pre>Claude has written you a handoff note on how to build a 3D lamp in Blender.  You do not need to do everything exactly like this, but it is a very clear guideline.  Every file you save will have the prefix test02 and then the rest of the name, this is for images, blender files, documentation.  We will want to compare metrics, so must keep a log with text prompt, Prompt version used, tokens used, cost in money, how long it took.
+
+Model/provider
+Round-trip count per build
+Blender error messages verbatim
+Screenshots after key steps
+Final scene objects count and naming
+
+In the end you will make a test02_lamp HTML file that summarizes everything, you can look at "D:\AI_software\Hermes_agent_outputs\blender02_deepseek\test01_sphere_report.html" as a decent example to follow, for sure make it all self contained HTML that can be deployed later.
+
+When you a building this, use LOTS of polygons so all rounding looks smooth, and edges should be beveled to look good, add a light when  needed, have a ground plane to build on, and use some HDR image and lots of reflective metal surfaces so it looks good in the viewport.</pre>
+</div>
+
+<!-- ===== HEADLINE STATS ===== -->
+<div class="grid">
+  <div class="stat"><div class="k">Build round-trips</div><div class="v">6</div></div>
+  <div class="stat"><div class="k">Checkpoint captures</div><div class="v">3</div></div>
+  <div class="stat"><div class="k">Final MESH objects</div><div class="v">9</div></div>
+  <div class="stat"><div class="k">Blender errors</div><div class="v">1 <span class="tag t-warn">recovered</span></div></div>
+  <div class="stat"><div class="k">Render engine</div><div class="v" style="font-size:16px">Cycles · 128s</div></div>
+  <div class="stat"><div class="k">Model / Provider</div><div class="v" style="font-size:13px">deepseek-v4-flash · NVIDIA free</div></div>
+</div>
+
+<!-- ===== TIME & COST ===== -->
+<h2>Time &amp; Cost</h2>
+<div class="card">
+  <div class="grid">
+    <div class="stat"><div class="k">Build wall-clock</div><div class="v" style="font-size:16px">~27 min</div></div>
+    <div class="stat"><div class="k">Est. LLM cost</div><div class="v" style="color:var(--good)">$0.00</div></div>
+    <div class="stat"><div class="k">Asset cost (HDRI)</div><div class="v" style="color:var(--good)">$0.00</div></div>
+    <div class="stat"><div class="k">Tokens captured?</div><div class="v" style="color:var(--good);font-size:15px">Yes</div></div>
+  </div>
+  <table>
+    <tr><th>Metric</th><th>Value</th><th>Basis / source</th></tr>
+    <tr><td>Build wall-clock (artifact span)</td><td>~27 min (16:37 → 17:04)</td><td>File mtimes of test02_lamp_* artifacts in output folder</td></tr>
+    <tr><td>RT1 — base + column + ground</td><td>~0.8s</td><td><span class="mono">test02_lamp_metrics_log.md</span></td></tr>
+    <tr><td>RT2 — lower arm assembly</td><td>~0.6s (incl. 1 retry)</td><td>metrics log + verbatim error</td></tr>
+    <tr><td>RT3 — upper arm assembly</td><td>~0.6s</td><td>metrics log</td></tr>
+    <tr><td>RT4 — materials</td><td>~0.5s</td><td>metrics log</td></tr>
+    <tr><td>RT5 — parenting + HDRI + lights + camera</td><td>~1.0s</td><td>metrics log</td></tr>
+    <tr><td>RT6 — camera reframe + Cycles setup + resave</td><td>~0.8s</td><td>metrics log</td></tr>
+    <tr><td>LLM tokens used (recorded)</td><td><b>3,155 in / 63,036 out</b></td><td>Summed per-RT from metrics log</td></tr>
+    <tr><td>LLM inference cost</td><td><b>$0.00</b></td><td>Model <code>deepseek-ai/deepseek-v4-flash</code> on NVIDIA free NVCF tier</td></tr>
+    <tr><td>HDRI asset cost</td><td><b>$0.00</b></td><td>Local file <span class="mono">studio_white_front_north_daylight.exr</span> (user-provided)</td></tr>
+    <tr><td>Electricity (est.)</td><td>&lt; $0.01</td><td>One 128-sample Cycles frame on RTX 5090 — rough estimate</td></tr>
+  </table>
+  <div class="find good"><b>Cost verdict.</b> This run cost effectively <b>nothing</b> — the model is on NVIDIA's free tier and the HDRI was user-provided. The only real "cost" was wall-clock time, dominated by the multi-step build and a long post-build stall where the prior agent failed to write this report (now resolved).</div>
+  <div class="find"><b>Provider note.</b> The metrics log records the provider string <code>custom:nvidia-free</code> (the alias assumed at build time). The working route is <code>custom:integrate.api.nvidia.com</code> (NVIDIA free NVCF tier) — functionally identical, $0. Recorded verbatim above for fidelity to the original log.</div>
+</div>
+
+<!-- ===== FILES ===== -->
+<h2>Files Produced</h2>
+<div class="card">
+<table>
+  <tr><th>File</th><th>Type</th><th>Purpose</th></tr>
+  <tr><td><span class="mono">test02_lamp.blend</span></td><td>Blender scene</td><td>Full editable scene (geometry, materials, HDRI world, lights, camera)</td></tr>
+  <tr><td><span class="mono">test02_hermes_handoff_desk_lamp_v1.0.md</span></td><td>Doc</td><td>Claude-authored structural handoff (skeleton + naming)</td></tr>
+  <tr><td><span class="mono">test02_lamp_metrics_log.md</span></td><td>Log</td><td>Verbatim round-trip metrics (tokens, cost, errors)</td></tr>
+  <tr><td><span class="mono">test02_lamp_A_base_column.png</span></td><td>Screenshot</td><td>After RT1 — MATERIAL viewport, base + column + ground</td></tr>
+  <tr><td><span class="mono">test02_lamp_A_base_column_solid.png</span></td><td>Screenshot</td><td>After RT1 — SOLID viewport variant</td></tr>
+  <tr><td><span class="mono">test02_lamp_B_arms.png</span></td><td>Screenshot</td><td>After RT3 — MATERIAL viewport, arms + joints</td></tr>
+  <tr><td><span class="mono">test02_lamp_B_arms_solid.png</span></td><td>Screenshot</td><td>After RT3 — SOLID viewport variant</td></tr>
+  <tr><td><span class="mono">test02_lamp_C_final_material.png</span></td><td>Screenshot</td><td>Final MATERIAL preview — all parts colored + HDRI reflections</td></tr>
+  <tr><td><span class="mono">test02_lamp_screencap_01.jpg</span></td><td>Screencap</td><td>Full Blender UI — finished lamp in Material Preview, outliner + MCP panel</td></tr>
+  <tr><td><span class="mono">test02_lamp_screencap_02.jpg</span></td><td>Screencap</td><td>Full Blender UI — hero shot of finished lamp (used as report hero)</td></tr>
+  <tr><td><span class="mono">test02_lamp.html</span></td><td>This file</td><td>Human-readable metrics + screenshots</td></tr>
+</table>
+<p class="note"><b>Excluded:</b> <span class="mono">test02_lamp_C_final_rendered.png</span> was NOT included. Vision QA confirmed it contains a default Blender scene (wireframe cube + grid + 3D cursor), not the lamp. Flagged for a clean re-render (see QA Findings).</p>
+</div>
+
+<!-- ===== METRICS TABLE ===== -->
+<h2>Build Metrics (prompt version → round-trip)</h2>
+<div class="card">
+<table>
+  <tr>
+    <th>Version</th><th>Text prompt (verbatim)</th><th>Model / Provider</th>
+    <th>RT #</th><th>Status</th><th>Blender error (verbatim)</th>
+  </tr>
+  <tr>
+    <td><b>v1.0</b></td>
+    <td class="mono">Preflight check - get current scene state before building the desk lamp</td>
+    <td>deepseek-v4-flash · NVIDIA free</td>
+    <td>—</td>
+    <td><span class="tag t-ok">OK</span></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><b>v1.0</b></td>
+    <td class="mono">Step 1 — Build high-poly lamp base, column, and ground plane with bevel modifiers</td>
+    <td>deepseek-v4-flash · NVIDIA free</td>
+    <td>1 / 6</td>
+    <td><span class="tag t-ok">OK</span></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><b>v1.0</b></td>
+    <td class="mono">Checkpoint A — capture viewport screenshot after base and column</td>
+    <td>deepseek-v4-flash · NVIDIA free</td>
+    <td>CKA</td>
+    <td><span class="tag t-ok">OK</span></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><b>v1.0</b></td>
+    <td class="mono">Step 2 — Lower arm assembly (joint sphere + arm cylinder)</td>
+    <td>deepseek-v4-flash · NVIDIA free</td>
+    <td>2 / 6</td>
+    <td><span class="tag t-ok">OK (retry)</span></td>
+    <td><span class="mono">'Mesh' object has no attribute 'use_auto_smooth'</span></td>
+  </tr>
+  <tr>
+    <td><b>v1.0</b></td>
+    <td class="mono">Step 3 — Upper arm assembly (joint sphere + arm cylinder)</td>
+    <td>deepseek-v4-flash · NVIDIA free</td>
+    <td>3 / 6</td>
+    <td><span class="tag t-ok">OK</span></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><b>v1.0</b></td>
+    <td class="mono">Checkpoint B — capture viewport screenshot after arms + head + bulb</td>
+    <td>deepseek-v4-flash · NVIDIA free</td>
+    <td>CKB</td>
+    <td><span class="tag t-ok">OK</span></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><b>v1.0</b></td>
+    <td class="mono">Step 4 — Assign PBR materials to all lamp parts</td>
+    <td>deepseek-v4-flash · NVIDIA free</td>
+    <td>4 / 6</td>
+    <td><span class="tag t-ok">OK</span></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><b>v1.0</b></td>
+    <td class="mono">Step 5 — Parenting chain + HDRI world + area lights + camera</td>
+    <td>deepseek-v4-flash · NVIDIA free</td>
+    <td>5 / 6</td>
+    <td><span class="tag t-ok">OK</span></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><b>v1.0</b></td>
+    <td class="mono">Checkpoint C — final screenshots + save .blend</td>
+    <td>deepseek-v4-flash · NVIDIA free</td>
+    <td>CKC</td>
+    <td><span class="tag t-ok">OK</span></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><b>v1.0</b></td>
+    <td class="mono">Step 6 — Camera reframe + Cycles setup + resave .blend</td>
+    <td>deepseek-v4-flash · NVIDIA free</td>
+    <td>6 / 6</td>
+    <td><span class="tag t-ok">OK</span></td>
+    <td>—</td>
+  </tr>
+</table>
+<p class="note"><b>Round-trip interpretation.</b> 6 logical build round-trips + 3 checkpoint captures, all succeeded.
+The single error (<code>'Mesh' object has no attribute 'use_auto_smooth'</code>) occurred on RT2 when the agent
+attempted a legacy smooth-shading call; it was resolved by retry and did not block the build. <b>Effective build
+round-trips: 6, all succeeded.</b></p>
+</div>
+
+<!-- ===== SCREENSHOTS ===== -->
+<h2>Screenshots After Key Steps <span style="font-size:12px;color:var(--mut);font-weight:400">— click any image for full resolution</span></h2>
+<div class="shots">
+  <div class="shot">
+    <img class="lb-img" src="test02_lamp_A_base_column.png" alt="RT1 base and column" data-cap="RT1 · MATERIAL viewport — Ground plane + lamp base + column, before arms. Confirms high-poly cylinders + bevels.">
+    <div class="cap"><b>RT1 · MATERIAL viewport.</b> Ground plane + lamp base + column, before arms. Confirms high-poly cylinders + bevels.</div>
+  </div>
+  <div class="shot">
+    <img class="lb-img" src="test02_lamp_B_arms.png" alt="RT3 arms and joints" data-cap="RT3 · MATERIAL viewport — Lower + upper arm assemblies with spherical joints, before materials.">
+    <div class="cap"><b>RT3 · MATERIAL viewport.</b> Lower + upper arm assemblies with spherical joints, before materials.</div>
+  </div>
+  <div class="shot">
+    <img class="lb-img" src="test02_lamp_C_final_material.png" alt="Final material preview" data-cap="Final · MATERIAL preview — All parts colored (red base, green arms, blue joints, black shade, emissive bulb) with HDRI reflections live.">
+    <div class="cap"><b>Final · MATERIAL preview.</b> All parts colored (red base, green arms, blue joints, black shade, emissive bulb) with HDRI reflections live.</div>
+  </div>
+  <div class="shot">
+    <img class="lb-img" src="test02_lamp_screencap_01.jpg" alt="Screencap 1 finished lamp" data-cap="UI screencap 1 — Finished lamp in Material Preview; outliner shows full object hierarchy + MCP addon connected.">
+    <div class="cap"><b>UI screencap 1.</b> Finished lamp in Material Preview; outliner shows full object hierarchy + MCP addon connected.</div>
+  </div>
+  <div class="shot">
+    <img class="lb-img" src="test02_lamp_screencap_02.jpg" alt="Screencap 2 hero lamp" data-cap="UI screencap 2 — HERO. Final articulated desk lamp, reflective metals catching the studio HDRI, ground plane for scale.">
+    <div class="cap"><b>UI screencap 2 — HERO.</b> Final articulated desk lamp, reflective metals catching the studio HDRI, ground plane for scale.</div>
+  </div>
+</div>
+
+<!-- ===== FINAL INVENTORY ===== -->
+<h2>Final Scene Inventory</h2>
+<div class="card">
+  <div class="grid">
+    <div class="stat"><div class="k">Object count</div><div class="v">12</div></div>
+    <div class="stat"><div class="k">MESH objects</div><div class="v">9</div></div>
+    <div class="stat"><div class="k">Active materials</div><div class="v">7</div></div>
+    <div class="stat"><div class="k">Lights</div><div class="v">2 (area)</div></div>
+  </div>
+<table>
+  <tr><th>Object</th><th>Type</th><th>Parent</th><th>Verts</th><th>Polys</th><th>Edges</th><th>Material</th><th>Modifiers</th></tr>
+  <tr><td><b>Ground_Plane</b></td><td>MESH</td><td>—</td><td>36</td><td>25</td><td>60</td><td>MAT_Floor_Brown</td><td>—</td></tr>
+  <tr><td><b>Lamp_Base</b></td><td>MESH</td><td>—</td><td>128</td><td>66</td><td>192</td><td>MAT_Base_Red</td><td>Bevel</td></tr>
+  <tr><td><b>Lamp_Column</b></td><td>MESH</td><td>Lamp_Base</td><td>96</td><td>50</td><td>144</td><td>MAT_Column_Steel</td><td>Bevel</td></tr>
+  <tr><td><b>Lamp_Joint_Lower</b></td><td>MESH</td><td>Lamp_Column</td><td>1106</td><td>1152</td><td>2256</td><td>MAT_Joint_Blue</td><td>—</td></tr>
+  <tr><td><b>Lamp_Arm_Lower</b></td><td>MESH</td><td>Lamp_Joint_Lower</td><td>96</td><td>50</td><td>144</td><td>MAT_Arm_Green</td><td>Bevel</td></tr>
+  <tr><td><b>Lamp_Joint_Upper</b></td><td>MESH</td><td>Lamp_Arm_Lower</td><td>1106</td><td>1152</td><td>2256</td><td>MAT_Joint_Blue</td><td>Bevel</td></tr>
+  <tr><td><b>Lamp_Arm_Upper</b></td><td>MESH</td><td>Lamp_Joint_Upper</td><td>96</td><td>50</td><td>144</td><td>MAT_Arm_Green</td><td>Bevel</td></tr>
+  <tr><td><b>Lamp_Head</b></td><td>MESH</td><td>Lamp_Arm_Upper</td><td>128</td><td>66</td><td>192</td><td>MAT_ShadeBlack</td><td>Bevel</td></tr>
+  <tr><td><b>Lamp_Bulb</b></td><td>MESH</td><td>Lamp_Head</td><td>482</td><td>512</td><td>992</td><td>MAT_BulbEmissive</td><td>Bevel</td></tr>
+  <tr><td><b>Fill_Light</b></td><td>AREA</td><td>—</td><td colspan="3">200W · size 1.5</td><td colspan="2">fill</td></tr>
+  <tr><td><b>Rim_Light</b></td><td>AREA</td><td>—</td><td colspan="3">300W · size 1.5</td><td colspan="2">rim</td></tr>
+  <tr><td><b>Camera</b></td><td>CAMERA</td><td>—</td><td colspan="3">50mm · loc (2.8,−2.5,1.5)</td><td colspan="2">active</td></tr>
+</table>
+<p class="note"><b>Naming.</b> 8 <code>Lamp_*</code> meshes follow the Claude handoff skeleton exactly, plus a
+<code>Ground_Plane</code> added per Jon's explicit "add a ground plane" instruction (overriding the handoff's
+no-ground constraint). The parent chain terminates at <code>Lamp_Base</code> as specified:
+<code>Lamp_Bulb → Lamp_Head → Lamp_Arm_Upper → Lamp_Joint_Upper → Lamp_Arm_Lower → Lamp_Joint_Lower → Lamp_Column → Lamp_Base</code>.</p>
+</div>
+
+<!-- ===== MATERIALS ===== -->
+<h2>Materials Summary</h2>
+<div class="card">
+<table>
+  <tr><th>Material</th><th>Objects</th><th>Look</th></tr>
+  <tr><td><span class="mono">MAT_Base_Red</span></td><td>Lamp_Base</td><td>Reflective red metal — Bevel</td></tr>
+  <tr><td><span class="mono">MAT_Column_Steel</span></td><td>Lamp_Column</td><td>Brushed steel — Bevel</td></tr>
+  <tr><td><span class="mono">MAT_Arm_Green</span></td><td>Lamp_Arm_Lower, Lamp_Arm_Upper</td><td>Reflective green metal — Bevel</td></tr>
+  <tr><td><span class="mono">MAT_Joint_Blue</span></td><td>Lamp_Joint_Lower, Lamp_Joint_Upper</td><td>Reflective blue metal — Bevel (upper)</td></tr>
+  <tr><td><span class="mono">MAT_ShadeBlack</span></td><td>Lamp_Head</td><td>Matte black shade</td></tr>
+  <tr><td><span class="mono">MAT_BulbEmissive</span></td><td>Lamp_Bulb</td><td>Emissive warm bulb</td></tr>
+  <tr><td><span class="mono">MAT_Floor_Brown</span></td><td>Ground_Plane</td><td>Brown matte floor for scale</td></tr>
+</table>
+</div>
+
+<!-- ===== LIGHTING & WORLD ===== -->
+<h2>Lighting &amp; World</h2>
+<div class="card">
+  <ul>
+    <li><b>World:</b> Environment Texture → Background → World Output. Source <span class="mono">studio_white_front_north_daylight.exr</span> (user-provided studio HDRI). Drives both lighting and reflections.</li>
+    <li><b>Fill_Light:</b> AREA, 200W, size 1.5 — soft fill.</li>
+    <li><b>Rim_Light:</b> AREA, 300W, size 1.5 — rim/edge definition.</li>
+    <li><b>Camera:</b> 50mm, location (2.8, −2.5, 1.5), active — three-quarter hero framing.</li>
+    <li><b>Engine:</b> CYCLES, 128 samples, denoising on, 1920×1080.</li>
+  </ul>
+</div>
+
+<!-- ===== QA FINDINGS ===== -->
+<h2>Visual QA (vision pass on captures)</h2>
+<div class="card">
+  <div class="find good"><b>Confirmed.</b> <span class="mono">test02_lamp_screencap_01.jpg</span> and <span class="mono">test02_lamp_screencap_02.jpg</span> show a coherent articulated desk lamp: weighted base, two angled metal arm segments joined by spherical joints, conical hooded head with a small emissive bulb at the tip, sitting on a flat ground plane. Materials are applied as intended (red base, green arms, blue joints, black shade, emissive bulb, brown floor).</div>
+  <div class="find good"><b>Confirmed.</b> <span class="mono">test02_lamp_C_final_material.png</span> shows all parts in their assigned colors with HDRI reflections wrapping the curved metal surfaces — the studio pano is live in the World.</div>
+  <div class="find bad"><b>Finding 1 — bad render artifact.</b> <span class="mono">test02_lamp_C_final_rendered.png</span> does <b>not</b> contain the lamp. Vision QA identified it as a default Blender scene (wireframe cube, grid floor, 3D cursor, default light/camera). It was excluded from this report and flagged for a clean re-render.</div>
+  <div class="find"><b>Finding 2 — captures are viewports, not Cycles renders.</b> The saved artifacts are Material-Preview viewports and full-UI screencaps, not the final Cycles frame. They prove the build but are not portfolio-grade stills. A proper Cycles render to disk is recommended as the closing artifact.</div>
+  <div class="find"><b>Finding 3 — one recovered error.</b> RT2 hit <span class="mono">'Mesh' object has no attribute 'use_auto_smooth'</span> (legacy smooth-shading call on a 4.x mesh). Retry succeeded; no impact on final geometry.</div>
+</div>
+
+<!-- ===== RECOMMENDATIONS ===== -->
+<h2>Recommendations / Next Steps</h2>
+<div class="card">
+<ul>
+  <li><b>Re-render.</b> Reconnect Blender, load <span class="mono">test02_lamp.blend</span>, and run a clean Cycles 128s (or 256s) render to <span class="mono">test02_lamp_final_cycles.png</span>. This replaces the excluded bad artifact and gives a portfolio still.</li>
+  <li><b>A/B comparison.</b> This run is the DeepSeek-V4-Flash leg (NVIDIA free tier) — pairs against <code>test01_sphere</code> (hy3) for the model-comparison goal. Append a comparison table to both reports once the render lands.</li>
+  <li><b>Bump MCP bridge timeout</b> if a higher-sample Cycles render trips the 300s ceiling (as seen in test01).</li>
+  <li><b>Optional polish.</b> Subdivide the ground plane further or add a soft contact-shadow trick for stronger floor grounding.</li>
+</ul>
+</div>
+
+<footer>
+  Generated by Hermes Agent (tik1) · Blender MCP v2.1 · source: test02_lamp_metrics_log.md +
+  verbatim scene inventory (get_scene_info) + vision QA on captures. Open this file from the
+  experiment folder so the relative image paths resolve.
+</footer>
+
+<!-- ===== LIGHTBOX OVERLAY ===== -->
+<div id="lightbox" aria-hidden="true">
+  <img id="lb-img" src="" alt="full resolution">
+  <div class="lb-cap" id="lb-cap"></div>
+  <div class="lb-hint">Click anywhere or press Esc to close · full resolution</div>
+</div>
+<script>
+(function(){
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lb-img');
+  var lbCap = document.getElementById('lb-cap');
+  function open(src, cap){
+    lbImg.src = src;
+    lbCap.textContent = cap || '';
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden','false');
+  }
+  function close(){
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden','true');
+    lbImg.src = '';
+  }
+  document.querySelectorAll('.lb-img').forEach(function(img){
+    img.addEventListener('click', function(e){
+      e.stopPropagation();
+      open(img.getAttribute('src'), img.getAttribute('data-cap'));
+    });
+  });
+  lb.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && lb.classList.contains('open')) close();
+  });
+})();
+</script>
+
+</div>
+</body>
+</html>

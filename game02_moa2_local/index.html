@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VFX Space Shooter</title>
+<style>
+  /* ── Responsive Dark-Mode Shell ── */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #05060c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Courier New', monospace;
+  }
+  canvas {
+    background: #05060c;
+    box-shadow: 0 0 60px rgba(0, 120, 255, 0.12), 0 0 120px rgba(0, 120, 255, 0.04);
+    max-width: 100%;
+    max-height: 100vh;
+  }
+</style>
+</head>
+<body>
+<canvas id="game"></canvas>
+
+<script>
+/* ==========================================================================
+   VFX SPACE SHOOTER — Single-File HTML5 Canvas Game
+   Vanilla JS · No dependencies · Opens directly in Chrome
+   ========================================================================== */
+
+/* ==========================================================================
+   BLOCK 1 — CANVAS & CONTEXT SETUP
+   Main canvas (800×600) + offscreen canvas for chromatic aberration.
+   CSS handles responsive scaling; internal resolution stays fixed.
+   ========================================================================== */
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d', { alpha: false });
+canvas.width = 800;
+canvas.height = 600;
+
+// Offscreen canvas for post-processing (chromatic aberration on hit)
+const offCanvas = document.createElement('canvas');
+offCanvas.width = canvas.width;
+offCanvas.height = canvas.height;
+const offCtx = offCanvas.getContext('2d', { alpha: false });
+
+/* ==========================================================================
+   BLOCK 2 — GAME STATE & MAIN LOOP
+   Central state object + requestAnimationFrame loop with capped delta time.
+   Delta is capped at 50ms so physics stays stable if the tab is backgrounded.
+   All velocities are in px/sec and multiplied by dt — frame-rate independent.
+   ========================================================================== */
+const game = {
+  player: null,
+  enemies: [],
+  projectiles: [],
+  particles: [],
+  stars: [],
+  score: 0,
+  shield: 100,
+  gameOver: false,
+  shakeX: 0,
+  shakeY: 0,
+  chromatic: 0,      // chromatic aberration intensity (decays each frame)
+  hitCooldown: 0,    // player invulnerability timer after taking a hit
+  spawnTimer: 1.0,   // counts down; spawns an enemy at zero
+  lastTime: 0
+};
+
+function loop(now) {
+  const dt = Math.min((now - game.lastTime) / 1000, 0.05);
+  game.lastTime = now;
+  update(dt);
+  draw();
+  requestAnimationFrame(loop);
+}
+
+/* ==========================================================================
+   BLOCK 3 — INPUT MANAGER
+   Keydown/keyup listeners feed a state map. WASD and Arrow keys map to the
+   same movement. SPACE fires continuously while held (with a cooldown).
+   preventDefault stops the page from scrolling on arrow keys / space.
+   ========================================================================== */
+const keys = {};
+const PREVENT = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space']);
+
+window.addEventListener('keydown', e => {
+  if (PREVENT.has(e.code)) e.preventDefault();
+  keys[e.code] = true;
+});
+window.addEventListener('keyup', e => { keys[e.code] = false; });
+
+// One-shot restart listener — catches quick R taps that the held-state
+// check in update() might miss between frames.
+window.addEventListener('keydown', e => {
+  if (e.code === 'KeyR' && game.gameOver) resetGame();
+});
+
+// Helper: is any of the given key codes currently held?
+function held(...codes) { return codes.some(c => keys[c]); }
+
+/* ==========================================================================
+   BLOCK 4 — ENTITY CLASSES
+   Player, Projectile, Enemy (3 procedural AI patterns), Particle.
+   Each has update(dt) and draw(). Velocities are px/sec × dt.
+   ========================================================================== */
+
+// ── Player ──────────────────────────────────────────────────────────────
+class Player {
+  constructor() {
+    this.x = canvas.width / 2;
+    this.y = canvas.height - 80;
+    this.vx = 0;
+    this.vy = 0;
+    this.radius = 16;
+    this.cooldown = 0;
+    this.thrust = 0;       // engine glow intensity 0-1
+  }
+
+  update(dt) {
+    // Target velocity from input (px/sec)
+    const SPEED = 420;
+    let tx = 0, ty = 0;
+    if (held('KeyW', 'ArrowUp'))    ty -= SPEED;
+    if (held('KeyS', 'ArrowDown'))  ty += SPEED;
+    if (held('KeyA', 'ArrowLeft'))  tx -= SPEED;
+    if (held('KeyD', 'ArrowRight')) tx += SPEED;
+
+    // Normalize diagonal so we don't move 1.41× faster
+    if (tx !== 0 && ty !== 0) { tx *= 0.7071; ty *= 0.7071; }
+
+    // Smooth lerp toward target — gives a "spacey" drift feel
+    this.vx += (tx - this.vx) * 0.18;
+    this.vy += (ty - this.vy) * 0.18;
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+
+    // Clamp to canvas bounds
+    this.x = Math.max(this.radius, Math.min(canvas.width  - this.radius, this.x));
+    this.y = Math.max(this.radius, Math.min(canvas.height - this.radius, this.y));
+
+    // Engine thrust glow follows vertical movement
+    this.thrust = Math.min(1, Math.abs(this.vy) / SPEED + 0.3);
+
+    // Shooting — continuous fire while SPACE is held, with cooldown
+    this.cooldown -= dt;
+    if (keys['Space'] && this.cooldown <= 0) {
+      game.projectiles.push(new Projectile(this.x, this.y - this.radius));
+      this.cooldown = 0.18;   // ~5.5 shots per second
+      // Muzzle flash particles
+      for (let i = 0; i < 6; i++)
+        game.particles.push(new Particle(this.x, this.y - this.radius, '#ffffff', 180, 0.12));
+    }
+  }
+
+  draw() {
+    // Blink during invulnerability frames (skip drawing on alternate frames)
+    if (game.hitCooldown > 0 && Math.floor(game.hitCooldown * 12) % 2 === 0) return;
+
+    ctx.save();
+    ctx.translate(this.x, this.y);
+
+    // Engine glow (behind ship) — pink/magenta
+    ctx.shadowBlur = 20 * this.thrust;
+    ctx.shadowColor = '#ff00aa';
+    ctx.fillStyle = `rgba(255, 0, 170, ${0.4 + this.thrust * 0.5})`;
+    ctx.beginPath();
+    ctx.ellipse(0, this.radius * 0.8, 5, 8 + this.thrust * 6, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Ship body — cyan triangle with neon glow
+    ctx.shadowBlur = 18;
+    ctx.shadowColor = '#00ddff';
+    ctx.fillStyle = '#0099ff';
+    ctx.beginPath();
+    ctx.moveTo(0, -this.radius);                    // nose
+    ctx.lineTo(-this.radius * 0.85, this.radius * 0.7);
+    ctx.lineTo(this.radius * 0.85, this.radius * 0.7);
+    ctx.closePath();
+    ctx.fill();
+
+    // Cockpit highlight
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = 'rgba(180, 240, 255, 0.7)';
+    ctx.beginPath();
+    ctx.arc(0, -2, 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+}
+
+// ── Projectile ──────────────────────────────────────────────────────────
+class Projectile {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.radius = 3.5;
+    this.active = true;
+  }
+  update(dt) {
+    this.y -= 650 * dt;   // px/sec upward
+    if (this.y < -20) this.active = false;
+  }
+  draw() {
+    ctx.save();
+    // Outer glow
+    ctx.shadowBlur = 14;
+    ctx.shadowColor = '#ffee00';
+    ctx.fillStyle = '#fff4a0';
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fill();
+    // Bright white core
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius * 0.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+// ── Enemy ───────────────────────────────────────────────────────────────
+// Three procedural movement patterns for variety:
+//   0 = Hunter  — tracks player position with sine wobble
+//   1 = Diver   — picks a direction at spawn and flies straight
+//   2 = Weaver  — sine-wave sweep across screen while drifting down
+class Enemy {
+  constructor() {
+    // Spawn from a random screen edge
+    const side = Math.floor(Math.random() * 4);
+    if      (side === 0) { this.x = Math.random() * canvas.width;  this.y = -30; }
+    else if (side === 1) { this.x = canvas.width + 30;             this.y = Math.random() * canvas.height * 0.6; }
+    else if (side === 2) { this.x = Math.random() * canvas.width;  this.y = canvas.height + 30; }
+    else                 { this.x = -30;                            this.y = Math.random() * canvas.height * 0.6; }
+
+    this.radius = 14;
+    this.active = true;
+    this.wobble = Math.random() * Math.PI * 2;
+    this.pattern = Math.floor(Math.random() * 3);
+
+    // Speed scales with score (difficulty ramp)
+    this.speed = 90 + Math.min(game.score * 0.6, 120);
+
+    // Diver picks a fixed angle toward player at spawn
+    if (this.pattern === 1)
+      this.diveAngle = Math.atan2(game.player.y - this.y, game.player.x - this.x);
+    // Weaver picks a horizontal direction
+    if (this.pattern === 2)
+      this.weaveDir = this.x < canvas.width / 2 ? 1 : -1;
+  }
+
+  update(dt) {
+    this.wobble += dt * 3;
+
+    if (this.pattern === 0) {
+      // Hunter: smooth-track player with sine wobble
+      const target = Math.atan2(game.player.y - this.y, game.player.x - this.x);
+      const angle = target + Math.sin(this.wobble) * 0.35;
+      this.x += Math.cos(angle) * this.speed * dt;
+      this.y += Math.sin(angle) * this.speed * dt;
+    } else if (this.pattern === 1) {
+      // Diver: straight line at spawn angle
+      this.x += Math.cos(this.diveAngle) * this.speed * dt;
+      this.y += Math.sin(this.diveAngle) * this.speed * dt;
+    } else {
+      // Weaver: horizontal sweep + sine vertical drift
+      this.x += this.weaveDir * this.speed * dt;
+      this.y += Math.sin(this.wobble) * 60 * dt + this.speed * 0.4 * dt;
+      // Bounce off side walls
+      if (this.x < this.radius || this.x > canvas.width - this.radius) this.weaveDir *= -1;
+    }
+
+    // Despawn if far off-screen
+    if (this.x < -60 || this.x > canvas.width + 60 ||
+        this.y < -60 || this.y > canvas.height + 60)
+      this.active = false;
+  }
+
+  draw() {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+
+    // Rotate to face movement direction
+    let facing;
+    if (this.pattern === 0) facing = Math.atan2(game.player.y - this.y, game.player.x - this.x);
+    else if (this.pattern === 1) facing = this.diveAngle;
+    else facing = this.weaveDir > 0 ? 0 : Math.PI;
+    ctx.rotate(facing + Math.PI / 2);   // +PI/2 because "up" is -Y
+
+    // Outer hexagon — red glow
+    ctx.shadowBlur = 16;
+    ctx.shadowColor = '#ff2244';
+    ctx.fillStyle = '#cc1133';
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+      const a = (Math.PI / 3) * i;
+      const px = Math.cos(a) * this.radius;
+      const py = Math.sin(a) * this.radius;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.fill();
+
+    // Inner core — hot pink
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = '#ff66aa';
+    ctx.fillStyle = '#ff6688';
+    ctx.beginPath();
+    ctx.arc(0, 0, 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+}
+
+// ── Particle ────────────────────────────────────────────────────────────
+// Used for explosions, muzzle flash, and death effects.
+// Drawn with additive blending (globalCompositeOperation='lighter') for a
+// bloom-like glow without the cost of shadowBlur on every particle.
+class Particle {
+  constructor(x, y, color, speed, life) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    const angle = Math.random() * Math.PI * 2;
+    const vel = Math.random() * speed;
+    this.vx = Math.cos(angle) * vel;
+    this.vy = Math.sin(angle) * vel;
+    this.life = life;
+    this.maxLife = life;
+    this.active = true;
+  }
+  update(dt) {
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+    this.vx *= 0.94;   // drag
+    this.vy *= 0.94;
+    this.life -= dt;
+    if (this.life <= 0) this.active = false;
+  }
+  draw() {
+    const t = this.life / this.maxLife;   // 1 → 0
+    ctx.globalAlpha = t;
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, 2.5 * t + 0.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+
+/* ==========================================================================
+   BLOCK 5 — VFX SYSTEMS
+   Starfield parallax (3 layers), explosion spawner with screen shake.
+   Neon glow is handled per-entity via shadowBlur in each draw() method.
+   Motion trails are handled in the draw() function (semi-transparent fill).
+   Chromatic aberration is handled in the draw() function (offscreen canvas).
+   ========================================================================== */
+
+// ── Starfield: 3 parallax layers ─────────────────────────────────────────
+function initStars() {
+  game.stars = [];
+  for (let i = 0; i < 60; i++) game.stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, speed: 15, size: 0.8 });
+  for (let i = 0; i < 50; i++) game.stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, speed: 35, size: 1.2 });
+  for (let i = 0; i < 30; i++) game.stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, speed: 70, size: 1.8 });
+}
+
+function updateStars(dt) {
+  for (const s of game.stars) {
+    s.y += s.speed * dt;
+    if (s.y > canvas.height) { s.y = 0; s.x = Math.random() * canvas.width; }
+  }
+}
+
+function drawStars() {
+  for (const s of game.stars) {
+    const brightness = s.speed < 20 ? 0.25 : s.speed < 50 ? 0.5 : 0.75;
+    ctx.fillStyle = `rgba(180, 200, 255, ${brightness})`;
+    ctx.fillRect(s.x, s.y, s.size, s.size);
+  }
+}
+
+// ── Explosion spawner (particles + screen shake) ─────────────────────────
+function spawnExplosion(x, y, color, count, speed, life) {
+  for (let i = 0; i < count; i++)
+    game.particles.push(new Particle(x, y, color, speed, life));
+  game.shakeX += (Math.random() - 0.5) * 10;
+  game.shakeY += (Math.random() - 0.5) * 10;
+}
+
+/* ==========================================================================
+   BLOCK 6 — GAME LOGIC: UPDATE
+   Player update, enemy spawning, entity updates, collision detection,
+   shield/score management, and VFX decay.
+   ========================================================================== */
+function update(dt) {
+  if (game.gameOver) {
+    if (keys['KeyR']) resetGame();
+    return;
+  }
+
+  // Decrement invulnerability timer
+  game.hitCooldown -= dt;
+
+  // Player
+  game.player.update(dt);
+
+  // Enemy spawning — timer-based, rate scales with score
+  game.spawnTimer -= dt;
+  if (game.spawnTimer <= 0) {
+    game.enemies.push(new Enemy());
+    game.spawnTimer = Math.max(0.35, 1.4 - game.score * 0.015);
+  }
+
+  // Update all entities
+  for (const p of game.projectiles) p.update(dt);
+  for (const e of game.enemies)     e.update(dt);
+  for (const p of game.particles)   p.update(dt);
+  updateStars(dt);
+
+  // ── Collision: projectile vs enemy (circle-distance) ──
+  for (let i = game.projectiles.length - 1; i >= 0; i--) {
+    const proj = game.projectiles[i];
+    if (!proj.active) continue;
+    for (let j = game.enemies.length - 1; j >= 0; j--) {
+      const enemy = game.enemies[j];
+      if (!enemy.active) continue;
+      if (Math.hypot(proj.x - enemy.x, proj.y - enemy.y) < enemy.radius + proj.radius) {
+        spawnExplosion(enemy.x, enemy.y, '#ffaa44', 18, 220, 0.6);
+        spawnExplosion(enemy.x, enemy.y, '#ff4422', 10, 140, 0.4);
+        enemy.active = false;
+        proj.active = false;
+        game.score++;
+        break;
+      }
+    }
+  }
+
+  // ── Collision: enemy vs player (with invulnerability check) ──
+  if (game.hitCooldown <= 0) {
+    for (const enemy of game.enemies) {
+      if (!enemy.active) continue;
+      if (Math.hypot(game.player.x - enemy.x, game.player.y - enemy.y) < game.player.radius + enemy.radius) {
+        spawnExplosion(enemy.x, enemy.y, '#ff4422', 15, 200, 0.5);
+        enemy.active = false;
+        game.shield -= 34;            // 3 hits to die (100 / 34 ≈ 3)
+        game.chromatic = 8;           // trigger chromatic aberration
+        game.hitCooldown = 1.0;       // 1 second invulnerability
+        game.shakeX += (Math.random() - 0.5) * 16;
+        game.shakeY += (Math.random() - 0.5) * 16;
+        if (game.shield <= 0) {
+          game.shield = 0;
+          game.gameOver = true;
+          // Big death explosion
+          spawnExplosion(game.player.x, game.player.y, '#00ddff', 40, 300, 0.8);
+          spawnExplosion(game.player.x, game.player.y, '#ffffff', 20, 200, 0.5);
+        }
+        break;
+      }
+    }
+  }
+
+  // Cleanup inactive entities
+  game.projectiles = game.projectiles.filter(p => p.active);
+  game.enemies     = game.enemies.filter(e => e.active);
+  game.particles   = game.particles.filter(p => p.active);
+
+  // Decay screen shake & chromatic aberration
+  game.shakeX *= 0.85;
+  game.shakeY *= 0.85;
+  game.chromatic *= 0.88;
+}
+
+/* ==========================================================================
+   BLOCK 7 — RENDERING: DRAW
+   Layer order (critical for correct VFX compositing):
+   1. Screen shake translate
+   2. Motion trail fill (semi-transparent, shadowBlur=0)
+   3. Starfield (full opacity, drawn after trail so stars stay crisp)
+   4. Particles (additive blend — 'lighter')
+   5. Projectiles (shadowBlur glow)
+   6. Enemies (shadowBlur glow)
+   7. Player (shadowBlur glow)
+   8. Restore shake
+   9. Chromatic aberration (offscreen double-image)
+   10. Vignette
+   11. HUD (drawn LAST so it never smears into trails)
+   12. Game-over overlay
+   ========================================================================== */
+function draw() {
+  ctx.save();
+
+  // ── 1. Screen shake ──
+  if (Math.abs(game.shakeX) > 0.1 || Math.abs(game.shakeY) > 0.1)
+    ctx.translate(game.shakeX, game.shakeY);
+
+  // ── 2. Motion trails: semi-transparent fill instead of clearRect ──
+  // This creates persistence-of-vision trails for all moving objects.
+  // shadowBlur MUST be 0 here or the fill itself gets blurred (expensive + ugly).
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = 'rgba(5, 6, 12, 0.22)';
+  ctx.fillRect(-30, -30, canvas.width + 60, canvas.height + 60);
+
+  // ── 3. Starfield (drawn after trail fill so stars are crisp) ──
+  drawStars();
+
+  // ── 4. Particles (additive blending for bloom-like glow) ──
+  ctx.globalCompositeOperation = 'lighter';
+  for (const p of game.particles) p.draw();
+  ctx.globalCompositeOperation = 'source-over';
+
+  // ── 5. Projectiles ──
+  for (const p of game.projectiles) p.draw();
+
+  // ── 6. Enemies ──
+  for (const e of game.enemies) e.draw();
+
+  // ── 7. Player (hidden on game over) ──
+  if (!game.gameOver) game.player.draw();
+
+  ctx.restore();   // end screen shake
+
+  // ── 9. Chromatic aberration post-process ──
+  // Copies the frame to offscreen, clears main, redraws twice with horizontal
+  // offset using 'lighter' blend. Creates a split-image flash on damage.
+  if (game.chromatic > 0.5) {
+    // Clear offscreen (transparent), copy current frame, then redraw
+    // the base at full opacity + two offset copies with additive blend.
+    // This avoids brightening the background during the damage flash.
+    offCtx.clearRect(0, 0, canvas.width, canvas.height);
+    offCtx.drawImage(canvas, 0, 0);
+
+    ctx.fillStyle = '#05060c';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(offCanvas, 0, 0);   // base copy at full opacity
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.globalAlpha = 0.5;
+    ctx.drawImage(offCanvas, -game.chromatic, 0);
+    ctx.drawImage(offCanvas,  game.chromatic, 0);
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  // ── 10. Vignette — subtle edge darkening for cinematic feel ──
+  const vig = ctx.createRadialGradient(
+    canvas.width / 2, canvas.height / 2, canvas.height * 0.35,
+    canvas.width / 2, canvas.height / 2, canvas.height * 0.75
+  );
+  vig.addColorStop(0, 'rgba(0, 0, 0, 0)');
+  vig.addColorStop(1, 'rgba(0, 0, 0, 0.35)');
+  ctx.fillStyle = vig;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // ── 11. HUD (drawn LAST so it never smears into trails) ──
+  ctx.shadowBlur = 0;
+  ctx.font = 'bold 20px "Courier New", monospace';
+  ctx.textAlign = 'left';
+
+  // Score
+  ctx.fillStyle = '#00ddff';
+  ctx.shadowBlur = 8;
+  ctx.shadowColor = '#00ddff';
+  ctx.fillText('SCORE: ' + game.score, 16, 30);
+
+  // Shield label + bar
+  ctx.shadowBlur = 0;
+  ctx.font = '14px "Courier New", monospace';
+  ctx.fillStyle = '#888899';
+  ctx.fillText('SHIELD', 16, 52);
+  // Bar background
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+  ctx.fillRect(80, 42, 120, 12);
+  // Bar fill (color shifts green → red as shield depletes)
+  const sp = game.shield / 100;
+  ctx.fillStyle = 'rgb(' + Math.floor(255 * (1 - sp)) + ', ' + Math.floor(200 * sp) + ', 50)';
+  ctx.shadowBlur = 6;
+  ctx.shadowColor = ctx.fillStyle;
+  ctx.fillRect(80, 42, 120 * sp, 12);
+  ctx.shadowBlur = 0;
+
+  // Instructions (bottom center)
+  ctx.font = '13px "Courier New", monospace';
+  ctx.fillStyle = 'rgba(150, 160, 180, 0.5)';
+  ctx.textAlign = 'center';
+  ctx.fillText('WASD / ARROWS to move  ·  SPACE to shoot  ·  R to restart', canvas.width / 2, canvas.height - 16);
+
+  // ── 12. Game-over overlay ──
+  if (game.gameOver) {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.textAlign = 'center';
+    ctx.shadowBlur = 24;
+    ctx.shadowColor = '#ff0033';
+    ctx.fillStyle = '#ff3355';
+    ctx.font = 'bold 48px "Courier New", monospace';
+    ctx.fillText('SYSTEM FAILURE', canvas.width / 2, canvas.height / 2 - 10);
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '22px "Courier New", monospace';
+    ctx.fillText('FINAL SCORE: ' + game.score, canvas.width / 2, canvas.height / 2 + 30);
+    ctx.fillStyle = '#888899';
+    ctx.font = '16px "Courier New", monospace';
+    ctx.fillText('Press R to restart', canvas.width / 2, canvas.height / 2 + 60);
+  }
+}
+
+/* ==========================================================================
+   BLOCK 8 — RESET & INIT
+   Resets all game state for a fresh round. Called on first load and on R.
+   ========================================================================== */
+function resetGame() {
+  game.player = new Player();
+  game.enemies = [];
+  game.projectiles = [];
+  game.particles = [];
+  game.score = 0;
+  game.shield = 100;
+  game.gameOver = false;
+  game.shakeX = 0;
+  game.shakeY = 0;
+  game.chromatic = 0;
+  game.hitCooldown = 0;
+  game.spawnTimer = 1.0;
+  initStars();
+}
+
+// ── Boot ──
+resetGame();
+game.lastTime = performance.now();
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

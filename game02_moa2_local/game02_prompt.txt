@@ -1,0 +1,23 @@
+I am initiating a project to create a modern, high-quality, 2D arcade-style game in a single HTML file. Please act as a senior game developer and follow these instructions:
+
+1. CORE GAMEPLAY:
+   - Create a side-scrolling or top-down space shooter game.
+   - Player control: Use the arrow keys (or WASD) to move the ship.
+   - Shooting: The player must shoot projectiles by hitting the SPACE BAR.
+   - Enemies: Implement simple, procedurally generated enemy patterns that move toward the player.
+   - Scoring: Add a real-time score display in the corner of the canvas.
+
+2. TECHNICAL SPECIFICATIONS:
+   - Structure: Everything must be contained in a single `index.html` file using HTML5 Canvas and vanilla JavaScript.
+   - Styling: Use CSS to create a clean, dark-mode, high-end "VFX-style" aesthetic. Ensure the canvas is responsive and centered on the screen.
+   - Performance: Use `requestAnimationFrame` for a smooth 60FPS loop.
+   - Modularity: Keep the game logic, rendering, and input handling in distinct, clearly commented JavaScript blocks.
+
+3. EXECUTION STEPS:
+   - First, describe your plan for the game architecture.
+   - Second, ask me if I want to add any specific "VFX" touches (like particles or bloom effects) before you begin writing the code.
+   - Wait for my "Proceed" before generating the final code.
+
+I want this code to be highly efficient, readable, and ready to play immediately in Chrome.
+
+When you finish, write up a full report of what you did, how long it took, what agents MOA or otherwise worked on it, which LLM, how much did it cost, tokens in and out, whatever data you can gather, just skip the data if you cannot find it quickly.  This report should be in HTML for easy viewing, nicely formated with a screen shot of the game, and instructions.  

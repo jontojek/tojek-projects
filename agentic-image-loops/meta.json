@@ -1,0 +1,12 @@
+{
+  "title": "Agentic Image Loops",
+  "blurb": "Three experiments in iterative image generation. The workflow never changes — between frames an LLM agent scores the image against a fixed rubric and writes the next prompt. 41 images, every decision logged.",
+  "tags": ["ComfyUI", "LLM Agent"],
+  "date": "2026-07-07",
+  "cta": "View experiments",
+  "thumb": {
+    "video": "assets/thumb_loops.mp4",
+    "poster": "agentic-image-loops/assets/img/evolve/iter_015.webp",
+    "alt": "The evolve loop's grey coupe improving across twenty generations"
+  }
+}

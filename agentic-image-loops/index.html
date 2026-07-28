@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>agentic image loops — hill-climb · morph · evolve</title><style>
+:root{--bg:#101014;--panel:#18181e;--line:#26262e;--ink:#e6e6ea;--dim:#8b8b96;--acc:#ff7a45;--acc2:#ffb38a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,'Segoe UI',sans-serif}
+a{color:var(--acc2);text-decoration:none}a:hover{color:var(--acc)}
+.wrap{max-width:1060px;margin:0 auto;padding:0 1.2rem}
+header.site{padding:4.5rem 0 2.5rem;text-align:center}
+h1{font-size:clamp(2rem,5vw,3.2rem);margin:.2rem 0;letter-spacing:-.02em}
+.kicker{color:var(--acc);text-transform:uppercase;letter-spacing:.18em;font-size:.8rem;font-weight:600}
+.sub{color:var(--dim);max-width:44rem;margin:.8rem auto 0}
+.stats{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin:2rem 0 0}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:.35rem 1rem;font-size:.85rem;color:var(--dim)}
+.chip b{color:var(--ink)}
+section{padding:2.6rem 0}
+h2{font-size:1.5rem;margin:0 0 1.2rem}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:760px){.split{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.4rem}
+.panel h3{margin:0 0 .5rem;font-size:1.05rem}
+.panel .tag{font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;font-weight:700}
+.tag.py{color:#6db3ff}.tag.ai{color:var(--acc)}
+.panel p{color:var(--dim);margin:.4rem 0;font-size:.95rem}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+@media(max-width:900px){.cards{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .18s,border-color .18s}
+.card:hover{transform:translateY(-4px);border-color:var(--acc)}
+.card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.card .body{padding:1.1rem 1.2rem 1.3rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
+.card .num{color:var(--acc);font-weight:700;font-size:.8rem;letter-spacing:.14em}
+.card h3{margin:0;font-size:1.2rem}
+.card .q{color:var(--dim);font-size:.92rem;flex:1}
+.card .res{font-size:.88rem;border-top:1px solid var(--line);padding-top:.7rem}
+.findings li{color:var(--dim);margin:.5rem 0}
+.findings b{color:var(--ink)}
+footer{border-top:1px solid var(--line);color:var(--dim);font-size:.85rem;padding:2rem 0;margin-top:2rem;text-align:center}
+.back{display:inline-block;margin:1.6rem 0 0;font-size:.9rem}
+.attrs{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.5rem;margin:1.4rem 0}
+.attrs .k{color:var(--dim);display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
+.iter{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.2rem;margin:1.2rem 0}
+.iter h3{margin:.1rem 0 .8rem;font-size:1rem}.iter h3 span{color:var(--dim);font-weight:400;font-size:.85rem}
+.iter img{width:100%;border-radius:8px}
+.iter table{border-collapse:collapse;margin:.6rem 0}.iter td{padding:.12rem .9rem .12rem 0;color:var(--dim);font-size:.92rem}
+.iter .tot td{color:var(--acc);font-weight:600}
+.iter p{font-size:.93rem;color:var(--dim)}.iter p b{color:var(--ink)}
+video{width:100%;border-radius:10px}
+.tick{fill:var(--dim);font-size:11px}
+p.md{color:var(--dim);max-width:52rem}
+p.md b,li b{color:var(--ink)}
+table.md{border-collapse:collapse;margin:1rem 0;width:100%;font-size:.92rem}
+table.md th{text-align:left;color:var(--ink);border-bottom:1px solid var(--line);padding:.4rem .8rem .4rem 0}
+table.md td{color:var(--dim);border-bottom:1px solid var(--line);padding:.4rem .8rem .4rem 0}
+code{background:#1f1f27;border:1px solid var(--line);border-radius:5px;padding:.05rem .35rem;font-size:.88em}
+</style></head><body>
+<div class='wrap'>
+<header class='site'>
+  <div class='kicker'>agentic image loops</div>
+  <h1>A fixed image pipeline.<br>An agent making the decisions.</h1>
+  <p class='sub'>Three experiments in iterative image generation with ComfyUI. The workflow never changes;
+  between frames, an LLM agent scores the image against a fixed rubric and writes the next prompt.
+  The same grey coupe runs through all three: refined into a studio hero shot, moved from the studio
+  onto a coastal highway through chained img2img, and improved further by selection and mutation
+  across a population of prompts and seeds.</p>
+  <div class='stats'>
+    <span class='chip'><b>3</b> loop designs</span>
+    <span class='chip'><b>41</b> images generated</span>
+    <span class='chip'><b>5.1 min</b> of GPU, total</span>
+    <span class='chip'><b>1</b> frozen workflow (Krea 2 Turbo)</span>
+    <span class='chip'><b>every</b> decision logged</span>
+  </div>
+</header>
+
+<section>
+  <h2>How the work is divided</h2>
+  <div class='split'>
+    <div class='panel'><div class='tag py'>PYTHON</div>
+      <h3>Everything that repeats is code</h3>
+      <p>A small script watches a folder. When a prompt file appears, it runs it through the same frozen
+      ComfyUI graph, saves the image, and appends one line to a log. It makes no judgment calls and never
+      changes between runs, so results are repeatable and failures are easy to isolate.</p></div>
+    <div class='panel'><div class='tag ai'>THE AGENT</div>
+      <h3>Everything that requires judgment is the agent</h3>
+      <p>Between frames, an LLM looks at the image, scores it against a rubric locked before the run
+      started, and writes the next prompt as a small JSON file. The two halves communicate only through
+      files on disk, so the agent can be swapped — a frontier model, a local model, or a person with a
+      text editor — without changing anything else.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>The three experiments</h2>
+  <div class='cards'><a class='card' href='experiments/01_hillclimb.html'><img src='assets/img/hillclimb/iter_007.webp' loading='lazy' alt='Hill-Climb best frame'><div class='body'><div class='num'>EXPERIMENT 01</div><h3>Hill-Climb</h3><div class='q'>Can one-clause prompt edits, scored against a fixed rubric, steadily improve an image?</div><div class='res'>27 → 44/50 in ten iterations. The run stopped automatically when scores plateaued.</div></div></a><a class='card' href='experiments/02_morph.html'><img src='assets/img/morph/iter_010.webp' loading='lazy' alt='Morph best frame'><div class='body'><div class='num'>EXPERIMENT 02</div><h3>Morph</h3><div class='q'>Can a chained img2img loop move the car from the studio to a coastal highway while keeping it the same car?</div><div class='res'>Arrived in seven steps. An early collapsed lineage is preserved in the logs and produced the clearest lessons.</div></div></a><a class='card' href='experiments/03_evolve.html'><img src='assets/img/evolve/iter_019.webp' loading='lazy' alt='Evolve best frame'><div class='body'><div class='num'>EXPERIMENT 03</div><h3>Evolve</h3><div class='q'>Does population search — selection, mutation, crossover — outperform single-lineage refinement?</div><div class='res'>48/50 by generation four — four points above the hill-climb baseline.</div></div></a></div>
+</section>
+
+<section>
+  <h2>What the logs taught us</h2>
+  <ul class='findings'>
+    <li><b>Seed handling depends on the loop type.</b> Fix the seed when refining a text-to-image prompt, so each change is attributable to the edit. Rotate it in img2img chains, where a fixed seed re-applies the same noise every frame and locks artifacts in. In evolution, treat the seed as one more variable to search.</li>
+    <li><b>Low denoise preserves artifacts rather than repairing them.</b> When a chain degrades, roll back to a clean frame and regenerate at higher denoise. Experiment 02's collapsed lineage is preserved in full.</li>
+    <li><b>Persistent compositions respond to relabeling, not force.</b> A garage doorway that held through every denoise setting changed immediately once the prompt described the same shape as a highway underpass.</li>
+    <li><b>Describe the cause, not the desired result.</b> "Fine metal flake catching the light" produced the highest-scoring paint of the project; specifying the exact reflection shapes degraded the image every time it was tried.</li>
+  </ul>
+  <p style='color:var(--dim)'>The full write-up is on the <a href='findings.html'>findings page</a>.
+  Every prompt, seed, score and judge note is in <code>data/</code>, unedited.</p>
+</section>
+
+<footer>agentic-image-loops · MIT · images generated locally with Krea 2 Turbo in ComfyUI · site rebuilt from data/ by tools/build_site.py</footer>
+</div></body></html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>findings — agentic image loops</title><style>
+:root{--bg:#101014;--panel:#18181e;--line:#26262e;--ink:#e6e6ea;--dim:#8b8b96;--acc:#ff7a45;--acc2:#ffb38a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,'Segoe UI',sans-serif}
+a{color:var(--acc2);text-decoration:none}a:hover{color:var(--acc)}
+.wrap{max-width:1060px;margin:0 auto;padding:0 1.2rem}
+header.site{padding:4.5rem 0 2.5rem;text-align:center}
+h1{font-size:clamp(2rem,5vw,3.2rem);margin:.2rem 0;letter-spacing:-.02em}
+.kicker{color:var(--acc);text-transform:uppercase;letter-spacing:.18em;font-size:.8rem;font-weight:600}
+.sub{color:var(--dim);max-width:44rem;margin:.8rem auto 0}
+.stats{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin:2rem 0 0}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:.35rem 1rem;font-size:.85rem;color:var(--dim)}
+.chip b{color:var(--ink)}
+section{padding:2.6rem 0}
+h2{font-size:1.5rem;margin:0 0 1.2rem}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:760px){.split{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.4rem}
+.panel h3{margin:0 0 .5rem;font-size:1.05rem}
+.panel .tag{font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;font-weight:700}
+.tag.py{color:#6db3ff}.tag.ai{color:var(--acc)}
+.panel p{color:var(--dim);margin:.4rem 0;font-size:.95rem}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+@media(max-width:900px){.cards{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .18s,border-color .18s}
+.card:hover{transform:translateY(-4px);border-color:var(--acc)}
+.card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.card .body{padding:1.1rem 1.2rem 1.3rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
+.card .num{color:var(--acc);font-weight:700;font-size:.8rem;letter-spacing:.14em}
+.card h3{margin:0;font-size:1.2rem}
+.card .q{color:var(--dim);font-size:.92rem;flex:1}
+.card .res{font-size:.88rem;border-top:1px solid var(--line);padding-top:.7rem}
+.findings li{color:var(--dim);margin:.5rem 0}
+.findings b{color:var(--ink)}
+footer{border-top:1px solid var(--line);color:var(--dim);font-size:.85rem;padding:2rem 0;margin-top:2rem;text-align:center}
+.back{display:inline-block;margin:1.6rem 0 0;font-size:.9rem}
+.attrs{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.5rem;margin:1.4rem 0}
+.attrs .k{color:var(--dim);display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
+.iter{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.2rem;margin:1.2rem 0}
+.iter h3{margin:.1rem 0 .8rem;font-size:1rem}.iter h3 span{color:var(--dim);font-weight:400;font-size:.85rem}
+.iter img{width:100%;border-radius:8px}
+.iter table{border-collapse:collapse;margin:.6rem 0}.iter td{padding:.12rem .9rem .12rem 0;color:var(--dim);font-size:.92rem}
+.iter .tot td{color:var(--acc);font-weight:600}
+.iter p{font-size:.93rem;color:var(--dim)}.iter p b{color:var(--ink)}
+video{width:100%;border-radius:10px}
+.tick{fill:var(--dim);font-size:11px}
+p.md{color:var(--dim);max-width:52rem}
+p.md b,li b{color:var(--ink)}
+table.md{border-collapse:collapse;margin:1rem 0;width:100%;font-size:.92rem}
+table.md th{text-align:left;color:var(--ink);border-bottom:1px solid var(--line);padding:.4rem .8rem .4rem 0}
+table.md td{color:var(--dim);border-bottom:1px solid var(--line);padding:.4rem .8rem .4rem 0}
+code{background:#1f1f27;border:1px solid var(--line);border-radius:5px;padding:.05rem .35rem;font-size:.88em}
+</style></head><body><div class='wrap'><a class='back' href='index.html'>← all experiments</a><header class='site' style='text-align:left;padding:1.6rem 0 1rem'><div class='kicker'>the write-up</div><h1>Findings</h1><p class='sub' style='margin-left:0'>Cross-experiment lessons, taken from the run logs rather than theory. The raw records are in <code>data/</code>.</p></header><p class='md'>One frozen Krea2-turbo workflow, one dumb Python runner, three loop topologies. Everything below was observed in the logs (<code>\1</code>), not theorized.</p>
+<h2>Headline results</h2>
+<table class='md'><tr><th>stage</th><th>question</th><th>answer</th></tr><tr><td>01_hillclimb</td><td>can agent prompt-mutation + fixed rubric climb reliably?</td><td>yes: 27→44/50 in 10 iters, plateau detector fired correctly</td></tr><tr><td>02_morph</td><td>can an i2i chain travel studio→highway holding identity?</td><td>yes: arrival in 7 clean beats, identity 10/10 throughout</td></tr><tr><td>03_evolve</td><td>does population search beat single-lineage refinement?</td><td>yes: 48/50 vs 44/50, +4 in 5 generations (20 images)</td></tr></table>
+<h2>Seed policy depends on loop topology (the biggest finding)</h2>
+<ul class='findings'>
+<li><b>\1</b> Every visual change is then attributable to the prompt edit. Non-negotiable for judging the judge.</li>
+<li><b>\1</b> Fixed seed re-applies the identical noise pattern each step; artifacts correlate and lock in (our speckle storm, frames 0–3). One seed rotation broke a two-frame stall instantly.</li>
+<li><b>\1</b> A seed reroll alone matched a 44 champion and deleted its seed-locked defect (gen 0, n2). Treat reroll as a mutation operator.</li>
+</ul>
+<h2>Artifact recovery in i2i chains</h2>
+<ul class='findings'>
+<li><b>\1</b> Denoise defends existing pixels, junk included. Our frozen &quot;drop to 0.30 to recover&quot; policy made speckle categorically worse in one step.</li>
+<li>What works, in order of preference: (1) roll back to the last clean ancestor and re-branch, (2) repaint at 0.50+ with fresh seed, (3) full chain restart. The car body always self-repaired before the background did — the model defends the subject, junk survives in low-attention regions.</li>
+<li>Artifacts trace to prompt wording: &quot;floor beginning to lighten&quot; birthed the wet speckle. Transitional/ambiguous surface language is a collapse seed.</li>
+</ul>
+<h2>Layout attractors: relabel, don&#x27;t fight</h2>
+<p class='md'>Compositions with strong structure (dark surround + bright center: our garage doorway, then the bridge) survive any denoise you can afford. Negating them (&quot;no overpass&quot;) does nothing. What works: <b>\1</b> — garage mouth → highway underpass mouth, in one 0.55 step, best beat of the run. Describe what things ARE, not what should disappear.</p>
+<h2>Prompt physics: cause, not effect</h2>
+<ul class='findings'>
+<li>&quot;fine metal flake catching the light&quot; → first 10/10 paint (the model has a physical reason for rich speculars). WON the evolution run.</li>
+<li>&quot;reflections modeling every curve&quot; / &quot;a single sweep&quot; → jagged, calligraphic junk, twice (n13, n17 in 03_evolve; n9 in 01_hillclimb). Art-directing the exact reflection shape over-constrains; describing material/light-source physics lets the sampler solve it.</li>
+<li>Style keywords move composition, not just quality: &quot;professional advertising photograph&quot; redesigned the entire car (hillclimb n6). Budget for that.</li>
+<li>Surface-quality clauses can hijack framing: &quot;smooth uncluttered hood&quot; pulled the camera high and tight, twice.</li>
+</ul>
+<h2>Loop mechanics that proved out</h2>
+<ul class='findings'>
+<li><b>\1</b> (agent writes step JSON, dumb runner executes, agent judges files): zero failures across 42 generations, fully agent-agnostic.</li>
+<li><b>\1</b> kept 10-iteration score curves comparable; the plateau rule (spread &lt; 2 over last 4) fired exactly when marginal gains died. Policy errors were handled as logged amendments, never silent edits.</li>
+<li><b>\1</b> made evolution monotonic — fitness never regressed in 5 generations.</li>
+<li><b>\1</b>: both 46 and 47 champions were crossovers, fusing independently discovered wins (chrome grille line × clean hood line × low angle).</li>
+<li>Judge blind spots to watch: brand-identity drift (the model relaxes toward real production designs — BMW/Maserati/Aston) is invisible to this rubric.</li>
+</ul>
+<h2>Numbers worth remembering (5090, Krea2-turbo fp8, 1664×928)</h2>
+<p class='md'>~7.5–8s per image; 8 steps, cfg 1, er_sde/sgm_uniform. Hillclimb run ≈ 9 min, morph ≈ 2 min of generation, full 20-image evolution ≈ 3 min. Iteration is effectively free — design experiments accordingly.</p><footer>agentic-image-loops · MIT · this page is generated from FINDINGS.md</footer></div></body></html>

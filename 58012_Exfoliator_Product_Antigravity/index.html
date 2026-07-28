@@ -1,0 +1,2075 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>58012 — EXFOLIATOR NEUTRAL LOOKDEV SHOWCASE</title>
+  
+  <!-- CDNs for Styles, Icons, and Typography -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            carbon: {
+              950: '#070709',
+              900: '#0F0F12',
+              800: '#16161C',
+              700: '#22222E',
+              600: '#2F2F3D',
+            },
+            amberAccent: {
+              DEFAULT: '#D4AF37',
+              light: '#E6C655',
+              dark: '#B08B20',
+              glow: 'rgba(212, 175, 55, 0.12)',
+            },
+            cream: {
+              DEFAULT: '#F2EFE9',
+              dim: '#D1CDC7',
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'spin-slow': 'spin 12s linear infinite',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Premium Glassmorphism and Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #070709;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #22222E;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #D4AF37;
+    }
+
+    .glass-card {
+      background: rgba(22, 22, 28, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .glass-card-hover {
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .glass-card-hover:hover {
+      border-color: rgba(212, 175, 55, 0.25);
+      background: rgba(26, 26, 34, 0.8);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 15px 0 rgba(212, 175, 55, 0.05);
+    }
+
+    /* 3D tilt container perspective */
+    .tilt-container {
+      perspective: 1000px;
+    }
+
+    /* BRIGHTER, LARGER Range slider custom styling */
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 38px;
+      width: 38px;
+      border-radius: 50%;
+      background: #D4AF37;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 1), 0 0 10px rgba(255, 255, 255, 0.8);
+      transition: transform 0.1s ease, background-color 0.1s ease;
+      border: 4px solid #0F0F12;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      background: #F2EFE9;
+    }
+
+    /* Radial glowing spot under cards */
+    .glow-bg {
+      background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 75%);
+    }
+
+    /* Slide compare overlay boundary line */
+    .compare-slider-handle {
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.9), 0 0 8px rgba(255, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body class="bg-carbon-950 text-cream font-sans overflow-x-hidden min-h-screen relative antialiased selection:bg-amberAccent selection:text-carbon-950">
+
+  <!-- Floating Bubble Canvas Background simulating Micro-Aeration -->
+  <canvas id="bubbles-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+
+  <!-- BACKGROUND RADIAL GLOWS -->
+  <div class="fixed top-0 left-1/4 w-[60vw] h-[60vw] rounded-full glow-bg pointer-events-none z-0 -translate-y-1/2"></div>
+  <div class="fixed bottom-0 right-1/4 w-[50vw] h-[50vw] rounded-full glow-bg pointer-events-none z-0 translate-y-1/3"></div>
+
+  <!-- CINEMATIC INTRO SPLASH -->
+  <div id="intro-splash" class="fixed inset-0 bg-carbon-950 z-[9999] flex flex-col items-center justify-center transition-all duration-700 ease-out">
+    <div class="absolute inset-0 bg-gradient-to-t from-carbon-950 via-transparent to-carbon-950 pointer-events-none z-10"></div>
+    <div class="absolute w-[300px] h-[300px] bg-amberAccent/5 rounded-full filter blur-[80px] animate-pulse-slow"></div>
+    
+    <div class="z-20 flex flex-col items-center max-w-md px-6 text-center">
+      <div class="mb-6 relative flex items-center justify-center">
+        <svg class="w-16 h-28 text-amberAccent opacity-80" viewBox="0 0 100 200" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M 20,40 C 20,40 15,160 30,180 C 35,185 65,185 70,180 C 85,160 80,40 80,40 Z" stroke-dasharray="600" stroke-dashoffset="600" id="splash-tube-path">
+            <animate attributeName="stroke-dashoffset" values="600;0" dur="2s" fill="freeze" />
+          </path>
+          <line x1="15" y1="40" x2="85" y2="40" stroke-dasharray="100" stroke-dashoffset="100">
+            <animate attributeName="stroke-dashoffset" values="100;0" dur="1s" delay="1s" fill="freeze" />
+          </line>
+          <circle cx="45" cy="80" r="2" fill="currentColor" opacity="0" class="animate-pulse"><animate attributeName="opacity" values="0;0.8;0" dur="3s" repeatCount="indefinite" /></circle>
+          <circle cx="55" cy="110" r="1.5" fill="currentColor" opacity="0" class="animate-pulse"><animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite" /></circle>
+          <circle cx="38" cy="130" r="2.5" fill="currentColor" opacity="0" class="animate-pulse"><animate attributeName="opacity" values="0;0.8;0" dur="4s" repeatCount="indefinite" /></circle>
+        </svg>
+      </div>
+
+      <h1 class="text-3xl font-extrabold tracking-[0.25em] text-cream mb-2 uppercase">58012</h1>
+      <p class="text-xs tracking-[0.4em] text-amberAccent uppercase mb-6 font-semibold">Exfoliator LookDev</p>
+      
+      <div class="h-[1px] w-32 bg-gradient-to-r from-transparent via-amberAccent/40 to-transparent mb-4"></div>
+      <p class="text-xs text-cream/40 font-mono tracking-wider">INITIATING REVIEW DASHBOARD...</p>
+    </div>
+  </div>
+
+
+  <!-- STICKY HEADER NAVBAR -->
+  <nav class="sticky top-0 z-40 bg-carbon-950/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amberAccent/20 to-cream/10 border border-amberAccent/20 flex items-center justify-center">
+          <i data-lucide="sparkles" class="w-5 h-5 text-amberAccent animate-pulse-slow"></i>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="text-lg font-black tracking-wider text-cream font-mono">58012</span>
+            <span class="text-xs bg-amberAccent/10 text-amberAccent border border-amberAccent/20 px-2 py-0.5 rounded font-mono font-bold">LOCKED V18</span>
+          </div>
+          <span class="text-[10px] tracking-[0.2em] text-cream/40 uppercase block">LookDev Review Portal</span>
+        </div>
+      </div>
+
+      <!-- Quick Nav Links -->
+      <div class="hidden md:flex items-center space-x-6 lg:space-x-8 text-xs lg:text-sm font-medium">
+        <a href="#references" class="text-cream/60 hover:text-amberAccent transition-colors">Physical References</a>
+        <a href="#timeline-section" class="text-cream/60 hover:text-amberAccent transition-colors">LookDev Scrubber</a>
+        <a href="#specular-battle" class="text-cream/60 hover:text-amberAccent transition-colors">Specular Control</a>
+        <a href="#gallery" class="text-cream/60 hover:text-amberAccent transition-colors">Generators Gallery</a>
+        <a href="#platforms" class="text-cream/60 hover:text-amberAccent transition-colors">AI Studio vs. Magnific</a>
+        <a href="#meta-construction" class="text-cream/60 hover:text-amberAccent transition-colors">Meta Construction</a>
+      </div>
+
+      <!-- Downstream Alignment Status -->
+      <div class="flex items-center space-x-3 text-xs bg-carbon-900 border border-white/5 px-4 py-2 rounded-xl">
+        <div class="w-2 h-2 rounded-full bg-green-500 animate-ping"></div>
+        <div class="w-2 h-2 rounded-full bg-green-500 absolute"></div>
+        <span class="text-cream/60 font-mono">PIPELINE ALIGNED</span>
+      </div>
+
+    </div>
+  </nav>
+
+
+  <!-- HERO SUMMARY -->
+  <header class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6 z-10">
+    <div class="max-w-3xl">
+      <div class="inline-flex items-center space-x-2 bg-amberAccent/10 border border-amberAccent/20 rounded-full px-3 py-1 text-xs text-amberAccent mb-4">
+        <i data-lucide="info" class="w-3.5 h-3.5"></i>
+        <span>XYZ GRAPHICS · LOOKDEV PRE-RENDER PIPELINE</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-cream mb-4 uppercase leading-[1.1]">
+        Evaluating AI Material Simulation for <span class="text-gradient bg-gradient-to-r from-amberAccent via-cream to-amberAccent bg-clip-text text-transparent">58012 Exfoliator</span>
+      </h1>
+      <p class="text-cream/70 text-md leading-relaxed">
+        Evaluating generated outputs against physical product specifications. Our goal was to simulate a non-reflective matte frosted sleeve holding a dense, luminous, micro-aerated crystalline balm—eliminating glossy reflections and capturing correct material density for our 3D and compositing teams.
+      </p>
+    </div>
+  </header>
+
+
+  <!-- PHYSICAL REFERENCE PHOTOS SECTION -->
+  <section id="references" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 z-10">
+    <div class="glass-card rounded-3xl p-6 border border-white/5">
+      <div class="flex items-center space-x-2 mb-6 pb-3 border-b border-white/5">
+        <i data-lucide="camera" class="text-amberAccent w-5 h-5"></i>
+        <h3 class="text-md font-bold text-cream uppercase tracking-wider">The Physical Simulation Inputs</h3>
+      </div>
+      
+      <p class="text-cream/60 text-xs mb-6 max-w-2xl">
+        These reference photographs of the physical exfoliator tube, base balm formula, and aeration goals were provided as seed images and text prompts to align the generative AI models:
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Ref 1 -->
+        <div class="bg-carbon-900/50 border border-white/5 rounded-2xl p-4 flex flex-col justify-between cursor-pointer group" onclick="openLightboxDirect('images/ref_outer_bottle.png', 'Product Prototype Reference', 'Photograph of the frosted, translucent tube prototype, establishing the 3D volume outline and cylindrical base curves.')">
+          <div class="relative w-full aspect-video bg-carbon-950 rounded-xl overflow-hidden mb-3 flex items-center justify-center">
+            <img src="images/ref_outer_bottle.png" class="object-cover w-full h-full group-hover:scale-105 transition-all duration-300" alt="Tube reference">
+            <span class="absolute bottom-2 right-2 text-[8px] bg-carbon-950/80 px-2 py-0.5 rounded font-mono text-cream/60">CLICK TO EXPAND</span>
+          </div>
+          <span class="text-xs font-bold text-cream font-mono">ref_outer_bottle.png</span>
+          <span class="text-[10px] text-cream/40 font-mono mt-0.5">Squeeze Tube Outline & Volume Baseline</span>
+        </div>
+
+        <!-- Ref 2 -->
+        <div class="bg-carbon-900/50 border border-white/5 rounded-2xl p-4 flex flex-col justify-between cursor-pointer group" onclick="openLightboxDirect('images/ref_mens_gel.png', 'Base Gel Material Reference', 'Photograph of the raw, warm translucent gel baseline formula showing material chroma and translucency behavior.')">
+          <div class="relative w-full aspect-video bg-carbon-950 rounded-xl overflow-hidden mb-3 flex items-center justify-center">
+            <img src="images/ref_mens_gel.png" class="object-cover w-full h-full group-hover:scale-105 transition-all duration-300" alt="Gel reference">
+            <span class="absolute bottom-2 right-2 text-[8px] bg-carbon-950/80 px-2 py-0.5 rounded font-mono text-cream/60">CLICK TO EXPAND</span>
+          </div>
+          <span class="text-xs font-bold text-cream font-mono">ref_mens_gel.png</span>
+          <span class="text-[10px] text-cream/40 font-mono mt-0.5">Warm Translucent Gel Color Target</span>
+        </div>
+
+        <!-- Ref 3 -->
+        <div class="bg-carbon-900/50 border border-white/5 rounded-2xl p-4 flex flex-col justify-between cursor-pointer group" onclick="openLightboxDirect('images/ref_nightfall_gel.png', 'Spread Gel Aeration Target', 'High-magnification reference of the fine micro-porous aeration cells, reading as a dense crystalline silt.')">
+          <div class="relative w-full aspect-video bg-carbon-950 rounded-xl overflow-hidden mb-3 flex items-center justify-center">
+            <img src="images/ref_nightfall_gel.png" class="object-cover w-full h-full group-hover:scale-105 transition-all duration-300" alt="Aeration reference">
+            <span class="absolute bottom-2 right-2 text-[8px] bg-carbon-950/80 px-2 py-0.5 rounded font-mono text-cream/60">CLICK TO EXPAND</span>
+          </div>
+          <span class="text-xs font-bold text-cream font-mono">ref_nightfall_gel.png</span>
+          <span class="text-[10px] text-cream/40 font-mono mt-0.5">Micro-Aeration Texture Goal</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SECTION 1: THE LOOKDEV TIMELINE -->
+  <section id="timeline-section" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 z-10">
+    
+    <div class="text-center mb-10">
+      <span class="text-xs font-bold text-amberAccent tracking-[0.3em] uppercase block mb-2 font-mono">PRIMARY INTERACTIVE SCREEN</span>
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-cream uppercase">The LookDev Evolutionary Track</h2>
+      <p class="text-cream/60 max-w-xl mx-auto mt-2 text-xs">
+        Drag or click the timeline below to scrub through the 10 key milestones of our generation process, comparing outputs across engine nodes.
+      </p>
+    </div>
+
+    <!-- MAIN OVERSIZED INTERACTIVE SLIDER CONTAINER (HEIGHT SHIFTS FIXED) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch glass-card rounded-3xl p-6 sm:p-10 border border-amberAccent/20 relative">
+      
+      <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-amberAccent/5 rounded-full filter blur-[60px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+
+      <!-- LEFT COLUMN: LARGE TIMELINE PREVIEW IMAGE -->
+      <div class="lg:col-span-6 flex flex-col items-center justify-center relative h-[450px] md:h-[550px] self-center">
+        <div class="relative w-full max-w-[420px] aspect-[1/1.2] bg-carbon-950 border-2 border-white/5 rounded-3xl p-6 overflow-hidden flex items-center justify-center shadow-2xl">
+          
+          <div class="absolute inset-0 bg-gradient-to-tr from-carbon-950 via-transparent to-carbon-950 flex items-center justify-center pointer-events-none">
+            <i data-lucide="loader" class="w-12 h-12 text-cream/5 animate-spin-slow"></i>
+          </div>
+
+          <!-- Crossfaded Images stacked on top of each other -->
+          <img id="scrub-img-0" src="images/v1_proxy.png" class="absolute inset-6 object-contain w-[90%] h-[90%] m-auto transition-all duration-300 opacity-100" alt="v3 proxy render">
+          <img id="scrub-img-1" src="images/v6_specular_fail.png" class="absolute inset-6 object-contain w-[90%] h-[90%] m-auto transition-all duration-300 opacity-0" alt="v6 fail render">
+          <img id="scrub-img-2" src="images/v8_benchmark.png" class="absolute inset-6 object-contain w-[90%] h-[90%] m-auto transition-all duration-300 opacity-0" alt="v8 render">
+          <img id="scrub-img-3" src="images/v9_benchmark.png" class="absolute inset-6 object-contain w-[90%] h-[90%] m-auto transition-all duration-300 opacity-0" alt="v9 render">
+          <img id="scrub-img-4" src="images/v12_benchmark.png" class="absolute inset-6 object-contain w-[90%] h-[90%] m-auto transition-all duration-300 opacity-0" alt="v12 render">
+          <img id="scrub-img-5" src="images/v15_fail.png" class="absolute inset-6 object-contain w-[90%] h-[90%] m-auto transition-all duration-300 opacity-0" alt="v15 fail render">
+          <img id="scrub-img-6" src="images/v15_pass.png" class="absolute inset-6 object-contain w-[90%] h-[90%] m-auto transition-all duration-300 opacity-0" alt="v15 pass render">
+          <img id="scrub-img-7" src="images/v16_pass.png" class="absolute inset-6 object-contain w-[90%] h-[90%] m-auto transition-all duration-300 opacity-0" alt="v16 render">
+          <img id="scrub-img-8" src="images/v17_pass.png" class="absolute inset-6 object-contain w-[90%] h-[90%] m-auto transition-all duration-300 opacity-0" alt="v17 render">
+          <img id="scrub-img-9" src="images/v18_locked.jpg" class="absolute inset-6 object-contain w-[90%] h-[90%] m-auto transition-all duration-300 opacity-0" alt="v18 locked render">
+
+        </div>
+        
+        <!-- Expand Button -->
+        <button class="absolute bottom-10 right-10 bg-carbon-900/95 border border-white/10 text-[10px] font-mono hover:bg-carbon-800 hover:border-amberAccent px-3 py-1.5 rounded-lg text-cream flex items-center space-x-1 transition-all shadow-md z-20 uppercase" onclick="openLightboxFromScrubber()">
+          <i data-lucide="maximize" class="w-3.5 h-3.5 text-amberAccent"></i>
+          <span>Click to Inspect Large</span>
+        </button>
+      </div>
+
+      <!-- RIGHT COLUMN: ENHANCED INTERACTIVE CONTROLS (HEIGHT COMPLETELY LOCKED) -->
+      <div class="lg:col-span-6 flex flex-col justify-between py-2 min-h-[450px] md:min-h-[550px]">
+        
+        <!-- ACTIVE VERSION AND GENERATOR NODE BADGE -->
+        <div class="border-b border-white/5 pb-4 h-[76px] flex flex-col justify-center">
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="active-phase-badge" class="text-[10px] bg-amberAccent/10 text-amberAccent border border-amberAccent/20 px-2.5 py-0.5 rounded-full font-mono uppercase font-bold tracking-wider">PHASE 1: THE MISDIRECTION</span>
+            <span id="active-engine-chip" class="text-[10px] px-2.5 py-0.5 rounded font-mono font-bold uppercase border bg-blue-500/15 text-blue-400 border-blue-500/25">Node: Google Nano Banana 2 (gnb2)</span>
+            <span id="active-version-num" class="ml-auto text-xl font-black text-cream font-mono">v3</span>
+          </div>
+          <div class="flex items-center justify-between mt-1">
+            <h3 id="active-version-title" class="text-md font-bold text-cream">Client Scene Layout Proxy</h3>
+            <p id="active-version-date" class="text-[9px] text-cream/40 font-mono">JULY 17, 2026</p>
+          </div>
+        </div>
+
+        <!-- TIMELINE DESCRIPTION & SPEC PANEL (STRICT HEIGHT LIMITS TO PREVENT JITTER) -->
+        <div class="flex-grow flex flex-col justify-center py-4">
+          <!-- Text Description: Strictly Locked Height -->
+          <div class="min-h-[120px] md:min-h-[140px] flex items-center">
+            <p id="active-version-desc" class="text-cream/70 text-xs sm:text-sm leading-relaxed">
+              At kickoff, the initial 3D layout scenes and mockups assumed a neutral green plastic proxy container. Dieline files specified a pink speckled gel, which was replaced post-real product inspection.
+            </p>
+          </div>
+
+          <!-- Dynamic Spec Grid: Strictly Locked Height -->
+          <div class="bg-carbon-950 border border-white/5 p-4 rounded-xl text-[11px] font-mono h-[140px] flex flex-col justify-between">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <p class="text-cream/40 text-[9px] mb-0.5 uppercase tracking-wider">PLATFORM / CHANNEL</p>
+                <p id="active-meta-platform" class="text-cream font-semibold truncate">Client Maya Scene</p>
+              </div>
+              <div>
+                <p class="text-cream/40 text-[9px] mb-0.5 uppercase tracking-wider">QC EVALUATION</p>
+                <p id="active-meta-qc" class="text-amber-500 font-semibold truncate">Proxy Reference Only</p>
+              </div>
+            </div>
+            <div class="border-t border-white/5 pt-2 mt-2 flex-grow flex flex-col justify-end">
+              <p class="text-cream/40 text-[9px] mb-0.5 uppercase tracking-wider">KEY OBSERVATION</p>
+              <p id="active-meta-obstacle" class="text-cream/80 leading-normal line-clamp-2">Frosted sleeve contours established; gel parameters overridden.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- GIANT OVERSIZED RANGE SLIDER TRACK (BIGGER & BRIGHTER) -->
+        <div class="mt-4 pt-4 border-t border-white/5">
+          <div class="flex items-center justify-between text-xs font-mono text-cream/40 mb-3">
+            <span class="font-bold">START (v3)</span>
+            <span class="text-amberAccent font-bold animate-pulse uppercase tracking-widest flex items-center space-x-1.5 text-xs md:text-sm">
+              <i data-lucide="chevrons-left-right" class="w-4 h-4"></i>
+              <span>SCRUB TIMELINE MILESTONES</span>
+            </span>
+            <span class="font-bold">LOCKED (v18)</span>
+          </div>
+
+          <!-- Extra Large Bright Glowing Slider -->
+          <div class="relative w-full flex items-center h-14 mb-4 bg-carbon-900 border border-white/5 rounded-2xl px-4 shadow-inner">
+            <input id="timeline-scrubber" type="range" min="0" max="9" value="0" class="w-full h-3 bg-carbon-700 rounded-lg appearance-none cursor-pointer outline-none transition-all accent-amberAccent">
+          </div>
+
+          <!-- Step Indicators: MUCH LARGER AND CLEARLY OUTLINED -->
+          <div class="flex justify-between text-xs font-mono text-cream/40 font-bold gap-1">
+            <button class="w-10 h-10 flex items-center justify-center rounded-xl bg-carbon-900 border border-white/5 hover:border-amberAccent hover:text-amberAccent transition-all text-xs focus:ring-2 focus:ring-amberAccent/50" onclick="setScrubber(0)">v3</button>
+            <button class="w-10 h-10 flex items-center justify-center rounded-xl bg-carbon-900 border border-white/5 hover:border-amberAccent hover:text-amberAccent transition-all text-xs focus:ring-2 focus:ring-amberAccent/50" onclick="setScrubber(1)">v6</button>
+            <button class="w-10 h-10 flex items-center justify-center rounded-xl bg-carbon-900 border border-white/5 hover:border-amberAccent hover:text-amberAccent transition-all text-xs focus:ring-2 focus:ring-amberAccent/50" onclick="setScrubber(2)">v8</button>
+            <button class="w-10 h-10 flex items-center justify-center rounded-xl bg-carbon-900 border border-white/5 hover:border-amberAccent hover:text-amberAccent transition-all text-xs focus:ring-2 focus:ring-amberAccent/50" onclick="setScrubber(3)">v9</button>
+            <button class="w-10 h-10 flex items-center justify-center rounded-xl bg-carbon-900 border border-white/5 hover:border-amberAccent hover:text-amberAccent transition-all text-xs focus:ring-2 focus:ring-amberAccent/50" onclick="setScrubber(4)">v12</button>
+            <button class="w-10 h-10 flex items-center justify-center rounded-xl bg-carbon-900 border border-white/5 hover:border-amberAccent hover:text-amberAccent transition-all text-xs focus:ring-2 focus:ring-amberAccent/50" onclick="setScrubber(5)">v15</button>
+            <button class="w-10 h-10 flex items-center justify-center rounded-xl bg-carbon-900 border border-white/5 hover:border-amberAccent hover:text-amberAccent transition-all text-xs focus:ring-2 focus:ring-amberAccent/50" onclick="setScrubber(6)">v15.2</button>
+            <button class="w-10 h-10 flex items-center justify-center rounded-xl bg-carbon-900 border border-white/5 hover:border-amberAccent hover:text-amberAccent transition-all text-xs focus:ring-2 focus:ring-amberAccent/50" onclick="setScrubber(7)">v16</button>
+            <button class="w-10 h-10 flex items-center justify-center rounded-xl bg-carbon-900 border border-white/5 hover:border-amberAccent hover:text-amberAccent transition-all text-xs focus:ring-2 focus:ring-amberAccent/50" onclick="setScrubber(8)">v17</button>
+            <button class="w-10 h-10 flex items-center justify-center rounded-xl bg-carbon-900 border border-white/5 hover:border-amberAccent hover:text-amberAccent transition-all text-xs focus:ring-2 focus:ring-amberAccent/50" onclick="setScrubber(9)">v18</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SECTION 2: SPECULAR BATTLE BEFORE/AFTER COMPARISON (LOUPE EXPANDED) -->
+  <section id="specular-battle" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-white/5 z-10">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Left Column -->
+      <div class="lg:col-span-5">
+        <span class="text-xs font-bold text-amberAccent tracking-[0.3em] uppercase block mb-2 font-mono">MATERIAL SPECULARITY CORRECTION</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-cream uppercase mb-4">Specular Highlight Suppression</h2>
+        <p class="text-cream/70 text-xs sm:text-sm leading-relaxed mb-4">
+          Standard generative models default to high-specular glossy highlights along transparent container borders. To match our design briefs, we suppressed these reflections entirely.
+        </p>
+        <p class="text-cream/70 text-xs sm:text-sm leading-relaxed mb-6">
+          Use the interactive loupe on the right to compare the initial specular highlights (v6) with the approved matte finish (v18).
+        </p>
+
+        <div class="bg-carbon-900 border border-white/5 p-4 rounded-xl flex items-center justify-between text-[11px] font-mono">
+          <div>
+            <span class="text-rose-500 font-bold block mb-1">FAIL CONDITION</span>
+            <span class="text-cream/60 leading-normal">Opaque white edge highlights & glossy glare lines.</span>
+          </div>
+          <div class="h-8 w-[1px] bg-white/5 mx-4"></div>
+          <div>
+            <span class="text-green-500 font-bold block mb-1">PASS CONDITION</span>
+            <span class="text-cream/60 leading-normal">Frosted, translucent, completely unlit sleeve body.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Loupe Compare (MADE MUCH LARGER) -->
+      <div class="lg:col-span-7 flex justify-center">
+        
+        <div class="relative w-full max-w-[560px] aspect-[1/1.1] bg-carbon-950 border-2 border-white/5 rounded-3xl p-6 overflow-hidden flex items-center justify-center select-none shadow-2xl" id="loupe-container">
+          
+          <!-- UNDER IMAGE: GLOSSY SPECULAR FAIL v6 (Epoch 1) -->
+          <img src="images/v6_specular_fail.png" class="object-contain w-[90%] h-[90%] select-none" id="loupe-bg-img" alt="glossy failure">
+          
+          <!-- UPPER REVEAL IMAGE: MATTE v18 LOCKED CANDIDATE (Lens size increased to circle(120px)) -->
+          <div class="absolute inset-6 pointer-events-none overflow-hidden flex items-center justify-center" id="loupe-overlay-wrapper">
+            <img src="images/v18_locked.jpg" class="object-contain w-[90%] h-[90%] select-none absolute m-auto" id="loupe-overlay-img" style="clip-path: circle(120px at 50% 50%);" alt="matte success">
+          </div>
+
+          <!-- DRAGGABLE LOUPE RING HANDLE (Diameter increased to 240px) -->
+          <div class="absolute w-[240px] h-[240px] border-2 border-amberAccent rounded-full pointer-events-none compare-slider-handle flex items-center justify-center z-10" id="loupe-ring" style="left: calc(50% - 120px); top: calc(50% - 120px);">
+            <div class="w-2.5 h-2.5 bg-amberAccent rounded-full shadow-lg"></div>
+            <span class="absolute -bottom-7 bg-amberAccent text-carbon-950 text-[10px] font-mono font-bold px-3 py-1 rounded-lg tracking-widest uppercase shadow-xl border border-white/20">LOCKED MATTE PASS</span>
+          </div>
+
+          <!-- Bottom bar instructions (MADE LARGER AND BRIGHTER) -->
+          <div class="absolute bottom-5 left-1/2 -translate-x-1/2 bg-amberAccent text-carbon-950 border-2 border-white/30 rounded-full px-6 py-2.5 text-xs font-mono font-black tracking-widest text-center pointer-events-none shadow-2xl flex items-center space-x-2 animate-bounce">
+            <i data-lucide="hand-metal" class="w-4 h-4"></i>
+            <span>DRAG OVER IMAGE TO INSPECT MATTE FEEDBACK</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SECTION 3: THE 5 PHYSICAL MATERIAL CRITERIA (3D TILT CARDS) -->
+  <section id="material-spec" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-white/5 z-10">
+    
+    <div class="text-center mb-10">
+      <span class="text-xs font-bold text-amberAccent tracking-[0.3em] uppercase block mb-2 font-mono">QUALITY EVALUATION CRITERIA</span>
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-cream uppercase">The Five Material Rulings</h2>
+      <p class="text-cream/60 max-w-xl mx-auto mt-2 text-xs">
+        Hover over the cards below to preview our five physical evaluation targets. Hover triggers a custom 3D card tilt and reflection glare. Click any card to load technical specifications below.
+      </p>
+    </div>
+
+    <!-- 3D CARDS GRID -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 mb-8 tilt-container">
+      
+      <!-- Axis 1: Tube Specular Kill -->
+      <div class="glass-card rounded-2xl p-4 border border-white/5 cursor-pointer glass-card-hover relative flex flex-col justify-between h-[180px]" onclick="selectRecipe(1)" id="axis-card-1">
+        <div class="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden opacity-0 transition-opacity duration-300" id="glare-card-1" style="background: radial-gradient(circle at 0px 0px, rgba(255,255,255,0.06) 0%, transparent 60%);"></div>
+        <div class="z-10">
+          <div class="text-amberAccent mb-2"><i data-lucide="shield-alert" class="w-5 h-5"></i></div>
+          <span class="text-[9px] font-mono text-cream/40 tracking-wider">AXIS ONE</span>
+          <h3 class="text-xs font-bold text-cream mt-1 uppercase">Sleeve Specular Kill</h3>
+        </div>
+        <div class="z-10 border-t border-white/5 pt-2 flex items-center justify-between text-[9px] font-mono">
+          <span class="text-cream/50">CONSTRAINT</span>
+          <span class="text-rose-500 font-bold">100% Matte</span>
+        </div>
+      </div>
+
+      <!-- Axis 2: Translucent Balm -->
+      <div class="glass-card rounded-2xl p-4 border border-white/5 cursor-pointer glass-card-hover relative flex flex-col justify-between h-[180px]" onclick="selectRecipe(2)" id="axis-card-2">
+        <div class="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden opacity-0 transition-opacity duration-300" id="glare-card-2" style="background: radial-gradient(circle at 0px 0px, rgba(255,255,255,0.06) 0%, transparent 60%);"></div>
+        <div class="z-10">
+          <div class="text-amberAccent mb-2"><i data-lucide="gem" class="w-5 h-5"></i></div>
+          <span class="text-[9px] font-mono text-cream/40 tracking-wider">AXIS TWO</span>
+          <h3 class="text-xs font-bold text-cream mt-1 uppercase">Crystalline Balm</h3>
+        </div>
+        <div class="z-10 border-t border-white/5 pt-2 flex items-center justify-between text-[9px] font-mono">
+          <span class="text-cream/50">TRANS-WEIGHT</span>
+          <span class="text-amberAccent font-bold">Luminous</span>
+        </div>
+      </div>
+
+      <!-- Axis 3: Micro-Aeration -->
+      <div class="glass-card rounded-2xl p-4 border border-white/5 cursor-pointer glass-card-hover relative flex flex-col justify-between h-[180px]" onclick="selectRecipe(3)" id="axis-card-3">
+        <div class="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden opacity-0 transition-opacity duration-300" id="glare-card-3" style="background: radial-gradient(circle at 0px 0px, rgba(255,255,255,0.06) 0%, transparent 60%);"></div>
+        <div class="z-10">
+          <div class="text-amberAccent mb-2"><i data-lucide="layers" class="w-5 h-5"></i></div>
+          <span class="text-[9px] font-mono text-cream/40 tracking-wider">AXIS THREE</span>
+          <h3 class="text-xs font-bold text-cream mt-1 uppercase">Micro-Aeration</h3>
+        </div>
+        <div class="z-10 border-t border-white/5 pt-2 flex items-center justify-between text-[9px] font-mono">
+          <span class="text-cream/50">VOID DIAMETER</span>
+          <span class="text-amberAccent font-bold">Pressed Silt</span>
+        </div>
+      </div>
+
+      <!-- Axis 4: Soft Light -->
+      <div class="glass-card rounded-2xl p-4 border border-white/5 cursor-pointer glass-card-hover relative flex flex-col justify-between h-[180px]" onclick="selectRecipe(4)" id="axis-card-4">
+        <div class="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden opacity-0 transition-opacity duration-300" id="glare-card-4" style="background: radial-gradient(circle at 0px 0px, rgba(255,255,255,0.06) 0%, transparent 60%);"></div>
+        <div class="z-10">
+          <div class="text-amberAccent mb-2"><i data-lucide="sun" class="w-5 h-5"></i></div>
+          <span class="text-[9px] font-mono text-cream/40 tracking-wider">AXIS FOUR</span>
+          <h3 class="text-xs font-bold text-cream mt-1 uppercase">Ambient Lighting</h3>
+        </div>
+        <div class="z-10 border-t border-white/5 pt-2 flex items-center justify-between text-[9px] font-mono">
+          <span class="text-cream/50">INTENSITY</span>
+          <span class="text-amberAccent font-bold">Unlit-Style</span>
+        </div>
+      </div>
+
+      <!-- Axis 5: Warm Chroma -->
+      <div class="glass-card rounded-2xl p-4 border border-white/5 cursor-pointer glass-card-hover relative flex flex-col justify-between h-[180px]" onclick="selectRecipe(5)" id="axis-card-5">
+        <div class="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden opacity-0 transition-opacity duration-300" id="glare-card-5" style="background: radial-gradient(circle at 0px 0px, rgba(255,255,255,0.06) 0%, transparent 60%);"></div>
+        <div class="z-10">
+          <div class="text-amberAccent mb-2"><i data-lucide="palette" class="w-5 h-5"></i></div>
+          <span class="text-[9px] font-mono text-cream/40 tracking-wider">AXIS FIVE</span>
+          <h3 class="text-xs font-bold text-cream mt-1 uppercase">Warm Chroma Base</h3>
+        </div>
+        <div class="z-10 border-t border-white/5 pt-2 flex items-center justify-between text-[9px] font-mono">
+          <span class="text-cream/50">CHROMA BASE</span>
+          <span class="text-amberAccent font-bold">Beige-Cream</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DYNAMIC RECIPE CARD DETAIL DASHBOARD -->
+    <div class="glass-card rounded-3xl p-6 sm:p-8 border border-white/5 relative" id="recipe-dashboard">
+      <div class="absolute top-4 right-4 text-xs font-mono text-amberAccent/40 flex items-center space-x-1">
+        <i data-lucide="terminal" class="w-4 h-4"></i>
+        <span>PIPELINE STANDARDS</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <div class="lg:col-span-5 border-b lg:border-b-0 lg:border-r border-white/5 pb-6 lg:pb-0 lg:pr-8 flex flex-col justify-between self-stretch">
+          <div>
+            <span id="recipe-tag" class="text-xs font-mono text-amberAccent uppercase tracking-widest block mb-1">AXIS ONE STANDARD</span>
+            <h3 id="recipe-title" class="text-xl font-bold text-cream uppercase mb-3">Sleeve Specular Kill</h3>
+            <p id="recipe-summary" class="text-cream/70 text-xs sm:text-sm leading-relaxed mb-6">
+              The outer squeeze tube plastic must read as 100% matte with zero specular reflections, gloss, or vertical commercial highlight bars on the curved container boundaries.
+            </p>
+          </div>
+          <div id="recipe-badge-bar" class="w-max bg-rose-500/10 text-rose-500 border border-rose-500/20 px-3 py-1 rounded text-xs font-mono font-bold">
+            HARD PIPELINE CONSTRAINT
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 space-y-4">
+          
+          <div>
+            <h4 class="text-xs font-mono text-cream/40 uppercase mb-2 tracking-wider flex items-center space-x-1">
+              <i data-lucide="code-2" class="w-4 h-4"></i>
+              <span>SYSTEM INSTRUCTIONS DIRECTIVES</span>
+            </h4>
+            <div class="bg-carbon-950 border border-white/5 rounded-xl p-4 font-mono text-xs text-cream/80 whitespace-pre-wrap leading-relaxed max-h-[140px] overflow-y-auto" id="recipe-prompt">
+SYSTEM INSTRUCTION FOR MATTE REFLECTION:
+- Outer tube plastic is 100% matte. Specular roughness = 1.0, glossiness = 0.0, reflectivity = 0.0.
+- Convert all lighting to flat ambient. The container surface must read as an unreflective, rough frosted sleeve with absolutely zero vertical white highlights or environment reflections on curved edges.
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div>
+              <h4 class="text-[10px] font-mono text-cream/40 uppercase mb-1 tracking-wider flex items-center space-x-1">
+                <i data-lucide="palette" class="w-4 h-4"></i>
+                <span>PHOTOSHOP COMP COMPLIANCE</span>
+              </h4>
+              <p id="recipe-comp" class="text-cream/70 leading-normal">
+                Retouching must use the raw matte color map as an unlit diffuse card, completely suppressing specular highlights inside Photoshop blend layers, ensuring full manual control of plastic specular in post.
+              </p>
+            </div>
+            <div>
+              <h4 class="text-[10px] font-mono text-cream/40 uppercase mb-1 tracking-wider flex items-center space-x-1">
+                <i data-lucide="box" class="w-4 h-4"></i>
+                <span>CGI SHADER REBUILD RULE</span>
+              </h4>
+              <p id="recipe-cgi" class="text-cream/70 leading-normal">
+                In Maya/Blender, set outer plastic shader transmission roughness = 0.95, specular IOR = 1.33, and assign zero metallic highlights on the cylinder's volume boundaries.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SECTION 4: THE GENERATIVE ENGINES GRID -->
+  <section id="gallery" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-white/5 z-10">
+    
+    <div class="flex flex-col xl:flex-row xl:items-end justify-between mb-8">
+      <div>
+        <span class="text-xs font-bold text-amberAccent tracking-[0.3em] uppercase block mb-2 font-mono">RENDER ARCHIVE MATRIX</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-cream uppercase">The Generative Engines Grid</h2>
+        <p class="text-cream/60 mt-1 text-xs sm:text-sm max-w-xl">
+          Filter iterations by their exact closed-source image generators. Select the **Compare** checkbox on any two cards to analyze output structures side-by-side!
+        </p>
+      </div>
+
+      <!-- FILTER CHIPS RECONFIGURED -->
+      <div class="flex flex-wrap gap-1.5 mt-4 xl:mt-0 font-mono text-[9px] sm:text-[10px]">
+        <button class="px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-lg bg-amberAccent text-carbon-950 border border-amberAccent font-bold transition-all" onclick="filterGallery('all', this)">ALL NODES</button>
+        <button class="px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-lg bg-carbon-900 text-cream/60 border border-white/5 hover:border-cream/20 transition-all" onclick="filterGallery('gnb2', this)">Google Nano Banana 2 (gnb2)</button>
+        <button class="px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-lg bg-carbon-900 text-cream/60 border border-white/5 hover:border-cream/20 transition-all" onclick="filterGallery('gnbp', this)">Google Nano Banana Pro (gnbp)</button>
+        <button class="px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-lg bg-carbon-900 text-cream/60 border border-white/5 hover:border-cream/20 transition-all" onclick="filterGallery('sd5p', this)">Seedance 5 Pro (sd5p)</button>
+        <button class="px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-lg bg-carbon-900 text-cream/60 border border-white/5 hover:border-cream/20 transition-all" onclick="filterGallery('gpt2', this)">GPT-2 (gpt2)</button>
+      </div>
+    </div>
+
+    <!-- GALLERY GRID (12 IMAGES) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="gallery-grid">
+      
+      <!-- Card 1: v6 Specular Fail (gnb2) -->
+      <div class="glass-card rounded-2xl p-4 border border-white/5 flex flex-col justify-between gallery-item relative group shadow-lg" data-epoch="gnb2">
+        <div class="relative w-full aspect-square bg-carbon-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center cursor-pointer" onclick="openLightbox(1)">
+          <img src="images/v6_specular_fail.png" class="object-contain w-[85%] h-[85%] group-hover:scale-105 transition-transform duration-300" alt="v6 failure">
+          <span class="absolute top-2 left-2 text-[8px] bg-red-500/10 text-red-500 border border-red-500/20 px-2 py-0.5 rounded-md font-mono font-bold">FAIL SPECULAR</span>
+          <span class="absolute bottom-2 left-2 text-[8px] bg-blue-500/15 text-blue-400 border-blue-500/25 px-2 py-0.5 rounded font-mono font-bold uppercase">Google Nano Banana 2 (gnb2)</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-xs font-bold text-cream font-mono truncate max-w-[130px]">v6_specular_fail.png</h4>
+            <span class="text-[9px] text-cream/40 font-mono">Google Nano Banana 2</span>
+          </div>
+          <label class="flex items-center space-x-1.5 cursor-pointer" onclick="event.stopPropagation();">
+            <input type="checkbox" class="w-4 h-4 accent-amberAccent rounded border-white/10 bg-carbon-900 compare-checkbox" data-id="1">
+            <span class="text-[9px] font-mono text-cream/40 select-none group-hover:text-amberAccent">Compare</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Card 2: v8 Benchmark (gnb2) -->
+      <div class="glass-card rounded-2xl p-4 border border-white/5 flex flex-col justify-between gallery-item relative group shadow-lg" data-epoch="gnb2">
+        <div class="relative w-full aspect-square bg-carbon-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center cursor-pointer" onclick="openLightbox(2)">
+          <img src="images/v8_benchmark.png" class="object-contain w-[85%] h-[85%] group-hover:scale-105 transition-transform duration-300" alt="v8 render">
+          <span class="absolute top-2 left-2 text-[8px] bg-green-500/10 text-green-500 border border-green-500/20 px-2 py-0.5 rounded-md font-mono font-bold">FAVORITE</span>
+          <span class="absolute bottom-2 left-2 text-[8px] bg-blue-500/15 text-blue-400 border-blue-500/25 px-2 py-0.5 rounded font-mono font-bold uppercase">Google Nano Banana 2 (gnb2)</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-xs font-bold text-cream font-mono truncate max-w-[130px]">v8_benchmark.png</h4>
+            <span class="text-[9px] text-cream/40 font-mono">Google Nano Banana 2</span>
+          </div>
+          <label class="flex items-center space-x-1.5 cursor-pointer" onclick="event.stopPropagation();">
+            <input type="checkbox" class="w-4 h-4 accent-amberAccent rounded border-white/10 bg-carbon-900 compare-checkbox" data-id="2">
+            <span class="text-[9px] font-mono text-cream/40 select-none group-hover:text-amberAccent">Compare</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Card 3: v9 Benchmark (gnbp) -->
+      <div class="glass-card rounded-2xl p-4 border border-white/5 flex flex-col justify-between gallery-item relative group shadow-lg" data-epoch="gnbp">
+        <div class="relative w-full aspect-square bg-carbon-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center cursor-pointer" onclick="openLightbox(3)">
+          <img src="images/v9_benchmark.png" class="object-contain w-[85%] h-[85%] group-hover:scale-105 transition-transform duration-300" alt="v9 render">
+          <span class="absolute top-2 left-2 text-[8px] bg-green-500/10 text-green-500 border border-green-500/20 px-2 py-0.5 rounded-md font-mono font-bold">FAVORITE</span>
+          <span class="absolute bottom-2 left-2 text-[8px] bg-purple-500/15 text-purple-400 border-purple-500/25 px-2 py-0.5 rounded font-mono font-bold uppercase">Google Nano Banana Pro (gnbp)</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-xs font-bold text-cream font-mono truncate max-w-[130px]">v9_benchmark.png</h4>
+            <span class="text-[9px] text-cream/40 font-mono">Google Nano Banana Pro</span>
+          </div>
+          <label class="flex items-center space-x-1.5 cursor-pointer" onclick="event.stopPropagation();">
+            <input type="checkbox" class="w-4 h-4 accent-amberAccent rounded border-white/10 bg-carbon-900 compare-checkbox" data-id="3">
+            <span class="text-[9px] font-mono text-cream/40 select-none group-hover:text-amberAccent">Compare</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Card 4: v12 Benchmark (gnbp) -->
+      <div class="glass-card rounded-2xl p-4 border border-white/5 flex flex-col justify-between gallery-item relative group shadow-lg" data-epoch="gnbp">
+        <div class="relative w-full aspect-square bg-carbon-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center cursor-pointer" onclick="openLightbox(4)">
+          <img src="images/v12_benchmark.png" class="object-contain w-[85%] h-[85%] group-hover:scale-105 transition-transform duration-300" alt="v12 render">
+          <span class="absolute top-2 left-2 text-[8px] bg-green-500/10 text-green-500 border border-green-500/20 px-2 py-0.5 rounded-md font-mono font-bold">FAVORITE</span>
+          <span class="absolute bottom-2 left-2 text-[8px] bg-purple-500/15 text-purple-400 border-purple-500/25 px-2 py-0.5 rounded font-mono font-bold uppercase">Google Nano Banana Pro (gnbp)</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-xs font-bold text-cream font-mono truncate max-w-[130px]">v12_benchmark.png</h4>
+            <span class="text-[9px] text-cream/40 font-mono">Google Nano Banana Pro</span>
+          </div>
+          <label class="flex items-center space-x-1.5 cursor-pointer" onclick="event.stopPropagation();">
+            <input type="checkbox" class="w-4 h-4 accent-amberAccent rounded border-white/10 bg-carbon-900 compare-checkbox" data-id="4">
+            <span class="text-[9px] font-mono text-cream/40 select-none group-hover:text-amberAccent">Compare</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Card 5: v15 Fail (gnb2) -->
+      <div class="glass-card rounded-2xl p-4 border border-white/5 flex flex-col justify-between gallery-item relative group shadow-lg" data-epoch="gnb2">
+        <div class="relative w-full aspect-square bg-carbon-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center cursor-pointer" onclick="openLightbox(5)">
+          <img src="images/v15_fail.png" class="object-contain w-[85%] h-[85%] group-hover:scale-105 transition-transform duration-300" alt="v15 fail render">
+          <span class="absolute top-2 left-2 text-[8px] bg-red-500/10 text-red-500 border border-red-500/20 px-2 py-0.5 rounded-md font-mono font-bold">FAIL JARGHOST</span>
+          <span class="absolute bottom-2 left-2 text-[8px] bg-blue-500/15 text-blue-400 border-blue-500/25 px-2 py-0.5 rounded font-mono font-bold uppercase">Google Nano Banana 2 (gnb2)</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-xs font-bold text-cream font-mono truncate max-w-[130px]">v15_fail.png</h4>
+            <span class="text-[9px] text-cream/40 font-mono">Google Nano Banana 2</span>
+          </div>
+          <label class="flex items-center space-x-1.5 cursor-pointer" onclick="event.stopPropagation();">
+            <input type="checkbox" class="w-4 h-4 accent-amberAccent rounded border-white/10 bg-carbon-900 compare-checkbox" data-id="5">
+            <span class="text-[9px] font-mono text-cream/40 select-none group-hover:text-amberAccent">Compare</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Card 6: v15.2 Pass (gnbp) -->
+      <div class="glass-card rounded-2xl p-4 border border-white/5 flex flex-col justify-between gallery-item relative group shadow-lg" data-epoch="gnbp">
+        <div class="relative w-full aspect-square bg-carbon-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center cursor-pointer" onclick="openLightbox(6)">
+          <img src="images/v15_pass.png" class="object-contain w-[85%] h-[85%] group-hover:scale-105 transition-transform duration-300" alt="v15 pass render">
+          <span class="absolute top-2 left-2 text-[8px] bg-green-500/10 text-green-500 border border-green-500/20 px-2 py-0.5 rounded-md font-mono font-bold">PASS BUBBLES</span>
+          <span class="absolute bottom-2 left-2 text-[8px] bg-purple-500/15 text-purple-400 border-purple-500/25 px-2 py-0.5 rounded font-mono font-bold uppercase">Google Nano Banana Pro (gnbp)</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-xs font-bold text-cream font-mono truncate max-w-[130px]">v15_pass.png</h4>
+            <span class="text-[9px] text-cream/40 font-mono">Google Nano Banana Pro</span>
+          </div>
+          <label class="flex items-center space-x-1.5 cursor-pointer" onclick="event.stopPropagation();">
+            <input type="checkbox" class="w-4 h-4 accent-amberAccent rounded border-white/10 bg-carbon-900 compare-checkbox" data-id="6">
+            <span class="text-[9px] font-mono text-cream/40 select-none group-hover:text-amberAccent">Compare</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Card 7: v16 SD5p Trial (sd5p) -->
+      <div class="glass-card rounded-2xl p-4 border border-white/5 flex flex-col justify-between gallery-item relative group shadow-lg" data-epoch="sd5p">
+        <div class="relative w-full aspect-square bg-carbon-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center cursor-pointer" onclick="openLightbox(7)">
+          <img src="images/v16_sd5p.png" class="object-contain w-[85%] h-[85%] group-hover:scale-105 transition-transform duration-300" alt="v16 SD5p Trial">
+          <span class="absolute top-2 left-2 text-[8px] bg-red-500/10 text-red-500 border border-red-500/20 px-2 py-0.5 rounded-md font-mono font-bold">FAIL SLEEVE</span>
+          <span class="absolute bottom-2 left-2 text-[8px] bg-teal-500/15 text-teal-400 border-teal-500/25 px-2 py-0.5 rounded font-mono font-bold uppercase">Seedance 5 Pro (sd5p)</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-xs font-bold text-cream font-mono truncate max-w-[130px]">v16_sd5p.png</h4>
+            <span class="text-[9px] text-cream/40 font-mono">Seedance 5 Pro</span>
+          </div>
+          <label class="flex items-center space-x-1.5 cursor-pointer" onclick="event.stopPropagation();">
+            <input type="checkbox" class="w-4 h-4 accent-amberAccent rounded border-white/10 bg-carbon-900 compare-checkbox" data-id="7">
+            <span class="text-[9px] font-mono text-cream/40 select-none group-hover:text-amberAccent">Compare</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Card 8: v16 GPT-2 Pass (gpt2) -->
+      <div class="glass-card rounded-2xl p-4 border border-white/5 flex flex-col justify-between gallery-item relative group shadow-lg" data-epoch="gpt2">
+        <div class="relative w-full aspect-square bg-carbon-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center cursor-pointer" onclick="openLightbox(8)">
+          <img src="images/v16_pass.png" class="object-contain w-[85%] h-[85%] group-hover:scale-105 transition-transform duration-300" alt="v16 render">
+          <span class="absolute top-2 left-2 text-[8px] bg-green-500/10 text-green-500 border border-green-500/20 px-2 py-0.5 rounded-md font-mono font-bold">PASS SLEEVE</span>
+          <span class="absolute bottom-2 left-2 text-[8px] bg-orange-500/15 text-orange-400 border-orange-500/25 px-2 py-0.5 rounded font-mono font-bold uppercase">GPT-2 (gpt2)</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-xs font-bold text-cream font-mono truncate max-w-[130px]">v16_pass.png</h4>
+            <span class="text-[9px] text-cream/40 font-mono">GPT-2</span>
+          </div>
+          <label class="flex items-center space-x-1.5 cursor-pointer" onclick="event.stopPropagation();">
+            <input type="checkbox" class="w-4 h-4 accent-amberAccent rounded border-white/10 bg-carbon-900 compare-checkbox" data-id="8">
+            <span class="text-[9px] font-mono text-cream/40 select-none group-hover:text-amberAccent">Compare</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Card 9: Extra Image 1 (gnb2) -->
+      <div class="glass-card rounded-2xl p-4 border border-white/5 flex flex-col justify-between gallery-item relative group shadow-lg" data-epoch="gnb2">
+        <div class="relative w-full aspect-square bg-carbon-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center cursor-pointer" onclick="openLightbox(9)">
+          <img src="images/v8_extra_1.png" class="object-contain w-[85%] h-[85%] group-hover:scale-105 transition-transform duration-300" alt="v8 extra fill">
+          <span class="absolute top-2 left-2 text-[8px] bg-amberAccent/10 text-amberAccent border border-amberAccent/20 px-2 py-0.5 rounded-md font-mono font-bold">STABILITY TEST</span>
+          <span class="absolute bottom-2 left-2 text-[8px] bg-blue-500/15 text-blue-400 border-blue-500/25 px-2 py-0.5 rounded font-mono font-bold uppercase">Google Nano Banana 2 (gnb2)</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-xs font-bold text-cream font-mono truncate max-w-[130px]">v8_extra_1.png</h4>
+            <span class="text-[9px] text-cream/40 font-mono">Google Nano Banana 2</span>
+          </div>
+          <label class="flex items-center space-x-1.5 cursor-pointer" onclick="event.stopPropagation();">
+            <input type="checkbox" class="w-4 h-4 accent-amberAccent rounded border-white/10 bg-carbon-900 compare-checkbox" data-id="9">
+            <span class="text-[9px] font-mono text-cream/40 select-none group-hover:text-amberAccent">Compare</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Card 10: Extra Image 2 (gnbp) -->
+      <div class="glass-card rounded-2xl p-4 border border-white/5 flex flex-col justify-between gallery-item relative group shadow-lg" data-epoch="gnbp">
+        <div class="relative w-full aspect-square bg-carbon-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center cursor-pointer" onclick="openLightbox(10)">
+          <img src="images/v9_extra_2.jpg" class="object-contain w-[85%] h-[85%] group-hover:scale-105 transition-transform duration-300" alt="v9 extra upscaler">
+          <span class="absolute top-2 left-2 text-[8px] bg-amberAccent/10 text-amberAccent border border-amberAccent/20 px-2 py-0.5 rounded-md font-mono font-bold">DETAIL EXPANSION</span>
+          <span class="absolute bottom-2 left-2 text-[8px] bg-purple-500/15 text-purple-400 border-purple-500/25 px-2 py-0.5 rounded font-mono font-bold uppercase">Google Nano Banana Pro (gnbp)</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-xs font-bold text-cream font-mono truncate max-w-[130px]">v9_extra_2.jpg</h4>
+            <span class="text-[9px] text-cream/40 font-mono">Google Nano Banana Pro</span>
+          </div>
+          <label class="flex items-center space-x-1.5 cursor-pointer" onclick="event.stopPropagation();">
+            <input type="checkbox" class="w-4 h-4 accent-amberAccent rounded border-white/10 bg-carbon-900 compare-checkbox" data-id="10">
+            <span class="text-[9px] font-mono text-cream/40 select-none group-hover:text-amberAccent">Compare</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Card 11: Extra Image 3 (gnb2) -->
+      <div class="glass-card rounded-2xl p-4 border border-white/5 flex flex-col justify-between gallery-item relative group shadow-lg" data-epoch="gnb2">
+        <div class="relative w-full aspect-square bg-carbon-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center cursor-pointer" onclick="openLightbox(11)">
+          <img src="images/v6_extra_3.jpeg" class="object-contain w-[85%] h-[85%] group-hover:scale-105 transition-transform duration-300" alt="v6 specular check">
+          <span class="absolute top-2 left-2 text-[8px] bg-red-500/10 text-red-500 border border-red-500/20 px-2 py-0.5 rounded-md font-mono font-bold">FAIL SPECULAR</span>
+          <span class="absolute bottom-2 left-2 text-[8px] bg-blue-500/15 text-blue-400 border-blue-500/25 px-2 py-0.5 rounded font-mono font-bold uppercase">Google Nano Banana 2 (gnb2)</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-xs font-bold text-cream font-mono truncate max-w-[130px]">v6_extra_3.jpeg</h4>
+            <span class="text-[9px] text-cream/40 font-mono">Google Nano Banana 2</span>
+          </div>
+          <label class="flex items-center space-x-1.5 cursor-pointer" onclick="event.stopPropagation();">
+            <input type="checkbox" class="w-4 h-4 accent-amberAccent rounded border-white/10 bg-carbon-900 compare-checkbox" data-id="11">
+            <span class="text-[9px] font-mono text-cream/40 select-none group-hover:text-amberAccent">Compare</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Card 12: v18 LOCKED -->
+      <div class="glass-card rounded-2xl p-4 border border-amberAccent/20 flex flex-col justify-between gallery-item relative group shadow-lg" data-epoch="gnbp">
+        <div class="relative w-full aspect-square bg-carbon-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center cursor-pointer" onclick="openLightbox(12)">
+          <img src="images/v18_locked.jpg" class="object-contain w-[85%] h-[85%] group-hover:scale-105 transition-transform duration-300" alt="v18 locked">
+          <span class="absolute top-2 left-2 text-[8px] bg-amberAccent text-carbon-950 font-bold px-2 py-0.5 rounded-md font-mono tracking-wider">LOCKED FINAL</span>
+          <span class="absolute bottom-2 left-2 text-[8px] bg-teal-500/15 text-teal-400 border-teal-500/25 px-2 py-0.5 rounded font-mono font-bold uppercase">Google Nano Banana Pro / Seedance</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-xs font-bold text-cream font-mono truncate max-w-[130px]">v18_locked.jpg</h4>
+            <span class="text-[9px] text-cream/40 font-mono">Google Nano Banana Pro</span>
+          </div>
+          <label class="flex items-center space-x-1.5 cursor-pointer" onclick="event.stopPropagation();">
+            <input type="checkbox" class="w-4 h-4 accent-amberAccent rounded border-white/10 bg-carbon-900 compare-checkbox" data-id="12">
+            <span class="text-[9px] font-mono text-cream/40 select-none group-hover:text-amberAccent">Compare</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DOCK BAR FOR COMPARATIVE ANALYSIS -->
+    <div id="compare-dock" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-carbon-900/95 backdrop-blur border border-amberAccent/30 rounded-2xl px-6 py-4 flex items-center justify-between space-x-8 shadow-2xl transition-all duration-300 translate-y-28 opacity-0 pointer-events-none">
+      <div class="flex items-center space-x-3 text-xs font-mono">
+        <i data-lucide="split" class="w-4 h-4 text-amberAccent animate-pulse"></i>
+        <span>DUAL COMPARE MODE: <span id="compare-count" class="text-amberAccent font-extrabold">0</span> / 2 SELECTED</span>
+      </div>
+      <div class="flex items-center space-x-3">
+        <button class="bg-carbon-700 hover:bg-carbon-600 border border-white/5 text-[10px] font-mono font-bold px-4 py-2 rounded-xl uppercase tracking-wider transition-all" onclick="clearSelectedCompare()">Clear</button>
+        <button id="compare-launch-btn" class="bg-amberAccent hover:bg-amberAccent-light text-carbon-950 text-[10px] font-mono font-extrabold px-5 py-2 rounded-xl uppercase tracking-widest transition-all shadow-lg opacity-50 cursor-not-allowed" onclick="launchCompareMode()" disabled>Launch Analysis</button>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- SECTION: PLATFORM COMPARISON (UPGRADED WITH DETAILED SYSTEM SCREENS AS REQUESTED) -->
+  <section id="platforms" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-white/5 z-10">
+    
+    <div class="text-center mb-10">
+      <span class="text-xs font-bold text-amberAccent tracking-[0.3em] uppercase block mb-2 font-mono">PIPELINE INFRASTRUCTURE</span>
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-cream uppercase">AI Studio vs. Magnific AI</h2>
+      <p class="text-cream/60 max-w-xl mx-auto mt-2 text-xs">
+        Understanding the distinct roles, platforms, and prompt styles that shaped this look-development process. Click on the high-resolution screens to inspect text directions in full size.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      
+      <!-- Card: AI Studio -->
+      <div class="glass-card rounded-3xl p-8 border border-purple-500/15 hover:border-purple-500/35 transition-all shadow-xl">
+        <div class="flex items-center justify-between mb-4 pb-2 border-b border-white/5">
+          <div class="flex items-center space-x-3">
+            <span class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 font-mono text-xs font-bold">AS</span>
+            <div>
+              <h3 class="text-md font-bold text-cream uppercase tracking-wide">Google AI Studio</h3>
+              <p class="text-[9px] text-cream/40 font-mono">Structural & Instruction Node</p>
+            </div>
+          </div>
+          <span class="text-[9px] bg-purple-500/10 text-purple-400 border border-purple-500/20 px-2.5 py-0.5 rounded font-mono font-bold uppercase">Role: Layout & Spec Control</span>
+        </div>
+
+        <p class="text-cream/70 text-xs leading-relaxed mb-6">
+          Used to lock down 3D cylindrical container geometry, enforce material constraints, and establish local diffuse color bounds. Under the Two-Layer setup, AI Studio separates background constraints from user parameters, keeping edges clean.
+        </p>
+
+        <!-- Dynamic platform screenshot capture (NOT SHRINKED OR COMPRESSED FOR TEXT READABILITY) -->
+        <div class="relative w-full aspect-video bg-carbon-950 rounded-2xl overflow-hidden mb-6 border border-white/5 cursor-pointer group" onclick="openLightboxDirect('images/AIstudio_02_system_instruction.jpg', 'AI Studio Interface (Original Size)', 'Screenshot of our detailed system instruction setups in Google AI Studio, mapping diffuse boundary limits and crushing specular edge shine. View in uncompressed original detail.')">
+          <img src="images/AIstudio_02_system_instruction.jpg" class="object-cover w-full h-full group-hover:scale-105 transition-all duration-300" alt="AI Studio Screenshot">
+          <div class="absolute inset-0 bg-gradient-to-t from-carbon-950/80 via-transparent to-transparent flex items-end p-4">
+            <span class="text-[10px] text-purple-400 font-mono flex items-center space-x-1 font-bold">
+              <i data-lucide="zoom-in" class="w-4 h-4"></i>
+              <span>INSPECT TEXT DIRECTIVES (FULL RES)</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Spec metrics comparisons -->
+        <div class="grid grid-cols-2 gap-4 text-[10px] font-mono text-cream/50 bg-carbon-950/50 p-4 rounded-xl">
+          <div>
+            <span class="text-purple-400 block mb-0.5 uppercase tracking-wider">Interface Setup</span>
+            <span class="text-cream leading-normal font-semibold">Dual-Layer Prompt Matrix</span>
+          </div>
+          <div>
+            <span class="text-purple-400 block mb-0.5 uppercase tracking-wider">Key Strength</span>
+            <span class="text-cream leading-normal font-semibold">Specular Highlight Kill</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Magnific AI -->
+      <div class="glass-card rounded-3xl p-8 border border-orange-500/15 hover:border-orange-500/35 transition-all shadow-xl">
+        <div class="flex items-center justify-between mb-4 pb-2 border-b border-white/5">
+          <div class="flex items-center space-x-3">
+            <span class="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400 font-mono text-xs font-bold">M</span>
+            <div>
+              <h3 class="text-md font-bold text-cream uppercase tracking-wide">Magnific AI</h3>
+              <p class="text-[9px] text-cream/40 font-mono">Micro-Texture Synthesis Node</p>
+            </div>
+          </div>
+          <span class="text-[9px] bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2.5 py-0.5 rounded font-mono font-bold uppercase">Role: Detail Upscaling</span>
+        </div>
+
+        <p class="text-cream/70 text-xs leading-relaxed mb-6">
+          Deployed as our primary detail generator, upscaling base outputs from AI Studio up to 4K. Magnific excels in micro-bubble texture synthesis, scaling coarse grain structures down to high-density sand and crystalline mousse.
+        </p>
+
+        <!-- Dynamic platform screenshot capture (NOT SHRINKED OR COMPRESSED FOR TEXT READABILITY) -->
+        <div class="relative w-full aspect-video bg-carbon-950 rounded-2xl overflow-hidden mb-6 border border-white/5 cursor-pointer group" onclick="openLightboxDirect('images/magnific_05_gpt2.jpg', 'Magnific Detail Synthesis (Original Size)', 'Screenshot of our detailed prompt upscaler settings and parameter controls in Magnific AI. View in uncompressed original detail.')">
+          <img src="images/magnific_05_gpt2.jpg" class="object-cover w-full h-full group-hover:scale-105 transition-all duration-300" alt="Magnific Screenshot">
+          <div class="absolute inset-0 bg-gradient-to-t from-carbon-950/80 via-transparent to-transparent flex items-end p-4">
+            <span class="text-[10px] text-orange-400 font-mono flex items-center space-x-1 font-bold">
+              <i data-lucide="zoom-in" class="w-4 h-4"></i>
+              <span>INSPECT TEXT DIRECTIVES (FULL RES)</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Spec metrics comparisons -->
+        <div class="grid grid-cols-2 gap-4 text-[10px] font-mono text-cream/50 bg-carbon-950/50 p-4 rounded-xl">
+          <div>
+            <span class="text-orange-400 block mb-0.5 uppercase tracking-wider">Refiner Engine</span>
+            <span class="text-cream leading-normal font-semibold">Creativity & Halo Sliders</span>
+          </div>
+          <div>
+            <span class="text-orange-400 block mb-0.5 uppercase tracking-wider">Key Strength</span>
+            <span class="text-cream leading-normal font-semibold">4K Detail Synthesis</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER & META-CONSTRUCTION LAB -->
+  <footer id="meta-construction" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-white/10 z-10">
+    
+    <!-- MAIN STORY & STATS ROW -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-12">
+      
+      <!-- Left Column: The Story of Hermes and Antigravity -->
+      <div class="lg:col-span-7 space-y-4 text-xs sm:text-sm">
+        <div class="inline-flex items-center space-x-2 bg-amberAccent/10 border border-amberAccent/20 rounded-full px-3 py-1 text-xs text-amberAccent">
+          <i data-lucide="book-open" class="w-3.5 h-3.5 animate-pulse-slow"></i>
+          <span>META-CONSTRUCTION LOG</span>
+        </div>
+        <h2 class="text-2xl font-extrabold text-cream uppercase">Project Handoff & Asset Construction</h2>
+        <p class="text-cream/70 leading-relaxed">
+          The look-development assets and version parameters on this site were documented and compiled by **Hermes agent (tik1)** over four days. This included parsing dieline specifications, recording prompts for all 18 versions, and cataloging the pivot from a pink speckled gel to the approved warm beige balm.
+        </p>
+        <p class="text-cream/70 leading-relaxed">
+          The **Antigravity agent** designed this portal to display those findings. Antigravity integrated Hermes' markdown files, mapped the sibling image assets into a local folder, and implemented the interactive comparisons, timeline scrubbing, and dual-image analysis tools.
+        </p>
+        <p class="text-cream/50 text-[10px] font-mono pt-4 border-t border-white/5">
+          *Collaboration signature: Hermes Agent [tik1] → Antigravity [High-Fidelity UI]*
+        </p>
+      </div>
+
+      <!-- Right Column: Neon-Glowing HUD Construction Stats -->
+      <div class="lg:col-span-5 font-mono">
+        <div class="glass-card rounded-3xl p-6 border border-amberAccent/30 shadow-2xl relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-amberAccent/10 rounded-full filter blur-xl"></div>
+          
+          <h3 class="text-md font-bold text-amberAccent uppercase tracking-widest mb-6 flex items-center space-x-2 border-b border-white/5 pb-3">
+            <i data-lucide="cpu" class="w-5 h-5 animate-pulse-slow"></i>
+            <span>Antigravity Construction Stats</span>
+          </h3>
+
+          <div class="grid grid-cols-2 gap-4 text-[11px]">
+            <div>
+              <p class="text-cream/40 mb-0.5">DEVELOPER AGENT</p>
+              <p class="text-cream font-bold">Antigravity</p>
+            </div>
+            <div>
+              <p class="text-cream/40 mb-0.5">MODELS ENGAGED</p>
+              <p class="text-cream font-bold">Gemini 3.5 Flash</p>
+            </div>
+            <div>
+              <p class="text-cream/40 mb-0.5 uppercase">Input Tokens</p>
+              <p class="text-amberAccent font-bold">~239,800 tokens</p>
+            </div>
+            <div>
+              <p class="text-cream/40 mb-0.5 uppercase">Output Tokens</p>
+              <p class="text-amberAccent font-bold">~79,420 tokens</p>
+            </div>
+            <div>
+              <p class="text-cream/40 mb-0.5">ESTIMATED API COST</p>
+              <p class="text-emerald-500 font-bold">$0.076 USD</p>
+            </div>
+            <div>
+              <p class="text-cream/40 mb-0.5">TOTAL BUILD TIME</p>
+              <p class="text-cream font-bold">~26.8 minutes</p>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-[9px] font-mono text-cream/40">
+            <span>PORTABILITY CODE</span>
+            <span class="text-amberAccent font-extrabold uppercase">100% OFFLINE PORTABLE ZIP</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Final legal disclaimer and copyright -->
+    <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between text-xs font-mono text-cream/30">
+      <p>© 2026 XYZ Graphics. All rights reserved. Strictly Confidential - Internal Use Only.</p>
+      <p class="mt-4 md:mt-0 flex items-center space-x-1">
+        <i data-lucide="shield-check" class="w-4 h-4 text-amberAccent"></i>
+        <span>NON-DISCLOSURE GENERAL COMPLIANT</span>
+      </p>
+    </div>
+  </footer>
+
+
+  <!-- LIGHTBOX CONTAINER WITH SIDECAR READER (RAW UNCOMPRESSED CONTAINER) -->
+  <div id="lightbox-modal" class="fixed inset-0 z-50 bg-carbon-950/95 backdrop-blur-md hidden flex-col items-center justify-center p-4">
+    
+    <div class="w-full max-w-7xl flex items-center justify-between text-xs font-mono text-cream/40 mb-4 pb-2 border-b border-white/5">
+      <span id="lightbox-meta-filename">gel01_diffuse.0001.png</span>
+      <button class="text-cream/60 hover:text-rose-500 font-bold flex items-center space-x-1.5 transition-colors" onclick="closeLightbox()">
+        <i data-lucide="x" class="w-4 h-4"></i>
+        <span>CLOSE</span>
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full max-w-7xl flex-grow items-center">
+      
+      <!-- Screen capture / render holder - w-auto h-auto ensures no artificial shrinkage -->
+      <div class="lg:col-span-7 h-[50vh] lg:h-[70vh] bg-carbon-900 border border-white/5 rounded-3xl p-6 overflow-hidden flex items-center justify-center relative">
+        <img id="lightbox-img" src="" class="object-contain max-w-full max-h-full w-auto h-auto transition-all duration-300" style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;" alt="expanded rendering">
+      </div>
+
+      <div class="lg:col-span-5 glass-card border border-white/5 rounded-3xl p-6 flex flex-col justify-between h-[50vh] lg:h-[70vh] self-stretch">
+        
+        <div class="flex items-center justify-between mb-4 border-b border-white/5 pb-3">
+          <span class="text-xs font-bold text-amberAccent tracking-widest uppercase flex items-center space-x-1.5 font-mono">
+            <i data-lucide="file-text" class="w-4 h-4"></i>
+            <span>SIDECAR METADATA RECORD</span>
+          </span>
+          <span id="lightbox-meta-platform" class="text-[10px] font-mono bg-carbon-900 border border-white/5 px-2.5 py-1 rounded text-cream/80">Magnific</span>
+        </div>
+
+        <div class="flex-grow font-mono text-[11px] leading-relaxed overflow-y-auto pr-2 max-h-[350px] space-y-4">
+          
+          <div>
+            <p class="text-cream/40 text-[9px] mb-0.5 uppercase tracking-wider">Version Epoch</p>
+            <p id="lightbox-meta-ver" class="text-cream font-bold">~v8 (estimated)</p>
+          </div>
+
+          <div>
+            <p class="text-cream/40 text-[9px] mb-0.5 uppercase tracking-wider">AIP-1 PROMPT TEXT DIRECTIVES</p>
+            <div id="lightbox-meta-prompt" class="bg-carbon-950 border border-white/5 p-3 rounded-lg text-cream/80 whitespace-pre-wrap leading-relaxed">
+              Prompt text goes here...
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <p class="text-cream/40 text-[9px] mb-0.5 uppercase tracking-wider">Timestamp Generated</p>
+              <p id="lightbox-meta-time" class="text-cream">2026-07-20 10:29</p>
+            </div>
+            <div>
+              <p class="text-cream/40 text-[9px] mb-0.5 uppercase tracking-wider">Session Identifier</p>
+              <p id="lightbox-meta-session" class="text-cream">morning session</p>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-cream/40 text-[9px] mb-0.5 uppercase tracking-wider">Human QC Evaluator Notes</p>
+            <div id="lightbox-meta-qc" class="bg-carbon-950/50 border border-white/5 p-3 rounded-lg text-cream/80 leading-normal">
+              QC notes go here...
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-[9px] font-mono text-cream/40">
+          <span>PIPELINE SECURITY STAMP: CONFIDENTIAL</span>
+          <span>FORMAT: UNLIT COMP MAP REFERENCE</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- DUAL SYNC COMPARE MODE OVERLAY -->
+  <div id="compare-modal" class="fixed inset-0 z-50 bg-carbon-950 hidden flex-col items-center justify-center p-4 select-none">
+    
+    <div class="w-full max-w-7xl flex items-center justify-between text-xs font-mono text-cream/40 mb-4 pb-2 border-b border-white/5">
+      <div class="flex items-center space-x-6">
+        <span class="text-amberAccent font-extrabold flex items-center space-x-1">
+          <i data-lucide="split" class="w-4 h-4"></i>
+          <span>DUAL SYNC ANALYSIS MATRIX</span>
+        </span>
+        <span class="hidden md:inline">· Panning/Zooming is synchronized between screens!</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <button class="bg-carbon-700 hover:bg-carbon-600 border border-white/5 text-[10px] px-3.5 py-1.5 rounded-lg text-cream transition-colors uppercase tracking-wider" onclick="resetCompareTransforms()">Reset Zoom</button>
+        <button class="text-cream/60 hover:text-rose-500 font-bold flex items-center space-x-1.5 transition-colors" onclick="closeCompareMode()">
+          <i data-lucide="x" class="w-4 h-4"></i>
+          <span>EXIT</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-7xl flex-grow h-[65vh] md:h-[70vh]">
+      
+      <div class="bg-carbon-900 border border-white/5 rounded-3xl p-4 overflow-hidden flex flex-col justify-between relative cursor-grab active:cursor-grabbing" id="compare-pane-left">
+        <div class="absolute top-3 left-3 bg-carbon-950/80 border border-white/5 rounded-lg px-2.5 py-1 text-[9px] font-mono text-cream/60 tracking-wider uppercase z-20">
+          IMAGE A · <span id="comp-left-title">gel01_diffuse.0001.png</span>
+        </div>
+        
+        <div class="flex-grow w-full flex items-center justify-center overflow-hidden relative" id="comp-left-zoom-box">
+          <img id="comp-img-left" src="" class="object-contain max-w-[85%] max-h-[85%] select-none pointer-events-none transform origin-center" style="transform: scale(1) translate(0px, 0px);" alt="image A">
+        </div>
+      </div>
+
+      <div class="bg-carbon-900 border border-white/5 rounded-3xl p-4 overflow-hidden flex flex-col justify-between relative cursor-grab active:cursor-grabbing" id="compare-pane-right">
+        <div class="absolute top-3 left-3 bg-carbon-950/80 border border-white/5 rounded-lg px-2.5 py-1 text-[9px] font-mono text-cream/60 tracking-wider uppercase z-20">
+          IMAGE B · <span id="comp-right-title">gen_filled_2k.0002.png</span>
+        </div>
+        
+        <div class="flex-grow w-full flex items-center justify-center overflow-hidden relative" id="comp-right-zoom-box">
+          <img id="comp-img-right" src="" class="object-contain max-w-[85%] max-h-[85%] select-none pointer-events-none transform origin-center" style="transform: scale(1) translate(0px, 0px);" alt="image B">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="w-full max-w-7xl mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 text-[10px] font-mono text-cream/60 border-t border-white/5 pt-4">
+      
+      <div class="space-y-1.5 pr-4 border-r border-white/5">
+        <div class="flex justify-between"><span class="text-cream/30">VERDICT/QC:</span> <span id="comp-left-meta-qc" class="text-cream">Approved (RT baseline)</span></div>
+        <div class="flex justify-between"><span class="text-cream/30">PROMPT:</span> <span id="comp-left-meta-prompt" class="text-cream/80 truncate max-w-[280px]">Prompt text truncated...</span></div>
+      </div>
+
+      <div class="space-y-1.5 pl-0 md:pl-4">
+        <div class="flex justify-between"><span class="text-cream/30">VERDICT/QC:</span> <span id="comp-right-meta-qc" class="text-cream">Pending evaluation</span></div>
+        <div class="flex justify-between"><span class="text-cream/30">PROMPT:</span> <span id="comp-right-meta-prompt" class="text-cream/80 truncate max-w-[280px]">Prompt text truncated...</span></div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- JAVASCRIPT LOGIC & INTERACTION CONTROLLER -->
+  <!-- ========================================== -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // ==========================================
+    // 1. EMBEDDED SIDECAR DATABASE
+    // ==========================================
+    const sidecarDatabase = {
+      1: {
+        filename: "v6_specular_fail.png",
+        version: "v6 (Epoch 1 Trial)",
+        platform: "Google Nano Banana 2 (gnb2)",
+        time: "2026-07-18 14:12",
+        session: "afternoon trials",
+        prompt: `SYSTEM INSTRUCTION:
+Generate a photorealistic material pass for a squeeze tube container. Maintain strict proportions but add beauty lighting.
+
+TEXT PROMPT:
+Standalone squeeze tube, clear frosted plastic, crimped ridged top, standing upright on white cyclorama surface. Fill the container with sheer pale translucent pink gel with coarse speckled exfoliant grains. High-specular glossy highlights on the tube plastic.`,
+        qc_notes: "FAIL TRIAL: High glossy vertical highlight lines drawn down the tube edges. Specular on outer plastic contradicts matte specification. Assumptions on pink speckled gel also rejected post-real product inspection.",
+        verdict_badge: "FAIL SPECULAR",
+        node: "gnb2"
+      },
+      2: {
+        filename: "v8_benchmark.png",
+        version: "~v8 (Epoch 2 Benchmark)",
+        platform: "Google Nano Banana 2 (gnb2)",
+        time: "2026-07-20 10:29",
+        session: "morning benchmark session",
+        prompt: `A clear squeeze tube standing upright, filled completely with whipped body scrub balm. The gel is neutral beige/off-white (match the real product color), containing a dense suspension of tiny round air bubbles inside. The tube plastic is matte and frosted translucent. Pure white background.`,
+        qc_notes: "DEEMED A FAVORITE: Approved by Stephanie Bouzard during the 3pm RT handoff meeting! Excels in beautiful crystalline 'luminous' quality and correct warm off-white chroma. Only request is to compress the bubbles slightly further for final passes.",
+        verdict_badge: "FAVORITE",
+        node: "gnb2"
+      },
+      3: {
+        filename: "v9_benchmark.png",
+        version: "~v9 (Epoch 2 Benchmark)",
+        platform: "Google Nano Banana Pro (gnbp)",
+        time: "2026-07-20 10:41",
+        session: "morning session",
+        prompt: `A clear squeeze tube filled with whipped body scrub balm, containing an extremely fine, microscopic, and dense suspension of air bubbles reading as a soft, hazy mousse. Off-white cream color. Smooth matte plastic sleeve. Pure white background.`,
+        qc_notes: "DEEMED A FAVORITE: Approved by Stephanie. Outstanding micro-aerated density and 'crystal look' representing light scattering. Serves as our primary baseline texture alongside v8.",
+        verdict_badge: "FAVORITE",
+        node: "gnbp"
+      },
+      4: {
+        filename: "v12_benchmark.png",
+        version: "~v12 (Epoch 2 Benchmark)",
+        platform: "Google Nano Banana Pro (gnbp)",
+        time: "2026-07-20 11:37",
+        session: "morning session",
+        prompt: `SYSTEM INSTRUCTION:
+Output a slightly-lit material reference pass: raw material color and texture with just enough ambient light to read 3D shape, leaving full lighting control to downstream compositing. Tube wall gets its own slightly darker tone.
+- Reflections & Specular (HARD CONSTRAINT): Outer tube plastic is 100% matte with zero specular, zero gloss, zero reflection on edges.
+
+TEXT PROMPT:
+Standalone 8oz squeeze tube of clear frosted plastic, crimped top. Fill filled completely with a translucent crystalline balm with microscopic soft-edged air pockets. Warm off-white product color. No text.`,
+        qc_notes: "DEEMED A FAVORITE: Approved by RT. Successfully implemented the Two-Layer System Instruction pivot in AI Studio. Tube edge reflections are suppressed while preserving 3D cylindrical volume through subtle tonal boundaries.",
+        verdict_badge: "FAVORITE",
+        node: "gnbp"
+      },
+      5: {
+        filename: "v15_fail.png",
+        version: "v15 (Epoch 3 Trial)",
+        platform: "Google Nano Banana 2 (gnb2)",
+        time: "2026-07-20 16:48",
+        session: "evening bubble trial",
+        prompt: `Generate the whipped body scrub balm from the first image (balm jar) inside the non-reflective matte clear tube from the second image. The balm has really tiny texture with subtle crystalline qualities. All lighting is diffuse and ambient - no reflections. No labels, no text.`,
+        qc_notes: "FAIL: Composite leakage occurred. A prominent 'ghost jar' reflection artifact is visible on the left boundary of the tube. Tube reads as opaque beige rather than frosted clear. Metallic silver rim mistakenly drawn on crimp fold.",
+        verdict_badge: "FAIL JARGHOST",
+        node: "gnb2"
+      },
+      6: {
+        filename: "v15_pass.png",
+        version: "v15.2 (Epoch 3 Benchmark)",
+        platform: "Google Nano Banana Pro (gnbp)",
+        time: "2026-07-20 16:39",
+        session: "evening session",
+        prompt: `Generate the whipped body scrub balm from the first image as it appears densely packed and compressed inside the non-reflective matte translucent non-colored translucent tube from the second image, with no green coloring, only matte clear. The balm has really tiny texture with subtle crystalline qualities — barely perceptible micro-foam. Diffuse ambient lighting with zero specular reflections on plastic.`,
+        qc_notes: "PASS BUBBLES: Outstanding clean output. No jar ghost artifact. Texture is dense and micro-crystalline with approved warm chroma. Only minor issue is a tiny spec highlight on plastic edge, which was noted for v16.",
+        verdict_badge: "PASS BUBBLES",
+        node: "gnbp"
+      },
+      7: {
+        filename: "v16_sd5p.png",
+        version: "v16 (SD5p Trial)",
+        platform: "Seedance 5 Pro (sd5p)",
+        time: "2026-07-21 11:15",
+        session: "afternoon model evaluation",
+        prompt: `Frosted squeeze tube container of body scrub cream, standing upright. Ultra-matte white frosted plastic body, zero specular highlights, unlit material shader, showing a dense cream inside containing tiny cellular bubble voids. Solid plain white background.`,
+        qc_notes: "FAIL CONTEXT: Seedance 5 Pro struggled intensely with plastic transparency and internal refraction parameters. The outer container reads as completely solid, chalky, and opaque, masking the balm's crystalline texture.",
+        verdict_badge: "FAIL MATTE SLEEVE",
+        node: "sd5p"
+      },
+      8: {
+        filename: "v16_pass.png",
+        version: "v16 (Epoch 4 Benchmark)",
+        platform: "GPT-2 (gpt2)",
+        time: "2026-07-21 19:10",
+        session: "evening spread pivot session",
+        prompt: `The container is an unlit, flat 2D graphic asset with a completely flat unshaded matte finish. Specular roughness = 1.0, reflectivity = 0.0, glossiness = 0.0. The outer surface is a chalky, unreflective, rough unlit white sleeve. There are absolutely NO curved highlights, NO specular bands, NO shiny plastic lines, and NO light reflections on the body or edges.
+
+The tube interior is completely and tightly filled from top to bottom with the whipped scrub balm. Microscopic, barely-perceptible soft-edged air pockets reading as a solid cream paste. Warm off-white chroma.`,
+        qc_notes: "PASS SLEEVE: Exceptional results using GPT-2 (gpt2)! Outer plastic is 100% matte with absolutely zero specular highlights on the edges. Frosted container reads as a clean, unreflective sleeve. Gel is packed completely tight.",
+        verdict_badge: "PASS SLEEVE",
+        node: "gpt2"
+      },
+      9: {
+        filename: "v8_extra_1.png",
+        version: "v8 Extra (Chroma Stability Check)",
+        platform: "Google Nano Banana 2 (gnb2)",
+        time: "2026-07-20 12:15",
+        session: "midday extra batch",
+        prompt: `Warm off-white crystalline gel inside a frosted plastic cylinder. Tiny porous voids uniformly distributed. Complete albedo map calibration. Solid white backplate.`,
+        qc_notes: "STABILITY TEST APPROVED: Successfully verified warm off-white chroma consistency across multiple parallel generation loops. Confirmed correct density matrix.",
+        verdict_badge: "STABILITY TEST",
+        node: "gnb2"
+      },
+      10: {
+        filename: "v9_extra_2.jpg",
+        version: "v9 Extra (Magnific Detail 4K Up)",
+        platform: "Google Nano Banana Pro (gnbp)",
+        time: "2026-07-20 13:40",
+        session: "detail resolution expansion run",
+        prompt: `4K hyper-detailed texture map upscaling. Crystalline balm, micro-bubble cells, frosted rough plastic boundary lines. Zero gloss, zero direct sunlight reflection.`,
+        qc_notes: "DETAIL EXPANSION APPROVED: Confirmed correct upscaling. Micro-pores resolved nicely without producing artificial halo ring lines. Edge boundaries aligned.",
+        verdict_badge: "DETAIL EXPANSION",
+        node: "gnbp"
+      },
+      11: {
+        filename: "v6_extra_3.jpeg",
+        version: "v6 Extra (Specular Boundary Run)",
+        platform: "Google Nano Banana 2 (gnb2)",
+        time: "2026-07-18 16:50",
+        session: "alternative baseline trial",
+        prompt: `Squeeze tube on solid white background. Translucent frosted body with bright glossy specular reflection down the left cylindrical corner. Warm cream inside.`,
+        qc_notes: "FAIL SPECULAR: Alternative trial still exhibits heavy glossy specular white lines, confirming our need to enforce the system instructions spec-kill.",
+        verdict_badge: "FAIL SPECULAR",
+        node: "gnb2"
+      },
+      12: {
+        filename: "v18_locked.jpg",
+        version: "v18 (Epoch 4 Locked)",
+        platform: "Google Nano Banana Pro / Seedance",
+        time: "2026-07-21 21:00",
+        session: "night-cap candidate lock",
+        prompt: `SYSTEM INSTRUCTION:
+Flatten the lighting and reduce the texture scale of the input approved favorite seed to a microscopic, sand-like grain.
+- SPECULAR HIGHLIGHT KILL (HARD CONSTRAINT): Completely eliminate any white reflections or vertical shine lines. Surface must read as ultra-matte.
+- ULTRA-FINE SAND-LIKE GRANULAR FILL: Balm is dense cream paste composed of a micro-granular silt suspension. Fine velvety micro-grain with absolutely no distinct circular bubbles.
+
+TEXT PROMPT:
+Standalone 8oz squeeze tube, clear frosted plastic, crimped ridged top. Flat ambient diffuse lighting. Fill interior with whipped scrub balm: a dense micro-porous matrix of sub-millimeter cellular voids reading as velvety pressed sand. No distinct spherical bubbles.`,
+        qc_notes: "LOCKED CANDIDATE: Outstanding, flawless result! The ultimate culmination of the LookDev phase. Fulfills all 5 criteria. Complete specular kill on plastic edges, ultra-fine microscopic pressed-sand granular fill, warm cream chroma, and perfect ambient shading to convey volume.",
+        verdict_badge: "LOCKED FINAL",
+        node: "gnbp"
+      }
+    };
+
+
+    // ==========================================
+    // 2. STAGE/PHASE TIMELINE SCRUBBER CONTROLLER
+    // ==========================================
+    const timelineData = [
+      {
+        phase: "Phase 1: The Layout Proxy",
+        version: "v3",
+        title: "Client Scene Layout Proxy",
+        date: "JULY 17, 2026",
+        desc: "At kickoff, the initial 3D layout scenes and mockups assumed a neutral green plastic proxy container. Dieline files specified a pink speckled gel, which was replaced post-real product inspection.",
+        node: "gnb2",
+        nodeClass: "bg-blue-500/15 text-blue-400 border-blue-500/25",
+        platform: "Client Maya Scene",
+        qc: "Proxy Reference Only",
+        obstacle: "Frosted sleeve contours established; gel parameters overridden."
+      },
+      {
+        phase: "Phase 2: Specular Correction",
+        version: "v6",
+        title: "Initial AI Render Specular Failure",
+        date: "JULY 18, 2026",
+        desc: "Early test iterations. The AI models, heavily trained on highly reflective studio product photos, painted prominent specular white lines and gloss streaks down the tube body. This violated the unlit matte specification.",
+        node: "gnb2",
+        nodeClass: "bg-blue-500/15 text-blue-400 border-blue-500/25",
+        platform: "AI Studio Node",
+        qc: "Fail (Specular Leaks)",
+        obstacle: "Glossy commercial edge lighting baked on tube plastic body."
+      },
+      {
+        phase: "Phase 2: Albedo Trials",
+        version: "v8",
+        title: "Crystalline Density Milestone",
+        date: "JULY 20, 2026 (10:29 AM)",
+        desc: "By removing studio photographic terms and testing unlit render commands (specular=0.0, albedo pass), we produced our first beautiful crystalline balm, though the tube container read as completely flat and 2D.",
+        node: "gnb2",
+        nodeClass: "bg-blue-500/15 text-blue-400 border-blue-500/25",
+        platform: "AI Studio Node",
+        qc: "Approved Balm Formula",
+        obstacle: "3D container cylinder geometry flattened by albedo parameters."
+      },
+      {
+        phase: "Phase 2: Albedo Trials",
+        version: "v9",
+        title: "Hazy Micro-Mousse Benchmark",
+        date: "JULY 20, 2026 (10:41 AM)",
+        desc: "Achieved an extremely fine, dense, micro-aerated suspension that scattered light inside the balm volume. Stephanie approved this 'crystal look' base color but requested further specular suppression.",
+        node: "gnbp",
+        nodeClass: "bg-purple-500/15 text-purple-400 border-purple-500/25",
+        platform: "Google Nano Banana Pro",
+        qc: "Approved Texture Base",
+        obstacle: "Plastic highlights persist on top crimp boundary."
+      },
+      {
+        phase: "Phase 3: Dual-Layer Architecture",
+        version: "v12",
+        title: "Two-Layer System Instructions Pivot",
+        date: "JULY 20, 2026 (11:37 AM)",
+        desc: "We pivoted to a dual-layer prompt model in AI Studio. We utilized permanent system directives instructing the AI model to establish 3D volume using local-color boundaries (making the tube wall slightly darker than the background) rather than relying on specular reflection. Highlights successfully crushed.",
+        node: "gnbp",
+        nodeClass: "bg-purple-500/15 text-purple-400 border-purple-500/25",
+        platform: "AI Studio Engine",
+        qc: "Approved Specular Solution",
+        obstacle: "Edge boundaries require high-pass alignment."
+      },
+      {
+        phase: "Phase 4: Formula Texture Refinement",
+        version: "v15",
+        title: "Jar Reference Composite Leak",
+        date: "JULY 20, 2026 (4:48 PM)",
+        desc: "We tested actual product jar photos to refine formula texture. However, using a dual image seed (jar formula + tube body) caused image composite leakage inside Magnific, drawing a metallic silver rim on the crimped top and ghost highlights on the tube edge.",
+        node: "gnb2",
+        nodeClass: "bg-blue-500/15 text-blue-400 border-blue-500/25",
+        platform: "Magnific Image-To-Image",
+        qc: "Fail (Ghost Artifacts)",
+        obstacle: "Seed jar contours leaking onto tube boundaries."
+      },
+      {
+        phase: "Phase 4: Formula Texture Refinement",
+        version: "v15.2",
+        title: "Clean Bubble Trial Success",
+        date: "JULY 20, 2026 (5:55 PM)",
+        desc: "By cleaning up seed prompts, keeping the jar image purely for texture references while describing the tube container entirely in words, we suppressed the ghosting, yielding a beautiful warm crystalline fill.",
+        node: "gnbp",
+        nodeClass: "bg-purple-500/15 text-purple-400 border-purple-500/25",
+        platform: "Magnific Seed-To-Image",
+        qc: "Pass Crystalline Target",
+        obstacle: "Bubble density requires sub-millimeter scale compression."
+      },
+      {
+        phase: "Phase 4: Formula Texture Refinement",
+        version: "v16",
+        title: "Nightfall Spread-Gel Pivot",
+        date: "JULY 21, 2026",
+        desc: "Stephanie Bouzard re-enforced unlit matte requirements. We pivoted to new micro-porous formula photos ('Nightfall spread-gel') and utilized GPT-2 inside Magnific, successfully generating a flawless matte sleeve.",
+        node: "gpt2",
+        nodeClass: "bg-orange-500/15 text-orange-400 border-orange-500/25",
+        platform: "Magnific Spread Pivot",
+        qc: "Pass Matte Sleeve",
+        obstacle: "Aritificial bubble noise requires sand/silt smoothing."
+      },
+      {
+        phase: "Phase 5: Matte Surface Calibration",
+        version: "v17",
+        title: "Matte Refinement Reset",
+        date: "JULY 21, 2026 (8:25 PM)",
+        desc: "Executed a single-image seed run in AI Studio (gnbp) to anchor our approved assets. Describing the sleeve strictly as a chalky, unreflective, unlit white container suppressed final specular lines.",
+        node: "gnbp",
+        nodeClass: "bg-purple-500/15 text-purple-400 border-purple-500/25",
+        platform: "AI Studio Single-Seed",
+        qc: "Pass (Zero Gaps)",
+        obstacle: "Refining cell diameter to granular silt size."
+      },
+      {
+        phase: "Phase 5: Granular Finish Lock",
+        version: "v18",
+        title: "Micro-Grain Sand Refinement Candidate",
+        date: "JULY 21, 2026 (9:00 PM)",
+        desc: "Our locked final candidate. By describing the texture as a micro-granular silt with the density of pressed sand, we produced a flawless unlit matte sleeve holding a dense, warm cream crystalline balm with no visible bubbles.",
+        node: "seedance",
+        nodeClass: "bg-teal-500/15 text-teal-400 border-teal-500/25",
+        platform: "AI Studio v18 Candidate",
+        qc: "LOCKED PASS",
+        obstacle: "None (Pipeline Locked)"
+      }
+    ];
+
+    const timelineScrubber = document.getElementById('timeline-scrubber');
+    const activePhaseBadge = document.getElementById('active-phase-badge');
+    const activeEngineChip = document.getElementById('active-engine-chip');
+    const activeVersionNum = document.getElementById('active-version-num');
+    const activeVersionTitle = document.getElementById('active-version-title');
+    const activeVersionDate = document.getElementById('active-version-date');
+    const activeVersionDesc = document.getElementById('active-version-desc');
+    const activeMetaPlatform = document.getElementById('active-meta-platform');
+    const activeMetaQc = document.getElementById('active-meta-qc');
+    const activeMetaObstacle = document.getElementById('active-meta-obstacle');
+
+    let currentScrubberIndex = 0;
+
+    function updateTimeline(index) {
+      currentScrubberIndex = index;
+      const data = timelineData[index];
+      
+      // Update Texts (strictly locked vertical bounds, preventing jitter)
+      activePhaseBadge.textContent = data.phase;
+      activeVersionNum.textContent = data.version;
+      activeVersionTitle.textContent = data.title;
+      activeVersionDate.textContent = data.date;
+      activeVersionDesc.textContent = data.desc;
+      activeMetaPlatform.textContent = data.platform;
+      activeMetaQc.textContent = data.qc;
+      activeMetaObstacle.textContent = data.obstacle;
+
+      // Update Engine Badge Full Names
+      let fullNodeName = "Google Nano Banana 2 (gnb2)";
+      if (data.node === 'gnbp') fullNodeName = "Google Nano Banana Pro (gnbp)";
+      if (data.node === 'sd5p') fullNodeName = "Seedance 5 Pro (sd5p)";
+      if (data.node === 'gpt2') fullNodeName = "GPT-2 (gpt2)";
+      if (data.node === 'seedance') fullNodeName = "Seedance 5 Pro (sd5p)";
+
+      activeEngineChip.textContent = `Node: ${fullNodeName}`;
+      activeEngineChip.className = `text-[10px] px-2.5 py-0.5 rounded font-mono font-bold uppercase border ${data.nodeClass}`;
+
+      // Toggle QC Color badges
+      if (data.qc.includes("Fail")) {
+        activeMetaQc.className = "text-rose-500 font-bold";
+      } else if (data.qc.includes("LOCKED") || data.qc.includes("Approved") || data.qc.includes("Pass")) {
+        activeMetaQc.className = "text-emerald-400 font-bold";
+      } else {
+        activeMetaQc.className = "text-amber-500 font-bold";
+      }
+
+      // Update stacked image opacities
+      for (let i = 0; i < 10; i++) {
+        const img = document.getElementById(`scrub-img-${i}`);
+        if (img) {
+          if (i === index) {
+            img.style.opacity = "1";
+            img.style.zIndex = "10";
+          } else {
+            img.style.opacity = "0";
+            img.style.zIndex = "0";
+          }
+        }
+      }
+    }
+
+    timelineScrubber.addEventListener('input', (e) => {
+      updateTimeline(parseInt(e.target.value));
+    });
+
+    function setScrubber(val) {
+      timelineScrubber.value = val;
+      updateTimeline(val);
+    }
+
+    function openLightboxFromScrubber() {
+      if (currentScrubberIndex === 0) {
+        openLightboxDirect('images/v1_proxy.png', 'v3 (Client Layout Proxy)', 'Photograph of the initial client frosted squeeze tube, establishing layout volume contours and dieline dimensions.');
+        return;
+      }
+      
+      // Scrubber maps indices 1-9 to Database IDs: 1 (v6), 2 (v8), 3 (v9), 4 (v12), 5 (v15 fail), 6 (v15 pass), 7 (v16 pass), 8 (v17 pass skipped / show lightbox 8), 9 (v18 locked)
+      let idMap = [null, 1, 2, 3, 4, 5, 6, 8, 8, 12];
+      let mappedId = idMap[currentScrubberIndex];
+      openLightbox(mappedId);
+    }
+
+
+    // ==========================================
+    // 3. INTERACTIVE BEFORE/AFTER MAGNIFYING LOUPE (EXPANDED LENS)
+    // ==========================================
+    const loupeContainer = document.getElementById('loupe-container');
+    const loupeRing = document.getElementById('loupe-ring');
+    const loupeOverlayImg = document.getElementById('loupe-overlay-img');
+
+    function updateLoupe(e) {
+      const rect = loupeContainer.getBoundingClientRect();
+      let x, y;
+      
+      if (e.touches && e.touches[0]) {
+        x = e.touches[0].clientX - rect.left;
+        y = e.touches[0].clientY - rect.top;
+      } else {
+        x = e.clientX - rect.left;
+        y = e.clientY - rect.top;
+      }
+
+      x = Math.max(0, Math.min(x, rect.width));
+      y = Math.max(0, Math.min(y, rect.height));
+
+      const xPercent = (x / rect.width) * 100;
+      const yPercent = (y / rect.height) * 100;
+
+      // Lens radius enlarged to 120px
+      loupeOverlayImg.style.clipPath = `circle(120px at ${xPercent}% ${yPercent}%)`;
+
+      // Ring handle reposition offset centered at 120px
+      loupeRing.style.left = `${x - 120}px`;
+      loupeRing.style.top = `${y - 120}px`;
+    }
+
+    loupeContainer.addEventListener('mousemove', updateLoupe);
+    loupeContainer.addEventListener('touchmove', updateLoupe);
+
+
+    // ==========================================
+    // 4. 3D CARD TILT & CURSOR SPECULAR GLARE
+    // ==========================================
+    const cardsToTilt = [1, 2, 3, 4, 5];
+
+    cardsToTilt.forEach(id => {
+      const card = document.getElementById(`axis-card-${id}`);
+      const glare = document.getElementById(`glare-card-${id}`);
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const px = (x / rect.width) - 0.5;
+        const py = (y / rect.height) - 0.5;
+
+        const rx = py * -15; 
+        const ry = px * 15;
+
+        card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.02)`;
+
+        glare.style.opacity = "1";
+        glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.08) 0%, transparent 60%)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
+        glare.style.opacity = "0";
+      });
+    });
+
+
+    // ==========================================
+    // 5. CANONICAL MATERIAL RECIPE DASHBOARD CONTROLLER
+    // ==========================================
+    const recipesData = {
+      1: {
+        tag: "AXIS ONE SPECS",
+        title: "Tube Specular Kill",
+        summary: "The outer squeeze tube plastic must read as 100% matte with zero specular reflections, gloss, or vertical commercial highlight bars on the curved container boundaries.",
+        badge: "HARD PIPELINE CONSTRAINT",
+        badgeClass: "bg-rose-500/10 text-rose-500 border border-rose-500/20 px-3 py-1 rounded text-xs font-mono font-bold",
+        prompt: `SYSTEM INSTRUCTION FOR MATTE REFLECTION:
+- Outer tube plastic is 100% matte. Specular roughness = 1.0, glossiness = 0.0, reflectivity = 0.0.
+- Convert all lighting to flat ambient. The container surface must read as an unreflective, rough frosted sleeve with absolutely zero vertical white highlights or environment reflections on curved edges.`,
+        comp: "Retouching must use the raw matte color map as an unlit diffuse card, completely suppressing specular highlights inside Photoshop blend layers, ensuring full manual control of plastic specular in post.",
+        cgi: "In Maya/Blender, set outer plastic shader transmission roughness = 0.95, specular IOR = 1.33, and assign zero metallic highlights on the cylinder's volume boundaries."
+      },
+      2: {
+        tag: "AXIS TWO SPECS",
+        title: "The Crystalline Balm Fill",
+        summary: "The exfoliator is a thick, translucent crystalline balm (not a thin pink gel, and not a dead-flat opaque foam). It must look like light is scattering through frosted glass, conveying internal volume.",
+        badge: "RT APPROVED TEXTURE BASELINE",
+        badgeClass: "bg-green-500/10 text-green-400 border-green-500/20 px-3 py-1 rounded text-xs font-mono font-bold",
+        prompt: `SYSTEM INSTRUCTION FOR CRYSTAL TEXTURE:
+- Balm is a thick, highly translucent crystalline balm with microscopic soft-edged voids.
+- Ensure the balm allows light scattering and transmission, capturing a luminous, frosted glow when lit from behind. Avoid opaque mousse structures.`,
+        comp: "Keep transmission channels maskable. Comps must multiply the light-scattering map over diffuse passes to capture that premium internal crystalline glow.",
+        cgi: "Apply subsurface scattering (SSS) with a scale of 0.2, transmission weight = 0.85, and an interior volume volume-absorption shader calibrated to warm cream tones."
+      },
+      3: {
+        tag: "AXIS THREE SPECS",
+        title: "Micro-Aeration Size",
+        summary: "Air pockets inside the balm fill must be microscopic, soft-edged, and suspended uniformly top-to-bottom. No large circular bubbles or wall-clinging pockets that cause 'bubble trouble'.",
+        badge: "APPROVED TEXTURE AXIS",
+        badgeClass: "bg-green-500/10 text-green-400 border-green-500/20 px-3 py-1 rounded text-xs font-mono font-bold",
+        prompt: `SYSTEM INSTRUCTION FOR FINE GRANULES:
+- Balm fill consists of an ultra-dense micro-granular sand-like suspension.
+- Aeration consists of sub-millimeter cellular voids so microscopic and finely dispersed that they read as a velvety pressed sand. Zero distinct circular bubbles or air gaps.`,
+        comp: "Extract micro-granular high-pass filters. Do not attempt manual bubble masking—let the AI's micro-silt sand pass act as a detailed texture overlay card inside compositing stacks.",
+        cgi: "Utilize geometry nodes to instancing microscopic 0.05mm spheres uniformly throughout the cylinder volume, randomized with low-contrast noise drivers."
+      },
+      4: {
+        tag: "AXIS FOUR SPECS",
+        title: "Ambient Frontal Lighting",
+        summary: "The raw, unlit, dead-flat albedo pass approach was abandoned. We require just enough soft, frontal ambient lighting to convey the cylinder's 3D volume, without creating directional specular reflections.",
+        badge: "POST-RT MEETING DECISION",
+        badgeClass: "bg-amberAccent/10 text-amberAccent border border-amberAccent/20 px-3 py-1 rounded text-xs font-mono font-bold",
+        prompt: `SYSTEM INSTRUCTION FOR AMBIENT SHADING:
+- Conveys 3D cylindrical shape through local-color boundaries and extremely soft ambient shading.
+- Subtle frontal ambient light is allowed, but NEVER paint directional shadows, harsh softbox glare lines, or high-contrast rim lights on the plastic body.`,
+        comp: "Compositors must multiply soft frontal ambient maps with CG render diffuses, using them as ambient occlusion layers to ground the 3D volume in photoreal environments.",
+        cgi: "In lighting rigs, disable all directional specular highlights (uncheck 'affect specular' on spot/area lights) and use only a dome light with a flat white environment HDRI map."
+      },
+      5: {
+        tag: "AXIS FIVE SPECS",
+        title: "Warm Beige Chroma",
+        summary: "The base color of the exfoliator fill is warm off-white / neutral beige (the actual physical product tone). Forcing a flat grey albedo pass was a failure; warmth is correct.",
+        badge: "COLOR COMPLIANCE LOCK",
+        badgeClass: "bg-green-500/10 text-green-400 border-green-500/20 px-3 py-1 rounded text-xs font-mono font-bold",
+        prompt: `SYSTEM INSTRUCTION FOR BALM CHROMA:
+- Balm fill color is a warm off-white / neutral cream beige.
+- Maintain subtle saturation in the warm spectrum (hex: #F2EFE9 to #D1CDC7). Tube wall plastic remains colorless, cool neutral pale-grey.`,
+        comp: "Use this warm beige albedo map as the master base color map. Apply selective Hue/Saturation masks in Photoshop to color-tint individual SKU hero variants (e.g. pink, blue, peach) in post.",
+        cgi: "Calibrate diffuse albedo color values in Maya to RGB: [0.93, 0.91, 0.88] with high rough absorption coefficients to prevent cool blue ambient reflections."
+      }
+    };
+
+    const recipeDashboard = document.getElementById('recipe-dashboard');
+    const recipeTag = document.getElementById('recipe-tag');
+    const recipeTitle = document.getElementById('recipe-title');
+    const recipeSummary = document.getElementById('recipe-summary');
+    const recipePrompt = document.getElementById('recipe-prompt');
+    const recipeComp = document.getElementById('recipe-comp');
+    const recipeCgi = document.getElementById('recipe-cgi');
+    const recipeBadgeBar = document.getElementById('recipe-badge-bar');
+
+    function selectRecipe(id) {
+      const data = recipesData[id];
+
+      recipeDashboard.style.borderColor = "#D4AF37";
+      setTimeout(() => {
+        recipeDashboard.style.borderColor = "rgba(255, 255, 255, 0.05)";
+      }, 400);
+
+      recipeTag.textContent = data.tag;
+      recipeTitle.textContent = data.title;
+      recipeSummary.textContent = data.summary;
+      recipePrompt.textContent = data.prompt;
+      recipeComp.textContent = data.comp;
+      recipeCgi.textContent = data.cgi;
+      
+      recipeBadgeBar.textContent = data.badge;
+      recipeBadgeBar.className = data.badgeClass;
+    }
+
+
+    // ==========================================
+    // 6. GALLERY FILTERING CONTROLLER (MODELS)
+    // ==========================================
+    function filterGallery(epoch, btn) {
+      const buttons = btn.parentElement.getElementsByTagName('button');
+      for (let b of buttons) {
+        b.className = "px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-lg bg-carbon-900 text-cream/60 border border-white/5 hover:border-cream/20 transition-all";
+      }
+      btn.className = "px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-lg bg-amberAccent text-carbon-950 border border-amberAccent font-bold transition-all";
+
+      const items = document.getElementsByClassName('gallery-item');
+      for (let item of items) {
+        const itemEpoch = item.getAttribute('data-epoch');
+        if (epoch === 'all' || itemEpoch === epoch) {
+          item.classList.remove('hidden');
+          setTimeout(() => {
+            item.style.opacity = "1";
+            item.style.transform = "scale(1)";
+          }, 50);
+        } else {
+          item.style.opacity = "0";
+          item.style.transform = "scale(0.95)";
+          setTimeout(() => {
+            item.classList.add('hidden');
+          }, 300);
+        }
+      }
+    }
+
+
+    // ==========================================
+    // 7. LIGHTBOX CONTROLLER (Dynamic Local Sidecar Reader)
+    // ==========================================
+    const lightboxModal = document.getElementById('lightbox-modal');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxFilename = document.getElementById('lightbox-meta-filename');
+    const lightboxVer = document.getElementById('lightbox-meta-ver');
+    const lightboxPlatform = document.getElementById('lightbox-meta-platform');
+    const lightboxTime = document.getElementById('lightbox-meta-time');
+    const lightboxSession = document.getElementById('lightbox-meta-session');
+    const lightboxPrompt = document.getElementById('lightbox-meta-prompt');
+    const lightboxQc = document.getElementById('lightbox-meta-qc');
+
+    function openLightbox(id) {
+      const card = sidecarDatabase[id];
+      const items = document.getElementsByClassName('gallery-item');
+      const imgPath = items[id - 1].querySelector('img').src;
+
+      lightboxImg.src = imgPath;
+      lightboxFilename.textContent = card.filename;
+      lightboxVer.textContent = card.version;
+      lightboxPlatform.textContent = card.platform;
+      lightboxTime.textContent = card.time;
+      lightboxSession.textContent = card.session;
+      lightboxPrompt.textContent = card.prompt;
+      lightboxQc.textContent = card.qc_notes;
+
+      lightboxModal.classList.remove('hidden');
+      lightboxModal.classList.add('flex');
+    }
+
+    function openLightboxDirect(src, title, notes) {
+      lightboxImg.src = src;
+      lightboxFilename.textContent = title;
+      lightboxVer.textContent = "Physical / Platform Input Reference";
+      lightboxPlatform.textContent = "XYZ System Captures";
+      lightboxTime.textContent = "2026-07-20 10:15";
+      lightboxSession.textContent = "Raw Uncompressed Pipeline Screenshot";
+      lightboxPrompt.textContent = "N/A - Original Capture Map";
+      lightboxQc.textContent = notes;
+
+      lightboxModal.classList.remove('hidden');
+      lightboxModal.classList.add('flex');
+    }
+
+    function closeLightbox() {
+      lightboxModal.classList.remove('flex');
+      lightboxModal.classList.add('hidden');
+    }
+
+
+    // ==========================================
+    // 8. DUAL IMAGE COMPARE CONTROLLER (SYNC PAN-ZOOM MATRIX)
+    // ==========================================
+    const compareCheckboxes = document.querySelectorAll('.compare-checkbox');
+    const compareDock = document.getElementById('compare-dock');
+    const compareCount = document.getElementById('compare-count');
+    const compareLaunchBtn = document.getElementById('compare-launch-btn');
+
+    let selectedCompareIds = [];
+
+    compareCheckboxes.forEach(cb => {
+      cb.addEventListener('change', () => {
+        const id = parseInt(cb.getAttribute('data-id'));
+        if (cb.checked) {
+          if (selectedCompareIds.length >= 2) {
+            cb.checked = false;
+            alert("Compare Mode is limited to exactly two selections at a time.");
+            return;
+          }
+          selectedCompareIds.push(id);
+        } else {
+          selectedCompareIds = selectedCompareIds.filter(item => item !== id);
+        }
+
+        compareCount.textContent = selectedCompareIds.length;
+        if (selectedCompareIds.length > 0) {
+          compareDock.classList.remove('translate-y-28', 'opacity-0', 'pointer-events-none');
+        } else {
+          compareDock.classList.add('translate-y-28', 'opacity-0', 'pointer-events-none');
+        }
+
+        if (selectedCompareIds.length === 2) {
+          compareLaunchBtn.removeAttribute('disabled');
+          compareLaunchBtn.className = "bg-amberAccent hover:bg-amberAccent-light text-carbon-950 text-[10px] font-mono font-extrabold px-5 py-2 rounded-xl uppercase tracking-widest transition-all shadow-lg cursor-pointer";
+        } else {
+          compareLaunchBtn.setAttribute('disabled', 'true');
+          compareLaunchBtn.className = "bg-carbon-700 text-cream/40 text-[10px] font-mono font-extrabold px-5 py-2 rounded-xl uppercase tracking-widest transition-all shadow-lg opacity-50 cursor-not-allowed";
+        }
+      });
+    });
+
+    function clearSelectedCompare() {
+      compareCheckboxes.forEach(cb => {
+        cb.checked = false;
+      });
+      selectedCompareIds = [];
+      compareCount.textContent = "0";
+      compareDock.classList.add('translate-y-28', 'opacity-0', 'pointer-events-none');
+    }
+
+    const compareModal = document.getElementById('compare-modal');
+    const compImgLeft = document.getElementById('comp-img-left');
+    const compImgRight = document.getElementById('comp-img-right');
+    const compLeftTitle = document.getElementById('comp-left-title');
+    const compRightTitle = document.getElementById('comp-right-title');
+    const compLeftMetaQc = document.getElementById('comp-left-meta-qc');
+    const compLeftMetaPrompt = document.getElementById('comp-left-meta-prompt');
+    const compRightMetaQc = document.getElementById('comp-right-meta-qc');
+    const compRightMetaPrompt = document.getElementById('comp-right-meta-prompt');
+
+    let zoomState = {
+      scale: 1,
+      translateX: 0,
+      translateY: 0,
+      isDragging: false,
+      startX: 0,
+      startY: 0
+    };
+
+    function launchCompareMode() {
+      if (selectedCompareIds.length !== 2) return;
+
+      const items = document.getElementsByClassName('gallery-item');
+      const cardLeft = sidecarDatabase[selectedCompareIds[0]];
+      const cardRight = sidecarDatabase[selectedCompareIds[1]];
+
+      const leftImgSrc = items[selectedCompareIds[0] - 1].querySelector('img').src;
+      const rightImgSrc = items[selectedCompareIds[1] - 1].querySelector('img').src;
+
+      compImgLeft.src = leftImgSrc;
+      compImgRight.src = rightImgSrc;
+      compLeftTitle.textContent = `${cardLeft.filename} (${cardLeft.node})`;
+      compRightTitle.textContent = `${cardRight.filename} (${cardRight.node})`;
+      compLeftMetaQc.textContent = cardLeft.verdict_badge + " - " + cardLeft.version;
+      compLeftMetaPrompt.textContent = cardLeft.prompt;
+      
+      compRightMetaQc.textContent = cardRight.verdict_badge + " - " + cardRight.version;
+      compRightMetaPrompt.textContent = cardRight.prompt;
+
+      resetCompareTransforms();
+
+      compareModal.classList.remove('hidden');
+      compareModal.classList.add('flex');
+    }
+
+    function closeCompareMode() {
+      compareModal.classList.remove('flex');
+      compareModal.classList.add('hidden');
+    }
+
+    function applyCompareTransforms() {
+      const transformStyle = `scale(${zoomState.scale}) translate(${zoomState.translateX}px, ${zoomState.translateY}px)`;
+      compImgLeft.style.transform = transformStyle;
+      compImgRight.style.transform = transformStyle;
+    }
+
+    function resetCompareTransforms() {
+      zoomState = {
+        scale: 1,
+        translateX: 0,
+        translateY: 0,
+        isDragging: false,
+        startX: 0,
+        startY: 0
+      };
+      applyCompareTransforms();
+    }
+
+    const comparePaneLeft = document.getElementById('compare-pane-left');
+    const comparePaneRight = document.getElementById('compare-pane-right');
+
+    function dragStart(e) {
+      zoomState.isDragging = true;
+      zoomState.startX = e.clientX - zoomState.translateX * zoomState.scale;
+      zoomState.startY = e.clientY - zoomState.translateY * zoomState.scale;
+    }
+
+    function dragMove(e) {
+      if (!zoomState.isDragging) return;
+      e.preventDefault();
+      zoomState.translateX = (e.clientX - zoomState.startX) / zoomState.scale;
+      zoomState.translateY = (e.clientY - zoomState.startY) / zoomState.scale;
+      applyCompareTransforms();
+    }
+
+    function dragEnd() {
+      zoomState.isDragging = false;
+    }
+
+    function wheelZoom(e) {
+      e.preventDefault();
+      const zoomFactor = 0.15;
+      if (e.deltaY < 0) {
+        zoomState.scale = Math.min(zoomState.scale + zoomFactor, 5);
+      } else {
+        zoomState.scale = Math.max(zoomState.scale - zoomFactor, 0.5);
+      }
+      applyCompareTransforms();
+    }
+
+    [comparePaneLeft, comparePaneRight].forEach(pane => {
+      pane.addEventListener('mousedown', dragStart);
+      pane.addEventListener('mousemove', dragMove);
+      pane.addEventListener('mouseup', dragEnd);
+      pane.addEventListener('mouseleave', dragEnd);
+      pane.addEventListener('wheel', wheelZoom, { passive: false });
+    });
+
+
+    // ==========================================
+    // 9. HIGH-PERFORMANCE CANVAS BACKGROUND PARTICLE SYSTEM
+    // ==========================================
+    const canvas = document.getElementById('bubbles-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let particles = [];
+    let mouse = { x: null, y: null, radius: 100 };
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.x;
+      mouse.y = e.y;
+    });
+
+    window.addEventListener('mouseleave', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    class Bubble {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height + canvas.height;
+        this.radius = Math.random() * 3 + 1;
+        this.baseSpeedY = Math.random() * -0.6 - 0.2;
+        this.speedY = this.baseSpeedY;
+        this.speedX = Math.random() * 0.4 - 0.2;
+        this.opacity = Math.random() * 0.15 + 0.05;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(242, 239, 233, ${this.opacity})`;
+        ctx.shadowBlur = 4;
+        ctx.shadowColor = 'rgba(212, 175, 55, 0.1)';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+
+        if (this.y < -10) {
+          this.y = canvas.height + 10;
+          this.x = Math.random() * canvas.width;
+        }
+
+        if (mouse.x !== null && mouse.y !== null) {
+          const dx = this.x - mouse.x;
+          const dy = this.y - mouse.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < mouse.radius) {
+            const force = (mouse.radius - dist) / mouse.radius;
+            const forceDirectionX = dx / dist;
+            const forceDirectionY = dy / dist;
+
+            this.x += forceDirectionX * force * 2;
+            this.y += forceDirectionY * force * 2;
+          }
+        }
+
+        this.draw();
+      }
+    }
+
+    function initBubbles() {
+      particles = [];
+      const particleCount = Math.floor((canvas.width * canvas.height) / 8000);
+      for (let i = 0; i < Math.min(particleCount, 120); i++) {
+        particles.push(new Bubble());
+      }
+    }
+
+    initBubbles();
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(bubble => bubble.update());
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+
+    // ==========================================
+    // 10. SPLASH REMOVE SEQUENCER
+    // ==========================================
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const splash = document.getElementById('intro-splash');
+        splash.style.opacity = '0';
+        splash.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+          splash.remove();
+        }, 700);
+      }, 1600);
+    });
+  </script>
+
+</body>
+</html>

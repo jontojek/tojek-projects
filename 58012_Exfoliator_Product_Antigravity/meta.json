@@ -1,0 +1,12 @@
+{
+  "title": "Exfoliator Product Lookdev",
+  "blurb": "Neutral lookdev showcase for product 58012 — watch the tube evolve from the v1 proxy through benchmark and pass/fail iterations to the locked v18 final.",
+  "tags": ["CGI Lookdev", "Product"],
+  "date": "2026-07-22",
+  "cta": "See the showcase",
+  "thumb": {
+    "video": "assets/thumb_exfoliator.mp4",
+    "poster": "assets/thumb_exfoliator.jpg",
+    "alt": "Lookdev progression from green proxy through fourteen versions to the locked final tube"
+  }
+}

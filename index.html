@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects — Jon Tojek</title>
+<meta name="description" content="AI, VFX and realtime experiments by Jon Tojek.">
+<style>
+:root{
+  --bg:#101014; --panel:#18181e; --panel2:#1d1d24; --line:#26262e;
+  --ink:#e6e6ea; --dim:#8b8b96; --acc:#ff7a45; --acc2:#ffb38a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.6 system-ui,-apple-system,'Segoe UI',sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:0 1.4rem}
+
+header.site{padding:5rem 0 3rem;text-align:center;position:relative}
+header.site::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 70% at 50% 0%,rgba(255,122,69,.08),transparent 70%)}
+header.site>*{position:relative}
+.kicker{color:var(--acc);text-transform:uppercase;letter-spacing:.22em;
+  font-size:.78rem;font-weight:600}
+h1{font-size:clamp(2.2rem,5vw,3.4rem);margin:.3rem 0 0;letter-spacing:-.02em}
+.sub{color:var(--dim);max-width:40rem;margin:.9rem auto 0;font-size:1.02rem}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;padding:1rem 0 4rem}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;
+  overflow:hidden;display:flex;flex-direction:column;
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.card:hover{transform:translateY(-5px);border-color:var(--acc);
+  box-shadow:0 14px 40px rgba(0,0,0,.45),0 0 0 1px var(--acc)}
+.card .frame{position:relative;overflow:hidden;aspect-ratio:16/9;background:var(--panel2)}
+.card .frame img,.card .frame video{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .35s ease}
+.card:hover .frame img,.card:hover .frame video{transform:scale(1.045)}
+.card .frame::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(16,16,20,.35),transparent 40%)}
+
+.body{padding:1.2rem 1.35rem 1.45rem;display:flex;flex-direction:column;gap:.55rem;flex:1}
+.meta{display:flex;align-items:center;justify-content:space-between;gap:.6rem}
+.tags{display:flex;gap:.45rem;flex-wrap:wrap}
+.tag{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;
+  color:var(--acc2);background:rgba(255,122,69,.09);
+  border:1px solid rgba(255,122,69,.25);border-radius:999px;padding:.18rem .7rem}
+.date{color:var(--dim);font-size:.74rem;white-space:nowrap}
+.card h2{margin:0;font-size:1.28rem;letter-spacing:-.01em}
+.card p{margin:0;color:var(--dim);font-size:.95rem;flex:1}
+.go{color:var(--acc);font-size:.88rem;font-weight:600;margin-top:.35rem;
+  display:inline-flex;align-items:center;gap:.35rem}
+.go::after{content:"→";transition:transform .2s ease}
+.card:hover .go::after{transform:translateX(4px)}
+
+footer{border-top:1px solid var(--line);color:var(--dim);font-size:.85rem;
+  padding:2rem 0 2.6rem;text-align:center}
+footer a{color:var(--acc2)}footer a:hover{color:var(--acc)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="site">
+  <div class="kicker">tojek.com</div>
+  <h1>Projects</h1>
+  <p class="sub">AI, VFX and realtime experiments — agent-driven image pipelines,
+  procedural 3D builds, and single-file games.</p>
+</header>
+
+<main class="grid">
+  <a class="card" href="58012_Exfoliator_Product_Antigravity/">
+    <div class="frame"><video src="assets/thumb_exfoliator.mp4" poster="assets/thumb_exfoliator.jpg" autoplay muted loop playsinline aria-label="Lookdev progression from green proxy through fourteen versions to the locked final tube"></video></div>
+    <div class="body">
+      <div class="meta">
+        <div class="tags"><span class="tag">CGI Lookdev</span><span class="tag">Product</span></div>
+        <span class="date">Jul 22, 2026</span>
+      </div>
+      <h2>Exfoliator Product Lookdev</h2>
+      <p>Neutral lookdev showcase for product 58012 — watch the tube evolve from the v1 proxy through benchmark and pass/fail iterations to the locked v18 final.</p>
+      <span class="go">See the showcase</span>
+    </div>
+  </a>
+
+  <a class="card" href="blender02_lamp/">
+    <div class="frame"><video src="assets/thumb_lamp.mp4" poster="assets/thumb_lamp.jpg" autoplay muted loop playsinline aria-label="Desk lamp build stages crossfading: base column, arms, final material"></video></div>
+    <div class="body">
+      <div class="meta">
+        <div class="tags"><span class="tag">Hermes Agent</span><span class="tag">Blender MCP</span></div>
+        <span class="date">Jul 17, 2026</span>
+      </div>
+      <h2>Hermes-Built Desk Lamp</h2>
+      <p>A desk lamp modeled entirely in Blender by a local Hermes Agent driving the Blender MCP — full build report with stage-by-stage renders, timings, and what went wrong.</p>
+      <span class="go">Read the build report</span>
+    </div>
+  </a>
+
+  <a class="card" href="game02_moa2_local/">
+    <div class="frame"><video src="assets/thumb_shooter.mp4" poster="assets/thumb_shooter_poster.jpg" autoplay muted loop playsinline aria-label="VFX Space Shooter gameplay — dashing ship and shockwave explosion"></video></div>
+    <div class="body">
+      <div class="meta">
+        <div class="tags"><span class="tag">HTML5 Canvas</span><span class="tag">Vanilla JS</span></div>
+        <span class="date">Jul 13, 2026</span>
+      </div>
+      <h2>VFX Space Shooter</h2>
+      <p>A single-file canvas game with no dependencies — frame-rate-independent physics, offscreen-canvas post-processing, and chromatic aberration on hit.</p>
+      <span class="go">Play it</span>
+    </div>
+  </a>
+
+  <a class="card" href="agentic-image-loops/">
+    <div class="frame"><video src="assets/thumb_loops.mp4" poster="agentic-image-loops/assets/img/evolve/iter_015.webp" autoplay muted loop playsinline aria-label="The evolve loop&#x27;s grey coupe improving across twenty generations"></video></div>
+    <div class="body">
+      <div class="meta">
+        <div class="tags"><span class="tag">ComfyUI</span><span class="tag">LLM Agent</span></div>
+        <span class="date">Jul 7, 2026</span>
+      </div>
+      <h2>Agentic Image Loops</h2>
+      <p>Three experiments in iterative image generation. The workflow never changes — between frames an LLM agent scores the image against a fixed rubric and writes the next prompt. 41 images, every decision logged.</p>
+      <span class="go">View experiments</span>
+    </div>
+  </a>
+
+</main>
+
+<footer>
+  Jon Tojek · <a href="https://tojek.com">tojek.com</a> · <a href="https://vfx.tojek.com">vfx.tojek.com</a>
+</footer>
+
+</div>
+</body>
+</html>

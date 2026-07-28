@@ -1,0 +1,12 @@
+{
+  "title": "Hermes-Built Desk Lamp",
+  "blurb": "A desk lamp modeled entirely in Blender by a local Hermes Agent driving the Blender MCP — full build report with stage-by-stage renders, timings, and what went wrong.",
+  "tags": ["Hermes Agent", "Blender MCP"],
+  "date": "2026-07-17",
+  "cta": "Read the build report",
+  "thumb": {
+    "video": "assets/thumb_lamp.mp4",
+    "poster": "assets/thumb_lamp.jpg",
+    "alt": "Desk lamp build stages crossfading: base column, arms, final material"
+  }
+}
