@@ -85,7 +85,7 @@ footer a{{color:var(--acc2)}}footer a:hover{{color:var(--acc)}}
 <div class="wrap">
 
 <header class="site">
-  <div class="kicker">tojek.com</div>
+  <div class="kicker">projects.tojek.com</div>
   <h1>Projects</h1>
   <p class="sub">AI, VFX and realtime experiments — agent-driven image pipelines,
   procedural 3D builds, and single-file games.</p>
