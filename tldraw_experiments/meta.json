@@ -1,0 +1,12 @@
+{
+  "title": "tldraw × ComfyUI: Four Experiments",
+  "blurb": "tldraw as a scriptable infinite canvas, driven by a local Hermes Agent over its HTTP API with ComfyUI generating alongside — cat-counting grids, hand-drawn perspective studies, stars turned into portals via img2img, and a four-LoRA style wedge.",
+  "tags": ["tldraw", "Hermes Agent", "ComfyUI"],
+  "date": "2026-07-28",
+  "cta": "Explore the canvas",
+  "thumb": {
+    "video": "assets/thumb_tldraw.mp4",
+    "poster": "assets/thumb_tldraw.jpg",
+    "alt": "Cats counting up one to nine, stars becoming cosmic portals, and four LoRA styles of the same kitchen cat"
+  }
+}
