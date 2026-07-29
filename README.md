@@ -1,5 +1,7 @@
 # tojek-projects
 
+> **Forgot how this all works? Read [HOW_THIS_WORKS.md](HOW_THIS_WORKS.md) — the 90-second version.**
+
 This repo is the source for **[projects.tojek.com](https://projects.tojek.com/)** —
 my public gallery of small daily AI / VFX / realtime experiments. One folder here =
 one project = one card on the landing page.
