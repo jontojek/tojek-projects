@@ -1,0 +1,12 @@
+{
+  "title": "FLUX 3 × Hermes Video Gallery",
+  "blurb": "Eight 20-second FLUX 3 video clips — text-to-video and image-to-video, each with generated diegetic audio — produced through the Nous Platform and orchestrated by a local Hermes Agent. Self-contained gallery with a particle canvas and lightbox player.",
+  "tags": ["FLUX 3", "Hermes Agent", "Video"],
+  "date": "2026-07-31",
+  "cta": "Watch the gallery",
+  "thumb": {
+    "video": "assets/thumb_flux3.mp4",
+    "poster": "assets/thumb_flux3.jpg",
+    "alt": "Montage of FLUX 3 clips: rooftop helicopter chase, lookdev alchemist, ComfyUI conductor, Maya viewport, and a tiger-man in Paris"
+  }
+}

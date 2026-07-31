@@ -1,0 +1,121 @@
+{
+  "name": "Flux 3 Video Gallery",
+  "tagline": "Flux 3 video generation provided by Nous Platform via Hermes Agent",
+  "description": "Self-contained HTML gallery showcasing 6 FLUX 3 video clips generated via the Nous Platform FLUX 3 Video Preview, managed through Hermes Agent v0.19.1 on the Plus subscription plan.",
+  "version": "1.0.0",
+  "generated": "2026-07-31T17:40:00Z",
+  "generator": "Hermes Agent v0.19.1",
+  "platform": "Nous Portal Plus ($20/mo)",
+  "engine": "Black Forest Labs FLUX 3 Video via Nous Tool Gateway",
+  "design_taste": {
+    "theme": "dark",
+    "layout": "mobile-vertical-stack",
+    "background": "radial-gradient with animated overlay",
+    "font_stack": "Inter, system UI, sans-serif",
+    "effects": ["particle-canvas", "gradient-pan", "object-fit-cover"]
+  },
+  "videos": [
+    {
+      "id": "01",
+      "title": "Rooftop Chase → Helicopter Sniper",
+      "filename": "flux3_hermes_vid01.mp4",
+      "poster": "flux3_hermes_vid01.jpg",
+      "original_resolution": "1280x704",
+      "web_resolution": "982x540",
+      "duration": 20.04,
+      "aspect_ratio": "16:9",
+      "original_size_mb": 20.9,
+      "compressed_size_mb": 4.8,
+      "prompt_type": "text_to_video",
+      "audio": "diegetic (rotors, rain, cable, gunfire, tram wheels)"
+    },
+    {
+      "id": "02",
+      "title": "The LookDev Alchemist",
+      "filename": "flux3_hermes_vid02.mp4",
+      "poster": "flux3_hermes_vid02.jpg",
+      "original_resolution": "1280x704",
+      "web_resolution": "982x540",
+      "duration": 20.04,
+      "aspect_ratio": "16:9",
+      "original_size_mb": 19.4,
+      "compressed_size_mb": 4.3,
+      "prompt_type": "text_to_video",
+      "audio": "diegetic (GPU fans, keyboard, glass clinks, butterfly wings, orchestral swell)"
+    },
+    {
+      "id": "03",
+      "title": "The ComfyUI Conductor",
+      "filename": "flux3_hermes_vid03.mp4",
+      "poster": "flux3_hermes_vid03.jpg",
+      "original_resolution": "1280x704",
+      "web_resolution": "982x540",
+      "duration": 20.04,
+      "aspect_ratio": "16:9",
+      "original_size_mb": 19.4,
+      "compressed_size_mb": 4.1,
+      "prompt_type": "text_to_video",
+      "audio": "diegetic (data streams, electronic chimes, text dissolving, glass droplets)"
+    },
+    {
+      "id": "04",
+      "title": "Maya Viewport Navigator",
+      "filename": "flux3_hermes_vid04.mp4",
+      "poster": "flux3_hermes_vid04.jpg",
+      "original_resolution": "1280x704",
+      "web_resolution": "982x540",
+      "duration": 20.04,
+      "aspect_ratio": "16:9",
+      "original_size_mb": 13.0,
+      "compressed_size_mb": 2.6,
+      "prompt_type": "text_to_video",
+      "audio": "diegetic (computer fans, mouse clicks, keyboard shortcuts)"
+    },
+    {
+      "id": "05",
+      "title": "SRO Horror Sequence",
+      "filename": "flux3_hermes_vid05.mp4",
+      "poster": "flux3_hermes_vid05.jpg",
+      "original_resolution": "704x1280",
+      "web_resolution": "298x540",
+      "duration": 20.04,
+      "aspect_ratio": "9:16",
+      "original_size_mb": 11.4,
+      "compressed_size_mb": 1.2,
+      "prompt_type": "image_to_video",
+      "audio": "diegetic (industrial hum, skittering insect legs, jaw grinding, faucet hiss)"
+    },
+    {
+      "id": "06",
+      "title": "Sad Clown's Morning",
+      "filename": "flux3_hermes_vid06.mp4",
+      "poster": "flux3_hermes_vid06.jpg",
+      "original_resolution": "960x960",
+      "web_resolution": "540x540",
+      "duration": 20.04,
+      "aspect_ratio": "1:1",
+      "original_size_mb": 10.2,
+      "compressed_size_mb": 1.4,
+      "prompt_type": "image_to_video",
+      "audio": "diegetic (circus calliope, city noise, sink glug, broom scrape)"
+    }
+  ],
+  "compression": {
+    "codec": "H.264 (libx264)",
+    "crf": 24,
+    "audio_codec": "AAC",
+    "audio_bitrate": "96k",
+    "max_height": 540,
+    "preset": "fast"
+  },
+  "total_original_mb": 94.3,
+  "total_compressed_mb": 18.9,
+  "compression_ratio": "5.0x",
+  "deployment": {
+    "method": "self-contained",
+    "entry_point": "index.html",
+    "portable": true,
+    "offline_capable": true,
+    "external_deps": false
+  }
+}

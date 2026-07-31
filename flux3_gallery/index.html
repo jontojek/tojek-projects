@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>FLUX 3 × Hermes — Video Gallery</title>
+  <style>
+    /* ===========================================================
+       Design: Dark cinema-theme, mobile-first
+       All video cards tap-to-play, modal lightbox with prompt
+       =========================================================== */
+    :root {
+      --bg: #07070a;
+      --bg2: #0d0d14;
+      --surface: #12121c;
+      --surface-hover: #1a1a28;
+      --accent: #6c63ff;
+      --accent-glow: rgba(108, 99, 255, 0.15);
+      --text: #eaeaef;
+      --text2: #9090a8;
+      --text3: #606078;
+      --radius: 14px;
+      --shadow: 0 12px 40px rgba(0,0,0,0.5);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* === Animated background === */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 40% at 20% 30%, rgba(108,99,255,0.03) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 80% 70%, rgba(108,99,255,0.02) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: -1;
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    /* === Container === */
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* === Header === */
+    header {
+      padding: 2.5rem 0 2rem;
+      text-align: center;
+      position: relative;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+    h1 {
+      font-size: clamp(1.6rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #eaeaef 0%, #6c63ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.4rem;
+    }
+    .subtitle {
+      color: var(--text2);
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      margin-bottom: 0.5rem;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem 1.5rem;
+      color: var(--text3);
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+    .meta-bar span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* === Gallery grid: 2 cols desktop, 1 col phone === */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+      padding: 2rem 0 3rem;
+    }
+    @media (min-width: 640px) {
+      .gallery { gap: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      .gallery { gap: 1rem; }
+    }
+
+    /* === Video Card === */
+    .video-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .video-card:hover,
+    .video-card:active {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+      border-color: rgba(108,99,255,0.2);
+    }
+
+    /* Poster thumbnail */
+    .poster {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--bg2);
+      overflow: hidden;
+    }
+    .poster[data-aspect="9:16"] { aspect-ratio: 9 / 16; }
+    .poster[data-aspect="1:1"]  { aspect-ratio: 1 / 1; }
+    .poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .video-card:hover .poster img {
+      transform: scale(1.04);
+    }
+
+    /* Gradient overlay on poster */
+    .poster::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.5) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    /* Play button circle */
+    .play-btn {
+      position: absolute;
+      bottom: 0.8rem;
+      right: 0.8rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(108,99,255,0.85);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.25s ease, transform 0.2s ease;
+      pointer-events: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .play-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: #fff;
+      margin-left: 2px;
+    }
+    .video-card:hover .play-btn,
+    .video-card:active .play-btn {
+      opacity: 1;
+    }
+    @media (max-width: 480px) {
+      .play-btn { opacity: 1; }
+    }
+
+    /* Aspect badge on poster */
+    .aspect-badge {
+      position: absolute;
+      top: 0.6rem;
+      left: 0.6rem;
+      z-index: 2;
+      padding: 0.2rem 0.55rem;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--text2);
+      letter-spacing: 0.3px;
+    }
+    /* Mode badge */
+    .mode-badge {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.6rem;
+      z-index: 2;
+      padding: 0.2rem 0.5rem;
+      background: rgba(108,99,255,0.2);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(108,99,255,0.25);
+      border-radius: 6px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    /* Video info below poster */
+    .info {
+      padding: 1rem 1rem 1.1rem;
+    }
+    .info h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .info-meta {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      font-size: 0.75rem;
+      color: var(--text3);
+    }
+    .info-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    /* === Placeholder card for pending video === */
+    .video-card.placeholder {
+      cursor: default;
+      opacity: 0.6;
+    }
+    .video-card.placeholder:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: rgba(255,255,255,0.05);
+    }
+    .video-card.placeholder .play-btn { display: none; }
+    .poster-placeholder {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #12121c 0%, #1a1a28 50%, #12121c 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .poster-placeholder .icon {
+      font-size: 2rem;
+      opacity: 0.3;
+    }
+    .poster-placeholder .label {
+      font-size: 0.75rem;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* === Modal/Lightbox === */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0s 0.3s;
+      padding: 0.5rem;
+    }
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.3s ease, visibility 0s 0s;
+    }
+    .modal-content {
+      position: relative;
+      max-width: 960px;
+      width: 100%;
+      max-height: 98vh;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-close {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.6rem;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+      line-height: 1;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.15); }
+    .modal-video-wrap {
+      position: relative;
+      background: #000;
+      width: 100%;
+    }
+    .modal-video {
+      width: 100%;
+      display: block;
+      max-height: 60vh;
+      object-fit: contain;
+    }
+    .modal-details {
+      padding: 1.2rem 1.2rem 1.5rem;
+      overflow-y: auto;
+      max-height: 40vh;
+      flex-shrink: 1;
+    }
+    .modal-details h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      color: var(--text);
+    }
+    .modal-details .prompt {
+      font-size: 0.85rem;
+      color: var(--text2);
+      line-height: 1.65;
+      white-space: pre-wrap;
+      margin-bottom: 0.8rem;
+    }
+    .modal-details .meta-line {
+      font-size: 0.75rem;
+      color: var(--text3);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 1.2rem;
+    }
+
+    /* === Footer === */
+    footer {
+      text-align: center;
+      padding: 2.5rem 0;
+      color: var(--text3);
+      font-size: 0.8rem;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* === Reduced motion === */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <h1>FLUX 3 &middot; Video Gallery</h1>
+    <p class="subtitle">8 generations &mdash; Nous Platform via Hermes Agent &mdash; 2026-07-31</p>
+    <div class="meta-bar">
+      <span>&#127916; 8 clips &middot; 20s &middot; 720p</span>
+      <span>&#128142; 21.5 MB total (compressed)</span>
+      <span>&#127918; t2v &amp; i2v &middot; 16:9 &middot; 9:16 &middot; 1:1</span>
+      <span>&#127911; Native diegetic audio</span>
+    </div>
+  </header>
+
+  <!-- Gallery Grid -->
+  <div class="gallery">
+
+    <!-- 01 — Rooftop Chase → Helicopter Sniper -->
+    <div class="video-card" data-video="01">
+      <div class="poster" data-aspect="16:9">
+        <img src="assets/posters/flux3_hermes_vid01.jpg" alt="Rooftop Chase" loading="lazy">
+        <span class="aspect-badge">16:9</span>
+        <span class="mode-badge">t2v</span>
+        <button class="play-btn"><svg viewBox="0 0 24 24"><polygon points="9,5 9,19 19,12z"/></svg></button>
+      </div>
+      <div class="info">
+        <h3>Rooftop Chase &#8594; Helicopter Sniper</h3>
+        <div class="info-meta">
+          <span>20s</span>
+          <span>4.8 MB</span>
+          <span>Hong Kong neon + helicopter cable swing</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 — The LookDev Alchemist -->
+    <div class="video-card" data-video="02">
+      <div class="poster" data-aspect="16:9">
+        <img src="assets/posters/flux3_hermes_vid02.jpg" alt="LookDev Alchemist" loading="lazy">
+        <span class="aspect-badge">16:9</span>
+        <span class="mode-badge">t2v</span>
+        <button class="play-btn"><svg viewBox="0 0 24 24"><polygon points="9,5 9,19 19,12z"/></svg></button>
+      </div>
+      <div class="info">
+        <h3>The LookDev Alchemist</h3>
+        <div class="info-meta">
+          <span>20s</span>
+          <span>4.3 MB</span>
+          <span>RGB pipettes &middot; pixel butterflies</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 — The ComfyUI Conductor -->
+    <div class="video-card" data-video="03">
+      <div class="poster" data-aspect="16:9">
+        <img src="assets/posters/flux3_hermes_vid03.jpg" alt="ComfyUI Conductor" loading="lazy">
+        <span class="aspect-badge">16:9</span>
+        <span class="mode-badge">t2v</span>
+        <button class="play-btn"><svg viewBox="0 0 24 24"><polygon points="9,5 9,19 19,12z"/></svg></button>
+      </div>
+      <div class="info">
+        <h3>The ComfyUI Conductor</h3>
+        <div class="info-meta">
+          <span>20s</span>
+          <span>4.0 MB</span>
+          <span>Node graph concert hall &middot; prompt mist</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 — The Insect Man (i2v, 16:9) -->
+    <div class="video-card" data-video="04">
+      <div class="poster" data-aspect="16:9">
+        <img src="assets/posters/flux3_hermes_vid04.jpg" alt="The Insect Man" loading="lazy">
+        <span class="aspect-badge">16:9</span>
+        <span class="mode-badge">i2v</span>
+        <button class="play-btn"><svg viewBox="0 0 24 24"><polygon points="9,5 9,19 19,12z"/></svg></button>
+      </div>
+      <div class="info">
+        <h3>The Insect Man</h3>
+        <div class="info-meta">
+          <span>20s</span>
+          <span>2.5 MB</span>
+          <span>Eraserhead nightmare &middot; kitchen swarm</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 — Tenderloin Clown (i2v, 1:1 poster) -->
+    <div class="video-card" data-video="05">
+      <div class="poster" data-aspect="1:1">
+        <img src="assets/posters/flux3_hermes_vid05.jpg" alt="Tenderloin Clown" loading="lazy">
+        <span class="aspect-badge">9:16</span>
+        <span class="mode-badge">i2v</span>
+        <button class="play-btn"><svg viewBox="0 0 24 24"><polygon points="9,5 9,19 19,12z"/></svg></button>
+      </div>
+      <div class="info">
+        <h3>Tenderloin Clown</h3>
+        <div class="info-meta">
+          <span>20s</span>
+          <span>1.1 MB</span>
+          <span>Cindy Sherman &middot; SRO &middot; circus calliope</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 — Big Head / Tiny Body Actor (i2v, 1:1) -->
+    <div class="video-card" data-video="06">
+      <div class="poster" data-aspect="1:1">
+        <img src="assets/posters/flux3_hermes_vid06.jpg" alt="Big Head Tiny Body Actor" loading="lazy">
+        <span class="aspect-badge">1:1</span>
+        <span class="mode-badge">i2v</span>
+        <button class="play-btn"><svg viewBox="0 0 24 24"><polygon points="9,5 9,19 19,12z"/></svg></button>
+      </div>
+      <div class="info">
+        <h3>Big Head / Tiny Body Actor</h3>
+        <div class="info-meta">
+          <span>20s</span>
+          <span>1.3 MB</span>
+          <span>Hollywood soundstage &middot; catering chaos</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 — Paris Tiger Trainer (i2v, 1:1) -->
+    <div class="video-card" data-video="07">
+      <div class="poster" data-aspect="1:1">
+        <img src="assets/posters/flux3_hermes_vid07.jpg" alt="Paris Tiger Trainer" loading="lazy">
+        <span class="aspect-badge">1:1</span>
+        <span class="mode-badge">i2v</span>
+        <button class="play-btn"><svg viewBox="0 0 24 24"><polygon points="9,5 9,19 19,12z"/></svg></button>
+      </div>
+      <div class="info">
+        <h3>Paris Tiger Trainer</h3>
+        <div class="info-meta">
+          <span>20s</span>
+          <span>1.8 MB</span>
+          <span>1920s archive &middot; failed street tricks &middot; jazz</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 — Tiger-Man of 1920s Paris (i2v, 1:1) -->
+    <div class="video-card" data-video="08">
+      <div class="poster" data-aspect="1:1">
+        <img src="assets/posters/flux3_hermes_vid08.jpg" alt="Tiger-Man Paris" loading="lazy">
+        <span class="aspect-badge">1:1</span>
+        <span class="mode-badge">i2v</span>
+        <button class="play-btn"><svg viewBox="0 0 24 24"><polygon points="9,5 9,19 19,12z"/></svg></button>
+      </div>
+      <div class="info">
+        <h3>Tiger-Man of 1920s Paris</h3>
+        <div class="info-meta">
+          <span>20s</span>
+          <span>1.6 MB</span>
+          <span>Costumed tiger growls &middot; crowd &middot; Eiffel Tower</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>FLUX 3 Video Gallery &mdash; Generated via Hermes Agent v0.19.1 on Nous Platform Plus Plan</p>
+    <p>Model: Flux 3 (Black Forest Labs) &middot; 8 clips &middot; 21.5 MB total &middot; 720p &middot; Native diegetic audio</p>
+  </footer>
+
+</div>
+
+<!-- Modal -->
+<div class="modal" id="video-modal">
+  <div class="modal-content">
+    <button class="modal-close" id="modal-close">&times;</button>
+    <div class="modal-video-wrap">
+      <video class="modal-video" id="modal-video" controls preload="metadata" playsinline webkit-playsinline></video>
+    </div>
+    <div class="modal-details">
+      <h2 id="modal-title"></h2>
+      <div class="prompt" id="modal-prompt"></div>
+      <div class="meta-line" id="modal-meta"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ===================================================
+  // Video metadata — CORRECT prompts for all 8 clips
+  // ===================================================
+  const videoData = {
+    "01": {
+      title: "Rooftop Chase → Helicopter Sniper",
+      prompt: "A weathered action hero in a charcoal tactical jacket sprints across wet neon-lit rooftops of a rain-slicked Hong Kong–style megacity at night, leaping between buildings as pursuing attack helicopters circle overhead. He reaches an antenna array, swings on a taut communication cable that snaps taut then recoils with a metallic twang, and he swings backward onto a moving tram below just as a minigun round punches through the rooftop where his head was a half-second before. The helicopter's rotors chop rain, distant thunder rumbles, and the tram wheels clack-rattle against the steel rails. No music, just diegetic sound: rotors, rain on metal, cable tension, gunfire echo, tram wheels on tracks.",
+      meta: "text-to-video · 16:9 · 20s · 4.8 MB · 720p · Native audio"
+    },
+    "02": {
+      title: "The LookDev Alchemist",
+      prompt: "Jon Tojek, a VFX technical artist with salt-and-pepper stubble and ink-stained fingers, sits at a dual-monitor workstation inside a glass-walled control room overlooking a bustling 3D render farm. As he adjusts a color gradient swatch on his calibrated monitor, the actual RGB values materialize as glowing liquid poured from a physical pipette into a floating glass vessel that hovers above his desk — red merging into orange into yellow, each hue solidifying into tangible light that he then tips into a crystalline shader node. The node graph on his screen comes alive: 3D models sprout polygon edges like growing plants, textures bloom across them like flowers, and rendered pixels peel off the monitor and flutter upward like metallic butterflies that settle onto the render farm racks below, each one lighting up a node with a soft click-hum. The hum builds into a gentle orchestral swell as the entire wall of servers pulses in rhythm with the shader compilation. The sound of GPU fans whirring, keyboard clicks, glass vessel clinks, and butterflies' wings rustling against metal. No music.",
+      meta: "text-to-video · 16:9 · 20s · 4.3 MB · 720p · Native audio"
+    },
+    "03": {
+      title: "The ComfyUI Conductor",
+      prompt: "Jon sits cross-legged in a vast concert hall made entirely of floating node graphs — hundreds of translucent ComfyUI nodes suspended in mid-air, glowing with neon-blue and amber connections like fiber-optic cables spanning the auditorium. He conducts the flow of data between them with elegant hand gestures: each motion sends streams of golden particles pulsing along the connection cables from node to node. As a positive prompt embedding travels from his hands through a CLIP encoder node, it manifests as literal text — flowing, cursive letters that dissolve into mist and reform as a 3D object that materializes in the center of the hall: a hyper-realistic bottle of cologne, rendered with physically-accurate glass refraction and condensation droplets that form and roll down the surface in real-time. The droplets fall in slow motion, each one catching and refracting the hall's ambient light, splashing into fine mist when they hit the marble floor below. The sound of gentle whooshing data streams, electronic nodes humming and chiming like wind bells, text dissolving with a soft shh sound, and glass condensation droplets pattering against stone. No music.",
+      meta: "text-to-video · 16:9 · 20s · 4.0 MB · 720p · Native audio"
+    },
+    "04": {
+      title: "The Insect Man",
+      prompt: "Jon Tojek sits rigidly at his breakfast table in the dim, industrial dining room. As his hand reaches for the cottage cheese mug, small dark beetles and flies scatter frantically away from the glass — their skittering echoing in the flat greenish-gray light. He lifts the mug mechanically to his mouth, drinks, then slowly lowers it. His head swivels over his left shoulder with an unnatural creak of his neck joints, his expression going vacant and distant. He stands with stiff, deliberate steps and walks toward the back kitchen, the camera following with a slow creeping dolly movement. As he reaches for a knife on the wooden worktable, insects burst from the handle and cutting board surface, scattering across the floor with skittering legs against wood. He chops food with rhythmic, mechanical precision — each chop releasing a small cloud of insects from the vegetable matter. He opens the old stove door, and a swarm pours out from the interior, scattering across the tiled floor. He pulls another glass from a hanging rack — insects scatter from the glass and the rack's surface. He fills the glass from the tap, drops of water catching the sickly fluorescent light, as more insects scatter from the faucet. The camera continues its slow push-in, the oppressive humidity of the room pressing in, shadows stretching unnaturally long. Throughout, the sound of industrial hum builds to a fever pitch: distant machinery, skittering insect legs, the grinding of his jaw, the hiss of the faucet, all mixed in an oppressive soundscape reminiscent of Eraserhead's industrial nightmare. No music — only diegetic environmental sound.",
+      meta: "image-to-video · 16:9 · 20s · 2.5 MB · 720p · Native audio · Frame 0: breakfast table photo"
+    },
+    "05": {
+      title: "Tenderloin Clown",
+      prompt: "The sad clown man slowly pushes himself upright from the bed, his movements heavy and weighed down, the blue flower on his lapel trembling with each motion. He swings his legs over the side of the bed — a dingy SRO mattress in a cramped, windowless room with beige textured walls and a dark wooden headboard, the heavy 35mm film grain clinging to every frame. He shuffles through the narrow space, past peeling wallpaper and a dented metal sink bolted to the wall, the camera following with a slow handheld push that maintains the vertical 9:16 frame. He reaches for the sink faucet — the metal is cold and corroded, water sputtering out brown for a moment before clearing. He drinks directly from the glass with a mechanical gulp, the glug-glug sharp in the dim room. Then he moves to the grimy window sill where a paper bag holds his supper — a halved sandwich and a piece of fruit, the grease stains bleeding through the bag. As he eats, the camera tilts up to show the chaos outside: yellow cab horns blaring, pedestrians rushing past broken bus stops, the neon glow of motel signs and bail bond offices bleeding through the dirty glass. A circus calliope melody drifts from somewhere unseen — tinny, warped, slightly out of tune, played on old calliope pipes — weaving between the city noise of honking horns, distant sirens, and the scrape of a broom against concrete from somewhere in the building. The grain thickens as the light shifts from afternoon to dusk, the orange sodium glow of street lamps replacing the weak daylight. The blue flower on his lapel has wilted slightly. No music beyond the warped calliope.",
+      meta: "image-to-video · 9:16 vertical · 20s · 1.1 MB · 720p · Native audio · Frame 0: Cindy Sherman clown photo"
+    },
+    "06": {
+      title: "Big Head / Tiny Body Actor",
+      prompt: "This tiny actor — with a giant oversized human head perched on a miniature doll-like body dressed in a white collared shirt and brown vest — stands alone on a white studio cyclorama under bright Hollywood lighting. The off-camera director yells \"Cut, that is a take, now get lunch\" and the camera begins to dolly backward rapidly, revealing the on-set activity behind the cyclorama: grips moving heavy lighting stands and flag frames, a boom operator lowering a shotgun microphone on a long arm, PA's with clipboards and headsets weaving through the equipment. Our small-body, big-head actor's expression shifts from focused performance to a broad, happy smile, and he turns and toddles off the cyc toward the catering table — a massive spread piled high with wraps, salads, fruit platters, and sandwich trays. Many other actors and beautiful actresses in period costume mill around the table, eating and laughing. The scene captures the bustling, chaotic behind-the-scenes energy of a Hollywood production, like a documentary on classic filmmaking. The clapperboard snaps — a loud CLAP — and the entire soundstage hums with overlapping crew chatter, footsteps on concrete, the clatter of catering trays, the distant buzz of walkie-talkies, and the director calling out orders. The whole scene has the texture of 35mm documentary film stock — warm color palette, soft lens falloff, naturalistic lighting. No music — only diegetic on-set sound.",
+      meta: "image-to-video · 1:1 square · 20s · 1.3 MB · 720p · Native audio · Frame 0: tiny actor portrait"
+    },
+    "07": {
+      title: "Paris Tiger Trainer",
+      prompt: "A Paris street corner near the Eiffel Tower in 1927. A man in a tattered brown overcoat — Jon, the failed homeless street entertainer — stands with his small, scruffy tiger cub on a frayed leash. A small crowd has gathered: men in flat caps and wool overcoats, a woman in a green headscarf, a man in a pinstripe suit. Jon claps his hands and gestures for the tiger cub to perform. The cub, bored and irritable, refuses. It rolls over with visible reluctance — paws in the air, tail flicking. Jon gestures again: \"Up, up!\" The cub rises unsteadily onto its hind legs, wobbling for a few seconds before flopping back down. The crowd murmurs — half amused, half disappointed. A few coins land in Jon's hat on the cobblestones. The camera pushes in slowly on Jon's face — his forced smile, the exhaustion behind his eyes. The Eiffel Tower looms indistinct in the hazy distance behind him. Haussmann-style buildings frame the shot. The sound layer: melancholy French swing jazz — solo accordion with brushed snare and a walking upright bass — drifting from somewhere unseen, the wet footsteps of the crowd on cobblestones, the tiger cub's soft mewling grunts, the clink of coins hitting felt. Vintage 1920s documentary film grain, sepia-tinged desaturation, soft lens edges, occasional frame jitter from a hand-cranked camera.",
+      meta: "image-to-video · 1:1 square · 20s · 1.8 MB · 720p · Native audio · Frame 0: Paris street scene"
+    },
+    "08": {
+      title: "Tiger-Man of 1920s Paris",
+      prompt: "A man in an elaborate tiger costume — orange faux-fur coat, tiger-head mask with green eyes, tiger-stripe pants, and a carved wooden staff — stands frozen on a Paris street in 1927, surrounded by a crowd of blurred period-dressed pedestrians in dark overcoats and hats. He tries to speak to them, opening the tiger mask's mouth to let out a muffled growl, but the sound comes out as a strangled, unintelligible rasp — half human, half animal. The pedestrians glance at each other with mild confusion rather than alarm. An elderly woman with a green headscarf pulls her coat tighter. A man in a flat cap steps back slightly. The camera slowly dollies backward (or perhaps orbits slightly left), revealing the Eiffel Tower looming behind in the hazy distance, the Haussmann-era buildings lining the street, a clock tower visible on the left. The tiger-man's paws (gloved hands inside the costume) clutch the staff tighter, knuckles white. He attempts another growl, this one more desperate, and a few leaves rustle across the cobblestones. The sound layer: warped 1920s French circus calliope music bleeding from a distant music box, the wet rasp of the tiger-growl through the mask, footsteps on wet cobblestones, distant streetcar clatter, and the murmur of the indifferent crowd. Vintage 1920s silent film documentary aesthetic — heavy film grain, sepia desaturation, lens softness, occasional frame jitter. 16mm projector gate weave flicker. No modern music — only period-appropriate diegetic atmosphere.",
+      meta: "image-to-video · 1:1 square · 20s · 1.6 MB · 720p · Native audio · Frame 0: tiger costume street photo"
+    }
+  };
+
+  // ===================================================
+  // Modal logic
+  // ===================================================
+  const modal = document.getElementById('video-modal');
+  const modalVideo = document.getElementById('modal-video');
+  const modalTitle = document.getElementById('modal-title');
+  const modalPrompt = document.getElementById('modal-prompt');
+  const modalMeta = document.getElementById('modal-meta');
+  const modalClose = document.getElementById('modal-close');
+
+  // Card click handler
+  document.querySelectorAll('.video-card:not(.placeholder)').forEach(function(card) {
+    card.addEventListener('click', function() {
+      var id = card.getAttribute('data-video');
+      var data = videoData[id];
+      if (!data) return;
+
+      modalTitle.textContent = data.title;
+      modalPrompt.textContent = data.prompt;
+      modalMeta.textContent = data.meta;
+      modalVideo.src = 'assets/videos/flux3_hermes_vid' + id + '.mp4';
+      modalVideo.load();
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      // Autoplay once enough data is loaded
+      modalVideo.addEventListener('canplay', function onCanPlay() {
+        modalVideo.play().catch(function(){});
+        modalVideo.removeEventListener('canplay', onCanPlay);
+      }, { once: true });
+    });
+  });
+
+  // Close modal
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    modalVideo.pause();
+    modalVideo.src = '';
+  }
+
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+
+  // Prevent modal close when clicking inside modal content
+  document.querySelector('.modal-content').addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+
+})();
+</script>
+
+</body>
+</html>

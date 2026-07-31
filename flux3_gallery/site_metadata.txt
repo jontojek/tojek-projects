@@ -1,0 +1,47 @@
+FLUX 3 Video Gallery — Site Metadata
+=====================================
+
+Generated: 2026-07-31 17:40
+Generator: Hermes Agent v0.19.1
+Platform: Nous Portal Plus Plan ($20/mo)
+
+Location: D:\AI_software\Hermes_agent_outputs\flux3_videos\flux3_gallery\
+
+Files:
+  index.html              — Self-contained gallery page
+  compress_videos.bat     — ffmpeg compression script (source → web)
+  extract_posters.bat     — Poster frame extraction script
+  site_metadata.txt       — This file
+
+Directories:
+  assets/videos/          — 6 compressed MP4 files (540p, H.264, CRF 24)
+  assets/posters/         — 6 JPG poster frames (1s timestamp)
+
+Video Assets:
+  vid01.mp4 — "Rooftop Chase → Helicopter Sniper" — 1280×704 — 20s — 5.0MB — 16:9
+  vid02.mp4 — "The LookDev Alchemist" — 1280×704 — 20s — 4.5MB — 16:9
+  vid03.mp4 — "The ComfyUI Conductor" — 1280×704 — 20s — 4.2MB — 16:9
+  vid04.mp4 — "Maya Viewport Navigator" — 1280×704 — 20s — 2.7MB — 16:9
+  vid05.mp4 — "SRO Horror Sequence" — 704×1280 — 20s — 1.2MB — 9:16
+  vid06.mp4 — "Sad Clown's Morning" — 540×540 — 20s — 1.4MB — 1:1
+
+Total compressed video size: 18.9 MB
+Total poster size: 0.3 MB
+Total site size: ~19.2 MB
+
+Compression settings: H.264 CRF 24, AAC 96kbps, max height 540px
+
+Design system:
+  - Dark theme with radial gradient background
+  - Animated gradient overlay (20s pan cycle)
+  - Particle canvas background (300 particles, GPU-accelerated)
+  - Mobile-first: 1 column → tablet 1 column → desktop grid (300px cards)
+  - Video modal lightbox with metadata display
+  - System font stack: Inter → system UI → sans-serif
+  - prefers-reduced-motion support
+
+Browser support: All modern browsers (ES6+)
+External deps: None (fully self-contained)
+CDN: None (fully offline-capable)
+
+Deployment: Double-click index.html to open
