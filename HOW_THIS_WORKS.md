@@ -5,12 +5,17 @@
 ## The one rule
 
 **Never edit files on the server. Ever.** Everything happens in the local folder,
-gets pushed to GitHub, and a robot copies it to the website automatically.
+gets pushed to GitHub, and the site updates itself automatically — in two places.
 
 ```
-my PC  ──push──►  GitHub  ──robot──►  projects.tojek.com
-(workbench)      (archive)            (the live site)
+                            ┌──robot(FTPS)──►  projects.tojek.com   (the real site)
+my PC  ──push──►  GitHub  ──┤
+(workbench)      (archive)  └──GitHub Pages──►  jontojek.github.io/tojek-projects/
+                                                (free mirror, has HTTPS)
 ```
+
+Both update on every push. The mirror is handy for checking something without
+touching the real domain, and as a backup if Arvixe is ever down.
 
 Whatever is on GitHub's `main` branch IS the website. If GitHub and the site
 ever look different, wait two minutes — the robot is probably still copying.
@@ -31,7 +36,11 @@ ever look different, wait two minutes — the robot is probably still copying.
 
 - **`index.html` at the root is GENERATED.** Never edit it by hand — edit the
   project's `meta.json` and re-run `build_index.py` instead.
-- **Keep images small.** Convert big PNGs to webp before committing
+- **Keep media small — it matters more than it looks.** Git remembers every file
+  forever, even after you delete it. Committing a 20 MB video adds 20 MB to the
+  repo permanently. Compress BEFORE the first commit; cleaning up afterwards
+  needs a history rewrite (done once, on 2026-07-31, reclaiming ~116 MB).
+- **Convert big PNGs to webp before committing**
   (Claude does this on request — "webp treatment"). Raw files (screen recordings,
   4K renders, .blend files) go in a `_sources/` folder inside the project —
   git ignores those automatically.
