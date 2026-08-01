@@ -67,6 +67,16 @@ skipping housekeeping files (README, build script, meta.json files).
 
 Its login is an FTP account (`jont_deploy@projects.tojek.com`) that can ONLY
 touch `public_html/projects` — the rest of tojek.com is out of its reach.
+
+**The gotcha that bit once (2026-08-01):** an FTP account is locked to its home
+directory, and cPanel silently REWRITES that directory field when you change the
+username while creating it. The account ended up at
+`/home3/jtadmin/projects.tojek.com/jont_deploy/`, which Apache does not serve —
+so deploys "succeeded" for days while the live site never changed. The document
+root for projects.tojek.com is `/home3/jtadmin/public_html/projects` and the FTP
+account's Path must match it exactly. The workflow now fetches the live page
+after every deploy and fails if the new content isn't actually being served, so
+this can never fail silently again.
 The password lives encrypted in GitHub → repo Settings → Secrets and variables
 → Actions. I can rotate it anytime: make a new password in cPanel → FTP
 Accounts, update the `FTP_PASSWORD` secret, done.

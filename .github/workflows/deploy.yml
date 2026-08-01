@@ -45,7 +45,7 @@ jobs:
           pattern = r'<a class="card" href="([^"]+)"'
           want = set(re.findall(pattern, open('index.html', encoding='utf-8').read()))
 
-          url = 'http://projects.tojek.com/'
+          url = 'https://projects.tojek.com/'
           req = urllib.request.Request(url, headers={'Cache-Control': 'no-cache'})
           live = urllib.request.urlopen(req, timeout=30).read().decode('utf-8', 'replace')
           have = set(re.findall(pattern, live))
@@ -54,7 +54,9 @@ jobs:
           if missing:
               print('FTP reported success, but %s is NOT serving: %s' % (url, missing))
               print('Expected %d project cards, live site has %d.' % (len(want), len(have)))
-              print('Most likely the FTP account home != public_html/projects.')
+              print('Check the FTP account home in cPanel -> FTP Accounts -> Path.')
+              print('It MUST be public_html/projects (the subdomain document root).')
+              print('cPanel silently rewrites that field when you edit the username.')
               sys.exit(1)
           print('Verified: %s is serving all %d projects.' % (url, len(want)))
           PY
