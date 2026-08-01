@@ -46,8 +46,18 @@ jobs:
           want = set(re.findall(pattern, open('index.html', encoding='utf-8').read()))
 
           url = 'https://projects.tojek.com/'
-          req = urllib.request.Request(url, headers={'Cache-Control': 'no-cache'})
-          live = urllib.request.urlopen(req, timeout=30).read().decode('utf-8', 'replace')
+          # A real User-Agent is required: the host's mod_security answers 406
+          # to urllib's default one.
+          req = urllib.request.Request(url, headers={
+              'Cache-Control': 'no-cache',
+              'User-Agent': 'Mozilla/5.0 (compatible; tojek-deploy-check/1.0)',
+              'Accept': 'text/html,*/*',
+          })
+          try:
+              live = urllib.request.urlopen(req, timeout=30).read().decode('utf-8', 'replace')
+          except Exception as e:
+              print('Could not fetch %s to verify the deploy: %s' % (url, e))
+              sys.exit(1)
           have = set(re.findall(pattern, live))
 
           missing = sorted(want - have)
