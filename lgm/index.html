@@ -1,0 +1,1420 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Let’s Get Medical — the making of the film</title>
+<style>
+:root{--ink:#101216;--paper:#f0eee8;--muted:#68717b;--line:rgba(16,18,22,.16);--cyan:#39bcd5;--violet:#8b79ed;--amber:#e39d45;--green:#49b785;--shadow:0 24px 70px rgba(16,18,22,.13)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.45}button{font:inherit}a{color:inherit}.page{max-width:1540px;margin:auto;padding:0 34px 90px}
+.hero{padding:70px 0 38px;position:relative}.hero:before{content:"";position:absolute;inset:0 18% 34% -15%;background:radial-gradient(circle at 30% 20%,rgba(57,188,213,.3),transparent 42%),radial-gradient(circle at 65% 10%,rgba(139,121,237,.22),transparent 35%);filter:blur(28px);pointer-events:none}.eyebrow,.kicker,.stage-kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:#606771}.hero h1{position:relative;max-width:1000px;margin:12px 0 20px;font-size:clamp(54px,8vw,132px);line-height:.86;letter-spacing:-.08em;font-weight:900;color:#16191e;background:linear-gradient(105deg,#16191e 10%,#5c42d2 45%,#1d9db5 70%,#16191e 92%);background-size:280% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:flow 13s ease-in-out infinite alternate}.hero h1:after{content:"";display:block;height:6px;width:min(360px,50%);margin-top:28px;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--violet),var(--amber));box-shadow:0 0 28px rgba(57,188,213,.5)}@keyframes flow{from{background-position:0% 50%}to{background-position:100% 50%}}.dek{font-family:Georgia,serif;font-size:clamp(18px,2.2vw,28px);line-height:1.26;max-width:900px;margin:0 0 25px}.hero-meta{display:flex;flex-wrap:wrap;gap:10px}.stat{background:#fff;border:1px solid var(--line);padding:10px 14px;border-radius:999px;font-size:12px;color:#4b535d}.stat b{color:var(--ink);margin-right:5px}
+.jump{position:sticky;top:10px;z-index:10;display:flex;gap:8px;flex-wrap:wrap;padding:10px;background:rgba(240,238,232,.87);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;margin:0 0 35px;box-shadow:0 10px 30px rgba(16,18,22,.06)}.jump a{font-size:12px;text-decoration:none;border:1px solid var(--line);padding:8px 11px;border-radius:999px;background:#fff}.jump a:hover{transform:translateY(-2px);border-color:var(--ink)}
+.hero-gallery{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin:0 0 55px}.hero-tile{margin:0;min-width:0}.image-button{display:block;width:100%;padding:0;border:0;cursor:zoom-in;background:#191b1f;border-radius:13px;overflow:hidden;position:relative;transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--lift,0px));transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease}.image-button:after{content:"↗";position:absolute;right:9px;bottom:7px;background:rgba(0,0,0,.64);color:white;border-radius:999px;padding:3px 8px;font-size:12px}.image-button img{display:block;width:100%;height:180px;object-fit:cover;transition:transform .55s cubic-bezier(.2,.8,.2,1),filter .55s ease;opacity:.94}.image-button:hover{--lift:-6px;box-shadow:0 18px 34px rgba(16,18,22,.22)}.image-button:hover img{transform:scale(1.055);filter:saturate(1.08) contrast(1.04);opacity:1}.hero-tile figcaption{padding:9px 2px 0;font-size:11px;color:#555d67}.hero-tile figcaption b,.hero-tile figcaption span{display:block}.hero-tile figcaption span{margin-top:3px;color:#7a818a}.hero-tile.reveal{transition-delay:calc(var(--reveal-index,0) * 55ms)}
+.location{display:grid;grid-template-columns:1fr .9fr;gap:30px;align-items:stretch;background:#20242b;color:#f4f1e9;border-radius:26px;padding:28px;margin:0 0 40px;overflow:hidden}.location h2{font-size:clamp(30px,4vw,58px);line-height:.95;letter-spacing:-.055em;margin:8px 0 16px}.location p{max-width:690px;color:#cbd0d5}.location-address{font-family:Georgia,serif;font-size:24px;color:#fff}.location-links{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.location-links a{padding:9px 12px;background:#f4f1e9;color:#20242b;border-radius:999px;text-decoration:none;font-size:12px;font-weight:800}.location figure{margin:0;min-height:300px}.location figure img{width:100%;height:100%;min-height:300px;object-fit:cover;border-radius:16px}.location figcaption{font-size:11px;color:#aeb5bb;margin-top:8px}
+.fulcrum{display:grid;grid-template-columns:.7fr 1fr;gap:24px;margin:0 0 52px}.fulcrum-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:25px;box-shadow:var(--shadow)}.fulcrum-card h2{margin:6px 0 10px;font-size:38px;letter-spacing:-.055em;line-height:.95}.fulcrum-card p{margin:8px 0;color:#555d65}.fulcrum-card .date-big{font-family:Georgia,serif;font-size:29px;color:#5b42d1}.evidence{display:grid;gap:9px}.evidence div{border-left:4px solid var(--violet);padding:10px 14px;background:#f7f3ff;border-radius:0 10px 10px 0}.evidence b{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#5b42d1}.evidence span{font-size:14px}
+.timeline-wrap{margin:0 0 65px;padding:22px 18px 18px;border:1px solid var(--line);border-radius:20px;background:#e6e3db;overflow:hidden}.timeline-title{display:flex;justify-content:space-between;gap:20px;align-items:end;margin:0 0 17px}.timeline-title h2{margin:0;font-size:30px;letter-spacing:-.05em}.timeline-title p{margin:0;color:#69717a;font-size:12px}.timeline{display:flex;gap:0;overflow-x:auto;padding:12px 5px 18px;scrollbar-color:#7c8188 transparent}.timeline-node{min-width:126px;position:relative;text-decoration:none;padding:17px 9px 4px;border-top:3px solid #aeb2b6}.timeline-node:before{content:"";position:absolute;top:-9px;left:14px;width:12px;height:12px;border-radius:50%;background:#aeb2b6;border:3px solid #e6e3db}.timeline-node.cyan{border-color:var(--cyan)}.timeline-node.violet{border-color:var(--violet)}.timeline-node.amber{border-color:var(--amber)}.timeline-node.green{border-color:var(--green)}.timeline-node.cyan:before{background:var(--cyan)}.timeline-node.violet:before{background:var(--violet)}.timeline-node.amber:before{background:var(--amber)}.timeline-node.green:before{background:var(--green)}.node-date{display:block;font-size:10px;font-weight:800;color:#555d64}.node-label{display:block;font-size:10px;color:#7b8188;margin-top:5px;line-height:1.2}.timeline-node:hover .node-label{color:var(--ink)}
+.story-stage{position:relative;margin:0 -34px;padding:55px 34px 74px;border-top:1px solid rgba(16,18,22,.14);overflow:hidden}.story-stage:before{content:"";position:absolute;inset:0;opacity:.78;pointer-events:none}.story-stage.cyan:before{background:linear-gradient(115deg,rgba(57,188,213,.22),transparent 48%,rgba(255,255,255,.24))}.story-stage.violet:before{background:linear-gradient(115deg,rgba(139,121,237,.21),transparent 48%,rgba(255,255,255,.24))}.story-stage.amber:before{background:linear-gradient(115deg,rgba(227,157,69,.25),transparent 48%,rgba(255,255,255,.24))}.story-stage.green:before{background:linear-gradient(115deg,rgba(73,183,133,.22),transparent 48%,rgba(255,255,255,.24))}.stage-header,.stage-images,.stage-mail-grid{position:relative}.stage-header{max-width:1000px;margin:0 auto 24px}.stage-kicker{display:flex;gap:10px;align-items:center;color:#555c65}.stage-kicker span{font-family:Georgia,serif;font-size:25px;color:var(--ink)}.stage-kicker i{display:block;width:45px;height:2px;background:currentColor;opacity:.5}.stage-header h2{font-size:clamp(42px,6vw,86px);line-height:.9;letter-spacing:-.075em;margin:12px 0 15px}.stage-header p{font-family:Georgia,serif;font-size:20px;line-height:1.25;max-width:760px;margin:0}.stage-milestone{display:inline-flex;gap:9px;align-items:baseline;margin-top:18px;padding:9px 12px;background:rgba(255,255,255,.58);border:1px solid rgba(16,18,22,.13);border-radius:10px;font-size:12px}.stage-milestone span{font-size:10px;text-transform:uppercase;letter-spacing:.13em;font-weight:900;color:#59616b}.stage-images{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;max-width:1000px;margin:0 auto 28px}.stage-image{margin:0;min-width:0}.stage-image img{height:180px}.stage-image figcaption{font-size:11px;color:#535c65;padding-top:7px}.stage-image .image-button{border-radius:12px}.stage-image.reveal{transition-delay:calc(var(--reveal-index,0) * 70ms)}
+.stage-mail-grid{max-width:1000px;margin:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.mail-card{min-width:0;scroll-margin-top:80px}.mail-card-top{display:flex;align-items:center;gap:9px;margin:0 4px 7px;color:#535b63;font-size:11px}.mail-number{width:27px;height:27px;display:grid;place-items:center;border-radius:50%;background:#171a1f;color:#fff;font-weight:900;font-size:10px}.mail-card time{font-weight:800}.mail-archive{margin-left:auto;text-transform:uppercase;letter-spacing:.14em;font-size:9px}.mail-window{background:#fbfaf6;border:1px solid rgba(16,18,22,.2);border-radius:13px;overflow:hidden;box-shadow:0 15px 40px rgba(16,18,22,.09)}.mail-window-bar{display:flex;align-items:center;gap:6px;padding:8px 10px;background:#292d33;color:#e1e3e5;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:10px}.mail-led{width:8px;height:8px;border-radius:50%;display:block}.mail-led.red{background:#df6d6d}.mail-led.yellow{background:#e6bc66}.mail-led.green{background:#5fc38c}.mail-window-title{margin-left:4px;opacity:.8}.mail-window-stage{margin-left:auto;font-size:9px;opacity:.56}.mail-head{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:14px 15px 11px;border-bottom:1px solid rgba(16,18,22,.12)}.mail-head div{min-width:0}.mail-head span{display:block;text-transform:uppercase;letter-spacing:.14em;font-size:9px;font-weight:800;color:#7a8189;margin-bottom:3px}.mail-head strong{display:block;font-size:12px;line-height:1.25;overflow-wrap:anywhere}.mail-head .mail-subject{grid-column:1/-1}.mail-head .mail-subject strong{font-family:Georgia,serif;font-size:18px;letter-spacing:-.025em}.mail-beat{padding:10px 15px;background:#f0ede5;border-bottom:1px solid rgba(16,18,22,.1);font-size:12px}.mail-beat b{display:block;text-transform:uppercase;letter-spacing:.12em;font-size:9px;margin-bottom:2px;color:#636a72}.mail-beat span{color:#383e45}.full-mail{background:#fffefa}.full-mail summary{cursor:pointer;padding:10px 15px;font-size:11px;font-weight:800;color:#5b42d1;border-top:1px dashed rgba(16,18,22,.18)}.full-mail[open] summary{background:#efebfa}.full-mail pre{margin:0;padding:15px;color:#25282c;white-space:pre-wrap;overflow-wrap:anywhere;font-family:"Courier New",ui-monospace,monospace;font-size:11px;line-height:1.48;max-height:720px;overflow:auto;border-top:1px solid rgba(16,18,22,.1)}.full-mail pre::selection{background:#cfeef2}.mail-body{max-height:720px;overflow:auto;padding:18px 18px 20px;background:#fffefa;color:#25282c;font-family:Georgia,"Times New Roman",serif;font-size:14px;line-height:1.62}.mail-body p{margin:0 0 1.05em}.mail-body p:last-child{margin-bottom:0}.mail-body .quoted{margin:0 0 .9em 10px;padding:.55em 12px;border-left:3px solid rgba(91,66,209,.35);background:#f4f1fa;color:#59616a;font-size:13px}.mail-body .list-item{margin:.25em 0 .25em 18px;padding-left:8px;position:relative}.mail-body .list-item:before{content:"•";position:absolute;left:-10px;color:#5b42d1;font-weight:900}.mail-body .body-heading{margin:1.15em 0 .5em;font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-size:11px;line-height:1.3;letter-spacing:.12em;text-transform:uppercase;font-weight:900;color:#626a73}.mail-body .body-heading:first-child{margin-top:0}.mail-body::-webkit-scrollbar{width:10px}.mail-body::-webkit-scrollbar-thumb{background:#c6c2ba;border-radius:99px;border:3px solid #fffefa}.mail-card.cyan .mail-window{border-top:4px solid var(--cyan)}.mail-card.violet .mail-window{border-top:4px solid var(--violet)}.mail-card.amber .mail-window{border-top:4px solid var(--amber)}.mail-card.green .mail-window{border-top:4px solid var(--green)}
+.credits{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:60px 0 0}.credits-card{padding:24px;background:#20242b;color:#f2eee6;border-radius:18px}.credits-card h2{font-size:30px;letter-spacing:-.05em;margin:0 0 12px}.credits-card p,.credits-card li{color:#c8ccd0}.credits-card ul{margin:0;padding-left:20px}.notes{padding:24px;background:#fff;border:1px solid var(--line);border-radius:18px}.notes h2{margin:0 0 12px;font-size:30px;letter-spacing:-.05em}.notes li{margin:8px 0;color:#59616a}.telemetry{margin-top:22px;color:#777e85;font-size:11px}.lightbox{position:fixed;inset:0;display:none;place-items:center;background:rgba(9,11,14,.9);z-index:30;padding:30px}.lightbox.open{display:grid}.lightbox img{max-width:min(1200px,94vw);max-height:82vh;object-fit:contain;border-radius:10px;box-shadow:0 30px 100px #000}.lightbox-caption{color:#fff;max-width:900px;text-align:center;font-size:13px;margin-top:12px}.lightbox-close{position:fixed;right:22px;top:16px;background:#fff;border:0;border-radius:99px;padding:9px 13px;cursor:pointer;font-weight:800}
+@media(max-width:980px){.hero-gallery{grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}.location,.fulcrum{grid-template-columns:1fr}.stage-mail-grid{grid-template-columns:1fr}.stage-images{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:620px){.page{padding:0 16px 60px}.hero{padding-top:45px}.hero-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.story-stage{margin:0 -16px;padding:42px 16px 58px}.stage-images{grid-template-columns:1fr 1fr}.location{padding:18px}.mail-head{grid-template-columns:1fr}.mail-head .mail-subject{grid-column:auto}.jump{top:5px}.timeline-node{min-width:115px}}
+.stage-images:after{content:"";position:absolute;inset:-55px -18%;z-index:-1;pointer-events:none;background:radial-gradient(circle at 15% 45%,rgba(255,255,255,.32),transparent 22%),radial-gradient(circle at 86% 30%,rgba(255,255,255,.2),transparent 20%);filter:blur(18px);animation:stageDrift 16s ease-in-out infinite alternate}.story-stage{isolation:isolate}.story-stage:before{animation:stageWash 18s ease-in-out infinite alternate}.timeline-node{transition:transform .3s ease,background-color .3s ease}.timeline-node:hover{transform:translateY(-5px)}.mail-card{transition:transform .35s ease,filter .35s ease}.mail-card:hover{transform:translateY(-4px)}html.js-motion .reveal{opacity:0;transform:translateY(24px) scale(.985)}html.js-motion .reveal.is-visible{opacity:1;transform:translateY(0) scale(1);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}@keyframes stageDrift{from{transform:translate3d(-3%,0,0) scale(1)}to{transform:translate3d(4%,2%,0) scale(1.08)}}@keyframes stageWash{from{background-position:0% 50%}to{background-position:100% 50%}}@keyframes heroBreath{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}.hero-gallery .hero-tile:nth-child(3n+1){animation:heroBreath 7s ease-in-out infinite}.hero-gallery .hero-tile:nth-child(3n+2){animation:heroBreath 8.5s ease-in-out 1s infinite}.hero-gallery .hero-tile:nth-child(3n){animation:heroBreath 9.5s ease-in-out 2s infinite}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}html.js-motion .reveal,html.js-motion .reveal.is-visible{opacity:1;transform:none}.image-button{transform:none!important}.mail-card:hover,.timeline-node:hover{transform:none}}
+.method-section{position:relative;overflow:hidden;margin:34px 0 0;padding:clamp(30px,5vw,66px);border:1px solid rgba(16,18,22,.15);border-radius:24px;background:linear-gradient(135deg,#e5f0ed 0%,#f5efe0 52%,#e9e8f2 100%);box-shadow:var(--shadow);isolation:isolate}.method-section:before{content:"";position:absolute;z-index:-1;width:420px;height:420px;right:-150px;top:-170px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.75),transparent 67%);animation:methodGlow 13s ease-in-out infinite alternate}.method-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(230px,.75fr);gap:clamp(24px,5vw,72px);align-items:start}.method-section h2{max-width:760px;font-size:clamp(34px,5vw,66px);line-height:.92;letter-spacing:-.07em;margin:8px 0 18px}.method-section p{max-width:760px;font-family:Georgia,serif;font-size:clamp(17px,2vw,21px);line-height:1.42;margin:0 0 15px}.method-section .method-lede{font-family:inherit;font-size:13px;line-height:1.5;color:#4c5961;max-width:630px}.method-facts{display:grid;gap:10px;margin:0}.method-fact{padding:15px 16px;border:1px solid rgba(16,18,22,.16);border-radius:14px;background:rgba(255,255,255,.54);backdrop-filter:blur(10px);transition:transform .3s ease,background-color .3s ease}.method-fact:hover{transform:translateX(5px);background:rgba(255,255,255,.78)}.method-fact b{display:block;font-size:25px;letter-spacing:-.04em}.method-fact span{display:block;margin-top:3px;color:#56616a;font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:800}.method-stamp{display:inline-flex;align-items:center;gap:8px;margin-top:7px;font-size:10px;text-transform:uppercase;letter-spacing:.16em;color:#56616a;font-weight:900}.method-stamp i{display:block;width:28px;height:2px;background:currentColor;opacity:.6}@keyframes methodGlow{from{transform:translate3d(-12px,8px,0) scale(.95)}to{transform:translate3d(10px,-6px,0) scale(1.08)}}
+.festival-section{position:relative;overflow:hidden;margin:34px 0 0;padding:clamp(30px,5vw,66px);border:1px solid rgba(16,18,22,.18);border-radius:24px;background:linear-gradient(135deg,#20242b 0%,#29253b 54%,#18343a 100%);color:#f4f1e9;box-shadow:var(--shadow);isolation:isolate}.festival-section:before{content:"";position:absolute;z-index:-1;width:520px;height:520px;right:-180px;top:-180px;border-radius:50%;background:radial-gradient(circle,rgba(57,188,213,.28),transparent 68%);animation:festivalGlow 15s ease-in-out infinite alternate}.festival-header{max-width:940px;margin:0 auto 28px}.festival-section .kicker{color:#a9bbc2}.festival-section h2{max-width:820px;font-size:clamp(34px,5vw,70px);line-height:.92;letter-spacing:-.07em;margin:8px 0 18px}.festival-lede{max-width:780px;font-family:Georgia,serif;font-size:clamp(17px,2vw,22px);line-height:1.4;margin:0;color:#d3d8db}.festival-toolbar{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}.festival-toolbar a{display:inline-flex;align-items:center;padding:10px 13px;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(255,255,255,.1);color:#fff;text-decoration:none;font-size:11px;font-weight:800;letter-spacing:.02em;transition:transform .25s ease,background-color .25s ease,border-color .25s ease}.festival-toolbar a:hover{transform:translateY(-3px);background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.65)}.festival-block{scroll-margin-top:85px;margin-top:30px}.festival-block + .festival-block{margin-top:42px;padding-top:36px;border-top:1px solid rgba(255,255,255,.16)}.festival-block-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:0 auto 15px;max-width:1100px}.festival-block-head h3{margin:0;font-size:clamp(24px,3vw,38px);letter-spacing:-.05em;line-height:1}.festival-block-head p{max-width:550px;margin:0;color:#b8c2c7;font-size:12px}.festival-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;max-width:1100px;margin:0 auto}.festival-card{min-width:0;padding:20px;border:1px solid rgba(255,255,255,.18);border-radius:16px;background:rgba(255,255,255,.075);backdrop-filter:blur(10px);transition:transform .3s ease,background-color .3s ease,border-color .3s ease}.festival-card:hover{transform:translateY(-5px);background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.42)}.festival-card.confirmed{border-color:rgba(73,183,133,.65)}.festival-card.submission{border-color:rgba(227,157,69,.62)}.festival-card.lead{border-color:rgba(139,121,237,.62)}.festival-tag{display:inline-block;margin-bottom:12px;font-size:9px;letter-spacing:.13em;text-transform:uppercase;font-weight:900;color:#a9bbc2}.festival-card.confirmed .festival-tag{color:#72d4a5}.festival-card.submission .festival-tag{color:#f2bd70}.festival-card.lead .festival-tag{color:#b8aaff}.festival-card h4{margin:0 0 8px;font-size:21px;line-height:1.03;letter-spacing:-.04em;color:#fff}.festival-meta{margin:0 0 11px;color:#dfe5e7;font-size:12px;font-weight:800;line-height:1.4}.festival-card p:not(.festival-meta):not(.festival-source){margin:0;color:#bdc6ca;font-size:13px;line-height:1.52}.festival-source{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}.festival-source a{font-size:10px;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.5)}.festival-source a:hover{border-bottom-color:#fff}.festival-footnote{max-width:1100px;margin:22px auto 0;color:#9eabb1;font-size:11px;line-height:1.5}.festival-footnote strong{color:#dbe1e3}.festival-section code{color:#e9c77b}.festival-research{scroll-margin-top:85px}.festival-research ul{max-width:1100px;margin:0 auto;padding-left:20px;color:#bcc6ca;font-size:12px;line-height:1.6}.festival-research li{margin:5px 0}@keyframes festivalGlow{from{transform:translate3d(-15px,8px,0) scale(.94)}to{transform:translate3d(10px,-8px,0) scale(1.08)}}@media(max-width:980px){.festival-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:720px){.method-grid{grid-template-columns:1fr}.method-section{padding:30px 22px}.festival-section{padding:30px 22px}.festival-grid{grid-template-columns:1fr}.festival-block-head{display:block}.festival-block-head p{margin-top:9px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="hero"><div class="eyebrow">PRIVATE PRODUCTION ARCHIVE · 1997—1999 · CLEANED EMAIL TRANSCRIPT</div><h1>Let’s Get Medical</h1><p class="dek">A 35mm medical nightmare made by Jon Tojek and Peter Juneau: first a line in a bio, then a midnight hospital operation, then two years of finishing, sound, submissions, and public life.</p><div class="hero-meta"><span class="stat"><b>28</b> selected messages</span><span class="stat"><b>4</b> story stages</span><span class="stat"><b>1997 → 1999</b> production arc</span><span class="stat"><b>local</b> images and film files</span></div></header>
+<nav class="jump" aria-label="Story stages"><a href="#timeline">Timeline</a><a href="#stage-premise">01 · premise</a><a href="#stage-night">02 · hospital night</a><a href="#stage-finish">03 · long finish</a><a href="#stage-public">04 · public life</a><a href="#images">Images</a><a href="#video">Moving image</a><a href="#festival-screenings">Festivals</a><a href="#festival-submissions">Submissions</a><a href="#festival-research">Festival notes</a><a href="#how-this-site-was-made">How this was made</a></nav>
+<section class="hero-gallery" id="images"><figure class="hero-tile reveal"><button class="image-button" data-full="media/images/still-03.webp" data-caption="The doctor in the dark" aria-label="Enlarge The doctor in the dark"><img loading="lazy" src="media/images/still-03.webp" alt="The doctor in the dark"></button><figcaption><b>The doctor in the dark</b><span>Production still · masked medical figure in surgical blue, isolated against black.</span></figcaption></figure>
+<figure class="hero-tile reveal"><button class="image-button" data-full="media/images/caps-0006-enhanced.webp" data-caption="The surgical tray" aria-label="Enlarge The surgical tray"><img loading="lazy" src="media/images/caps-0006-enhanced.webp" alt="The surgical tray"></button><figcaption><b>The surgical tray</b><span>Production frame · gloved hands and instruments under low-key surgical light.</span></figcaption></figure>
+<figure class="hero-tile reveal"><button class="image-button" data-full="media/images/caps-0008.webp" data-caption="Robb Gardner on set" aria-label="Enlarge Robb Gardner on set"><img loading="lazy" src="media/images/caps-0008.webp" alt="Robb Gardner on set"></button><figcaption><b>Robb Gardner</b><span>Grip, lighting, cinematography help, and early feedback.</span></figcaption></figure>
+<figure class="hero-tile reveal"><button class="image-button" data-full="media/images/scan-02.webp" data-caption="The real Dr. Scott on camera"><img loading="lazy" src="media/images/scan-02.webp" alt="The real Dr. Scott acting while Peter Juneau operates the camera"></button><figcaption><b>The real Dr. Scott on camera</b><span>Dr. Scott acts while director/cinematographer Peter Juneau operates the 35mm camera.</span></figcaption></figure>
+<figure class="hero-tile reveal"><button class="image-button" data-full="media/images/scan-03.webp" data-caption="Co-directors planning the shot" aria-label="Enlarge Co-directors planning the shot"><img loading="lazy" src="media/images/scan-03.webp" alt="Jon Tojek and Peter Juneau planning the next shot"></button><figcaption><b>Co-directors planning the shot</b><span>Jon Tojek and Peter Juneau plan the next setup.</span></figcaption></figure>
+<figure class="hero-tile reveal"><button class="image-button" data-full="media/images/caps-0021.webp" data-caption="Shoot date — July 13, 1997" aria-label="Enlarge Shoot date — July 13, 1997"><img loading="lazy" src="media/images/caps-0021.webp" alt="Film slate dated July 13, 1997"></button><figcaption><b>Shoot date — July 13, 1997</b><span>Production slate for Scene 9, Take 2; the date is marked 7/13/97.</span></figcaption></figure>
+<figure class="hero-tile reveal"><button class="image-button" data-full="media/images/scan-01.webp" data-caption="Clinical reference image" aria-label="Enlarge Clinical reference image"><img loading="lazy" src="media/images/scan-01.webp" alt="Clinical reference image"></button><figcaption><b>Clinical reference image</b><span>Local scan in the LGM image set; a clinical/documentary reference, not labeled as a film frame.</span></figcaption></figure>
+<figure class="hero-tile reveal"><button class="image-button" data-full="media/images/scan-06.webp" data-caption="Peter Juneau behind the camera" aria-label="Enlarge Peter Juneau behind the camera"><img loading="lazy" src="media/images/scan-06.webp" alt="Peter Juneau operating the 35mm camera"></button><figcaption><b>Peter Juneau behind the camera</b><span>Director and cinematographer; operating the 35mm camera.</span></figcaption></figure>
+<figure class="hero-tile reveal"><button class="image-button" data-full="media/images/caps-0003.webp" data-caption="LGM image study 03" aria-label="Enlarge LGM image study 03"><img loading="lazy" src="media/images/caps-0003.webp" alt="LGM image study 03"></button><figcaption><b>LGM image study 03</b><span>Local image from the LGM project set; caption kept deliberately source-neutral.</span></figcaption></figure>
+<figure class="hero-tile reveal"><button class="image-button" data-full="media/images/caps-0023.webp" data-caption="Jon Tojek on set — July 13, 1997" aria-label="Enlarge Jon Tojek on set — July 13, 1997"><img loading="lazy" src="media/images/caps-0023.webp" alt="Jon Tojek on set in surgical cap and mask, July 13, 1997"></button><figcaption><b>Jon Tojek on set</b><span>Co-director, cinematographer, and visual-effects artist. Shoot date: July 13, 1997.</span></figcaption></figure></section>
+<section class="location"><div><div class="kicker">THE PLACE BEHIND THE STORY</div><h2>CalPacific Medical Center, San Francisco</h2><p>Per Jon’s identification, the hospital was CalPacific Medical Center. Public history places the 1997 site at the former Pacific Presbyterian / CPMC Pacific Campus.</p><p class="location-address">CPMC Pacific Campus<br>2333 Buchanan Street<br>San Francisco, CA 94115</p><p>Today the site is the CPMC Pacific Heights Outpatient Center. The current exterior photograph is included as a location reference, not as a 1997 production image.</p><div class="location-links"><a href="https://www.google.com/maps/dir/?api=1&amp;destination=2333+Buchanan+Street+San+Francisco%2C+CA+94115+US">Open Google Maps</a><a href="https://www.openstreetmap.org/?mlat=37.790601&amp;mlon=-122.432260#map=18/37.790601/-122.432260">Open OpenStreetMap</a></div></div><figure><img src="media/images/cpmc-pacific-campus-exterior.webp" alt="Current exterior of the CPMC Pacific Campus at 2333 Buchanan Street"><figcaption>Current exterior view with the “Sutter Health CPMC Pacific Campus” sign and covered entrance. Source: Sutter Health facility page. Not a 1997 film frame.</figcaption></figure></section>
+<section class="fulcrum"><div class="fulcrum-card"><div class="kicker">THE PRODUCTION FULCRUM</div><h2>The hospital night</h2><div class="date-big">Overnight July 12–13, 1997</div><p>This calendar window is an evidence-based reconstruction from the July 10 “this weekend” note and the July 15 post-shoot response. The archive does not contain one standalone sentence naming the date.</p><p><b>Lead actor:</b> Scott Kaminski as Dr. Scott.</p></div><div class="fulcrum-card"><div class="kicker">WHAT THE MAIL SAYS</div><div class="evidence"><div><b>July 7 · direct evidence</b><span>Peter says Scott is off work at 7:30 and available.</span></div><div><b>July 10 · direct evidence</b><span>Jon says they are filming the medical short “this weekend,” taking five people in scrubs into a live hospital at midnight with the 35mm camera.</span></div><div><b>July 15 · direct evidence</b><span>Robb asks “How was the shoot?” and says he is glad Jon pulled it off.</span></div><div><b>July 24 · direct evidence</b><span>Robb: “The hospital stuff looks awesome.”</span></div></div></div></section>
+<section class="timeline-wrap" id="timeline"><div class="timeline-title"><div><div class="kicker">CHRONOLOGY / 28 MESSAGES</div><h2>A visible production timeline</h2></div><p>Each marker jumps to a cleaned historical email.</p></div><div class="timeline"><a class="timeline-node cyan" href="#mail-1" title="Mar 28, 1997 — Here is the BIO"><span class="node-dot"></span><span class="node-date">Mar 28, 1997</span><span class="node-label">01 · Here is the BIO</span></a><a class="timeline-node cyan" href="#mail-2" title="Mar 30, 1997 — (no subject)"><span class="node-dot"></span><span class="node-date">Mar 30, 1997</span><span class="node-label">02 · (no subject)</span></a><a class="timeline-node cyan" href="#mail-3" title="Apr 1, 1997 — Hey"><span class="node-dot"></span><span class="node-date">Apr 1, 1997</span><span class="node-label">03 · Hey</span></a><a class="timeline-node violet" href="#mail-4" title="May 14, 1997 — Re: GUILT"><span class="node-dot"></span><span class="node-date">May 14, 1997</span><span class="node-label">04 · Re: GUILT</span></a><a class="timeline-node violet" href="#mail-5" title="May 14, 1997 — Re: Meat packing"><span class="node-dot"></span><span class="node-date">May 14, 1997</span><span class="node-label">05 · Re: Meat packing</span></a><a class="timeline-node violet" href="#mail-6" title="Jun 4, 1997 — Chicago Packing Co."><span class="node-dot"></span><span class="node-date">Jun 4, 1997</span><span class="node-label">06 · Chicago Packing Co.</span></a><a class="timeline-node violet" href="#mail-7" title="Jun 11, 1997 — Re: Chicago Packing Co."><span class="node-dot"></span><span class="node-date">Jun 11, 1997</span><span class="node-label">07 · Re: Chicago Packing Co.</span></a><a class="timeline-node violet" href="#mail-8" title="Jul 24, 1997 — Re: Hey jag-off"><span class="node-dot"></span><span class="node-date">Jul 24, 1997</span><span class="node-label">08 · Re: Hey jag-off</span></a><a class="timeline-node violet" href="#mail-9" title="Sep 27, 1997 — Got any Images or what?"><span class="node-dot"></span><span class="node-date">Sep 27, 1997</span><span class="node-label">09 · Got any Images or what?</span></a><a class="timeline-node amber" href="#mail-10" title="Mar 2, 1999 — Re: this sunday barbeque"><span class="node-dot"></span><span class="node-date">Mar 2, 1999</span><span class="node-label">10 · Re: this sunday barbeque</span></a><a class="timeline-node amber" href="#mail-11" title="Mar 2, 1999 — Re: this sunday barbeque"><span class="node-dot"></span><span class="node-date">Mar 2, 1999</span><span class="node-label">11 · Re: this sunday barbeque</span></a><a class="timeline-node amber" href="#mail-12" title="Mar 4, 1999 — Your SIGGRAPH 99 Online Submission Account Information"><span class="node-dot"></span><span class="node-date">Mar 4, 1999</span><span class="node-label">12 · Your SIGGRAPH 99 Online Submission</span></a><a class="timeline-node amber" href="#mail-13" title="Mar 25, 1999 — Prix Ars Electronica 1999 (http://prixars.orf.at/english/indexe.htm)"><span class="node-dot"></span><span class="node-date">Mar 25, 1999</span><span class="node-label">13 · Prix Ars Electronica 1999 (http://</span></a><a class="timeline-node amber" href="#mail-14" title="Mar 26, 1999 — On the anniversary of the birth of Jon Tojek..."><span class="node-dot"></span><span class="node-date">Mar 26, 1999</span><span class="node-label">14 · On the anniversary of the birth of</span></a><a class="timeline-node amber" href="#mail-15" title="Mar 29, 1999 — SIGGRAPH 99 Online Submission Acknowledgement"><span class="node-dot"></span><span class="node-date">Mar 29, 1999</span><span class="node-label">15 · SIGGRAPH 99 Online Submission Ackn</span></a><a class="timeline-node amber" href="#mail-16" title="Mar 30, 1999 — You have submitted this entry for the Prix Ars Electronica 1999 (Computer Animation A-52)"><span class="node-dot"></span><span class="node-date">Mar 30, 1999</span><span class="node-label">16 · You have submitted this entry for </span></a><a class="timeline-node amber" href="#mail-17" title="Mar 30, 1999 — You have submitted this entry for the Prix Ars Electronica 1999 (Visual Effects F-12)"><span class="node-dot"></span><span class="node-date">Mar 30, 1999</span><span class="node-label">17 · You have submitted this entry for </span></a><a class="timeline-node amber" href="#mail-18" title="Apr 21, 1999 — Re: Stuff"><span class="node-dot"></span><span class="node-date">Apr 21, 1999</span><span class="node-label">18 · Re: Stuff</span></a><a class="timeline-node amber" href="#mail-19" title="Apr 26, 1999 — Re: Stuff"><span class="node-dot"></span><span class="node-date">Apr 26, 1999</span><span class="node-label">19 · Re: Stuff</span></a><a class="timeline-node amber" href="#mail-20" title="Apr 27, 1999 — Re: David Cronenberg&#x27;s eXistenZ (http://www.existenz.com/frame.html)"><span class="node-dot"></span><span class="node-date">Apr 27, 1999</span><span class="node-label">20 · Re: David Cronenberg&#x27;s eXistenZ (h</span></a><a class="timeline-node amber" href="#mail-21" title="Apr 27, 1999 — Re: promotion machinery"><span class="node-dot"></span><span class="node-date">Apr 27, 1999</span><span class="node-label">21 · Re: promotion machinery</span></a><a class="timeline-node amber" href="#mail-22" title="May 18, 1999 — Re: check tapes sound"><span class="node-dot"></span><span class="node-date">May 18, 1999</span><span class="node-label">22 · Re: check tapes sound</span></a><a class="timeline-node green" href="#mail-23" title="Jun 4, 1999 — Re: user group"><span class="node-dot"></span><span class="node-date">Jun 4, 1999</span><span class="node-label">23 · Re: user group</span></a><a class="timeline-node green" href="#mail-24" title="Jun 9, 1999 — Next Bay Area Maya User&#x27;s Group Meeting"><span class="node-dot"></span><span class="node-date">Jun 9, 1999</span><span class="node-label">24 · Next Bay Area Maya User&#x27;s Group Me</span></a><a class="timeline-node green" href="#mail-25" title="Jun 12, 1999 — Re: Let&#x27;s Get Medical SF showing"><span class="node-dot"></span><span class="node-date">Jun 12, 1999</span><span class="node-label">25 · Re: Let&#x27;s Get Medical SF showing</span></a><a class="timeline-node green" href="#mail-26" title="Jun 21, 1999 — Re: Film submission for the mission"><span class="node-dot"></span><span class="node-date">Jun 21, 1999</span><span class="node-label">26 · Re: Film submission for the missio</span></a><a class="timeline-node green" href="#mail-27" title="Jul 12, 1999 — RE: FW: Where am I?"><span class="node-dot"></span><span class="node-date">Jul 12, 1999</span><span class="node-label">27 · RE: FW: Where am I?</span></a><a class="timeline-node green" href="#mail-28" title="Jul 21, 1999 — Re: "><span class="node-dot"></span><span class="node-date">Jul 21, 1999</span><span class="node-label">28 · Re: </span></a></div></section>
+<section class="stages"><section class="story-stage cyan" id="stage-premise" data-stage="premise"><div class="stage-header"><div class="stage-kicker"><span>01</span><i></i><b>MAR–APR 1997</b></div><h2>The premise gets a name</h2><p>A medical nightmare begins as a line in an artist bio, then acquires collaborators, a camera, and a material world.</p><div class="stage-milestone"><span>Milestone</span>The film first appears in Jon’s public-facing bio.</div></div><div class="stage-images">
+<figure class="stage-image reveal"><button class="image-button" data-full="media/images/caps-0001.webp" data-caption="WORK (failure)" aria-label="Enlarge WORK (failure)"><img loading="lazy" src="media/images/caps-0001.webp" alt="WORK (failure)"></button><figcaption>WORK (failure)</figcaption></figure>
+<figure class="stage-image reveal"><button class="image-button" data-full="media/images/caps-0010.webp" data-caption="The medical premise takes shape" aria-label="Enlarge The medical premise takes shape"><img loading="lazy" src="media/images/caps-0010.webp" alt="The medical premise takes shape"></button><figcaption>The medical premise takes shape</figcaption></figure>
+<figure class="stage-image reveal"><button class="image-button" data-full="media/images/scan-07.webp" data-caption="The hospital set takes shape" aria-label="Enlarge The hospital set takes shape"><img loading="lazy" src="media/images/scan-07.webp" alt="The hospital set takes shape"></button><figcaption>The hospital set takes shape</figcaption></figure>
+<figure class="stage-image reveal"><button class="image-button" data-full="media/images/scan-09.webp" data-caption="Crew and cast between setups" aria-label="Enlarge Crew and cast between setups"><img loading="lazy" src="media/images/scan-09.webp" alt="Crew and cast between setups"></button><figcaption>Crew and cast between setups</figcaption></figure>
+</div><div class="stage-mail-grid"><article class="mail-card cyan" id="mail-1" data-stage="premise" data-search="Jon Tojek Stewart McSherry Here is the BIO Stewart McSherry wrote:
+&gt;
+&gt; bazter please email me a bio, it needs to be emailed to siggraph,
+&gt; they are hassling me
+
+Allright here it goes.
+
+	Jon Tojek has been at Alias|Wavefront for the past 6 months working as
+an Application Engineer whose responsibilities include demoing and
+training people in all of the Toronto based companies 2D and 3D
+software.  Visiting customers that range from ILM, PDI, and Rhythm and
+Hues doing high-end flim and video for the masses down to hungry start
+ups working in commercials and games such as Radium, Little Fluffy
+Clouds, and H-gun.  Before this he was heading up the 3D department for
+a Full-service special effects house in Chicago called Post Effects.
+This was a 60+ large scale post facility with a long history of effects
+and happened to be the first north american Alias entertainment
+customer.  Here his first responsiblility was to build a team of
+animators and helm a department that included 7 SGI workstations inside
+a 9 bay environment.  &quot;It was at Post Effects that I learned the
+business of client relations, making quotes, management, and sacrificing
+myself on the alter of hard-core work,&quot; Tojek commented.  For two years
+before that he was once again in the corporate fold of Alias chicago
+doing the AE job and considers that to be the place where he did his
+most lasting work such as DevilBoy:Documentary on Clowns, and The
+UrbanWorm.  Other stints include more animator work at CyberToons in
+Milwaukee, Electrical Engineering graduate from University of Wisconsin
+Madison, and relentlessly part time but obsessed electronic musician who
+scores all of his animations and videos.  Currently his latest project
+is a 35mm short entitled &quot;Let&#x27;s get medical&quot; which deals with his
+current interest in medical equipment and practices.
+
+There you go sherry,
+Hows that for blowing smoke
+
+JonT
+AliasWhore SF">
+      <div class="mail-card-top"><span class="mail-number">01</span><time datetime="1997-03-28 18:38:00">Mar 28, 1997</time><span class="mail-archive">Chicago</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_01.txt</span><span class="mail-window-stage">01 / The premise gets a name</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Jon Tojek</strong></div><div><span>To</span><strong>Stewart McSherry</strong></div><div class="mail-subject"><span>Subject</span><strong>Here is the BIO</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>The project enters the bio as a 35mm medical short.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Stewart McSherry wrote:</p>
+<p class="body-paragraph quoted">bazter please email me a bio, it needs to be emailed to siggraph, they are hassling me</p>
+<p class="body-paragraph">Allright here it goes.</p>
+<p class="body-paragraph">Jon Tojek has been at Alias|Wavefront for the past 6 months working as an Application Engineer whose responsibilities include demoing and training people in all of the Toronto based companies 2D and 3D software. Visiting customers that range from ILM, PDI, and Rhythm and Hues doing high-end flim and video for the masses down to hungry start ups working in commercials and games such as Radium, Little Fluffy Clouds, and H-gun. Before this he was heading up the 3D department for a Full-service special effects house in Chicago called Post Effects.</p>
+<p class="body-paragraph">This was a 60+ large scale post facility with a long history of effects and happened to be the first north american Alias entertainment customer. Here his first responsiblility was to build a team of animators and helm a department that included 7 SGI workstations inside a 9 bay environment. "It was at Post Effects that I learned the business of client relations, making quotes, management, and sacrificing myself on the alter of hard-core work," Tojek commented.</p>
+<p class="body-paragraph">For two years before that he was once again in the corporate fold of Alias chicago doing the AE job and considers that to be the place where he did his most lasting work such as DevilBoy:Documentary on Clowns, and The UrbanWorm. Other stints include more animator work at CyberToons in Milwaukee, Electrical Engineering graduate from University of Wisconsin Madison, and relentlessly part time but obsessed electronic musician who scores all of his animations and videos. Currently his latest project is a 35mm short entitled "Let's get medical" which deals with his current interest in medical equipment and practices.</p>
+<p class="body-paragraph">There you go sherry, Hows that for blowing smoke</p>
+<p class="body-paragraph">JonT AliasWhore SF</p></div></details>
+      </div>
+    </article><article class="mail-card cyan" id="mail-2" data-stage="premise" data-search="Stewart McSherry , , , , Jon Tojek, Deanan DaSilva  these are our respective bios.  i edited them somewhat....(please forgive me)
+
+please if you have time, check them out and tweak artistically.  remember
+the focus of this meeting is computer art and us poor souls are somehow
+representing that.
+
+woe are we !
+
+                Abstract artists in the bay area
+                s.f. siggraph meeting APRIL 22nd
+
+(jon please scrub thru this maybe some music stuff(i edited too much)
+ and maybe a paragraph
+on devil boy if you want)
+
+JON TOJEK
+
+john tojek has a long distorted history in computer graphics, electronic music,
+and electrical engineering..
+
+starting at the univ of wisconsin, where he received his EE degree, onward
+thru heading up the 3D department at Post Effects in Chicago, to today, working
+as a Applications Engineer for Alias|Wavefront in san francisco, jon tojek
+has disturbed friends and co-workers with his slick sick surrealistic brand
+of self-introspective filmmaking.  he considers his most lasting work to be
+the film DevilBoy:Documentary on Clowns, and the UrbanWorm, which he completed
+while in working in Chicago.  it is a statement on _____ and _____ ?
+
+Currently his latest project is a 35mm short entitled &quot;Let&#x27;s get medical&quot;
+which deals with his current interest in medical equipment and practices...
+
+will show:
+
+(joel maybe elaborate on your large body of experimental work and current
+   efforts towards highend printing et al ?)
+
+JOEL MARIANO
+
+Born in the Philippines, Joel Mariano is one generation removed from
+the rice farm.  He began living in the USA at the age of 6. Athough he
+grew up here, his childhood memories of the tropics have had an
+everlasting influence on his art in terms of movement, form, and color.
+As an undergraduate, he studied classical art in Europe--concentrating
+on Classical Greek Sculpture and the Italian High Renaissance.  Double
+majoring in Fine Art and Journalism for his undergraduate studies, he
+was able to experience a firm foundation in drawing, painting,
+printmaking, and clay figurative sculpture.
+
+His first exposure to seriously using computers to create art was at
+the California Institute of the Arts--where he got his Master of Fine
+Arts degree specializing in Experimental Animation.  At CalArts from
+1984-87, he played with real-time analog video graphics, and began
+exploring 3D animation systems.  Tired of getting limited cubicomp
+time, Joel used his scholarship money to purchase an Amiga
+computer--this move changed his life.  Since then, he has realized that
+computer graphic imaging was a medium that allowed him to combine all
+his aesthetic interests.  For the past 10 years, his focus has been on
+new ways of achieving aesthetic results that could only be made from
+this medium.  His goal in his abstracts is to achieve harmonious
+compositions from a pure epiphany of colors and tones--devoid of
+ego--but spiritually fulfilling.
+
+will show:
+
+several examples and speak about current work
+
+DEANAN DASILVA
+
+(waitin)
+
+digital illusion
+
+will show:
+
+(shane do you want to mention more about  your own
+personal work)
+
+SHANE COOPER
+
+Shane Cooper studied computer enginering at the University of California
+San Diego, durring which time he worked at the San Diego Super Computer
+Center on numerous graphics intensive simulations and independent projects.
+Around then, he was also working in the science of particle physics
+at UCSD and the Stanford Linear Accelerator Center. He later moved to
+San Francisco, where he worked with George Coates Performance Works as a
+computer effects designer, creating abstract graphics applications to
+interact in realtime with actors live, on stage, and in 3D. These works were
+showcased in the prestigious Spaleto Festival in South Carolina as
+well performed in Tokyo as part of the Intercommunications project funded
+by NTT. In San Francisco, he also worked on various projects for
+Silicon Graphics including some graphic effects work for motion pictures,
+and realtime visual effects for the Macy&#x27;s Passport Fashion Show. He worked
+in Los Angeles with Silicon Studio LA developing live fully interactive
+realtime graphics performance software. This is being used successfully by
+Graham Nash in his Lifesighs show, which he has recently performed in Atlanta.
+Shane Cooper currently works for Protozoa in San Francisco, developing realtime
+performance software for performing interactive virtual characters and sets for
+television broadcast and the web (see  In his spare time,
+he creates more realtime abstract computer works for the SGI and PC platforms.
+He has many other interests that are less visual, and they include computer
+generated text, computer music, artificial intelligence, voluntary human
+control via computer, animal controled art, and the usage of real ant systems
+for solving problems.
+
+will be showing:
+
+ if there is an o2:
+
+if theres not:
+
+nick philip
+
+Born London England
+29 years old
+Independent Animator and designer.
+Art Director of &quot;UK skate&quot; Magazine, Late 80&#x27;s
+Moved to California 88
+Bought Macintosh Computer 1990
+Started Consciousness streetwear Lable Anarchic Adjustment
+Galvinzing West Coast Rave aesthetic/philosophy
+Founding Contributor to Wired Magazine
+Creator of T shirt Line  &quot;Shift&quot;
+worked in Tokyo with animators at NHK
+Art Directed/ Illustrated Many experimental music projects for
+Independent Labels including astralwerks, Silent Records, Geffen
+Island
+Animation work has been featured on MTV music awards, AMP, C-Net, MSNBC,
+Entertainment Tonight, Next Step.
+Just Completed work on Orb Website for New release Orblivion and Interactive
+Music title &quot;Radical Beauty&quot; for Local record lable OM records
+
+will be showing:
+
+Radical Beauty, interactive music cd-rom project.
+
+(I&#x27;ll need a fast PCI bus Mac  (8500 or
+9500) with 1000&#x27;s
+of cols display. 32 meg RAM and 250 meg Hardrive &amp; Projector &amp; Speakers)
+
+stewart mcsherry
+
+blobby boy.  raytraced turds at eight.
+
+born on the bayou.  committed at 18.
+
+kawaguchi wannabe.
+
+a prolific hankering for troublesome relationships with
+friends, family, and esp. females.  the triple F  hex.  voodoo priesthood
+at age 7.   result: long history of hypnotizing corporate patrons to allow
+computer access to poor miserable voodoo self, in order to fill that void in
+his life called &quot;email&quot;.
+
+currently obsessed with shiny glowing objects.">
+      <div class="mail-card-top"><span class="mail-number">02</span><time datetime="1997-03-30 22:16:24">Mar 30, 1997</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_02.txt</span><span class="mail-window-stage">01 / The premise gets a name</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Stewart McSherry</strong></div><div><span>To</span><strong>shane@protozoa.com, mariano@ix.netcom.com, jmariano@ea.com, nphilip@best.com, Jon Tojek, Deanan DaSilva</strong></div><div class="mail-subject"><span>Subject</span><strong>(no subject)</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>The April computer-art meeting gives the film a public context.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">these are our respective bios. i edited them somewhat....(please forgive me)</p>
+<p class="body-paragraph">please if you have time, check them out and tweak artistically. remember the focus of this meeting is computer art and us poor souls are somehow representing that.</p>
+<p class="body-paragraph">woe are we !</p>
+<p class="body-paragraph">Abstract artists in the bay area s.f. siggraph meeting APRIL 22nd</p>
+<p class="body-paragraph">(jon please scrub thru this maybe some music stuff(i edited too much) and maybe a paragraph on devil boy if you want)</p>
+<p class="body-paragraph body-heading">JON TOJEK</p>
+<p class="body-paragraph">john tojek has a long distorted history in computer graphics, electronic music, and electrical engineering..</p>
+<p class="body-paragraph">starting at the univ of wisconsin, where he received his EE degree, onward thru heading up the 3D department at Post Effects in Chicago, to today, working as a Applications Engineer for Alias|Wavefront in san francisco, jon tojek has disturbed friends and co-workers with his slick sick surrealistic brand of self-introspective filmmaking. he considers his most lasting work to be the film DevilBoy:Documentary on Clowns, and the UrbanWorm, which he completed while in working in Chicago. it is a statement on _____ and _____ ?</p>
+<p class="body-paragraph">Currently his latest project is a 35mm short entitled "Let's get medical" which deals with his current interest in medical equipment and practices...</p>
+<p class="body-paragraph">will show:</p>
+<p class="body-paragraph">(joel maybe elaborate on your large body of experimental work and current efforts towards highend printing et al ?)</p>
+<p class="body-paragraph body-heading">JOEL MARIANO</p>
+<p class="body-paragraph">Born in the Philippines, Joel Mariano is one generation removed from the rice farm. He began living in the USA at the age of 6. Athough he grew up here, his childhood memories of the tropics have had an everlasting influence on his art in terms of movement, form, and color. As an undergraduate, he studied classical art in Europe--concentrating on Classical Greek Sculpture and the Italian High Renaissance. Double majoring in Fine Art and Journalism for his undergraduate studies, he was able to experience a firm foundation in drawing, painting, printmaking, and clay figurative sculpture.</p>
+<p class="body-paragraph">His first exposure to seriously using computers to create art was at the California Institute of the Arts--where he got his Master of Fine Arts degree specializing in Experimental Animation. At CalArts from 1984-87, he played with real-time analog video graphics, and began exploring 3D animation systems. Tired of getting limited cubicomp time, Joel used his scholarship money to purchase an Amiga computer--this move changed his life.</p>
+<p class="body-paragraph">Since then, he has realized that computer graphic imaging was a medium that allowed him to combine all his aesthetic interests. For the past 10 years, his focus has been on new ways of achieving aesthetic results that could only be made from this medium. His goal in his abstracts is to achieve harmonious compositions from a pure epiphany of colors and tones--devoid of ego--but spiritually fulfilling.</p>
+<p class="body-paragraph">will show:</p>
+<p class="body-paragraph">several examples and speak about current work</p>
+<p class="body-paragraph body-heading">DEANAN DASILVA</p>
+<p class="body-paragraph">(waitin)</p>
+<p class="body-paragraph">digital illusion</p>
+<p class="body-paragraph">will show:</p>
+<p class="body-paragraph">(shane do you want to mention more about your own personal work)</p>
+<p class="body-paragraph body-heading">SHANE COOPER</p>
+<p class="body-paragraph">Shane Cooper studied computer enginering at the University of California San Diego, durring which time he worked at the San Diego Super Computer Center on numerous graphics intensive simulations and independent projects. Around then, he was also working in the science of particle physics at UCSD and the Stanford Linear Accelerator Center. He later moved to San Francisco, where he worked with George Coates Performance Works as a computer effects designer, creating abstract graphics applications to interact in realtime with actors live, on stage, and in 3D.</p>
+<p class="body-paragraph">These works were showcased in the prestigious Spaleto Festival in South Carolina as well performed in Tokyo as part of the Intercommunications project funded by NTT. In San Francisco, he also worked on various projects for Silicon Graphics including some graphic effects work for motion pictures, and realtime visual effects for the Macy's Passport Fashion Show. He worked in Los Angeles with Silicon Studio LA developing live fully interactive realtime graphics performance software.</p>
+<p class="body-paragraph">This is being used successfully by Graham Nash in his Lifesighs show, which he has recently performed in Atlanta. Shane Cooper currently works for Protozoa in San Francisco, developing realtime performance software for performing interactive virtual characters and sets for television broadcast and the web (see In his spare time, he creates more realtime abstract computer works for the SGI and PC platforms. He has many other interests that are less visual, and they include computer generated text, computer music, artificial intelligence, voluntary human control via computer, animal controled art, and the usage of real ant systems for solving problems.</p>
+<p class="body-paragraph">will be showing:</p>
+<p class="body-paragraph">if there is an o2:</p>
+<p class="body-paragraph">if theres not:</p>
+<p class="body-paragraph">nick philip</p>
+<p class="body-paragraph">Born London England 29 years old Independent Animator and designer. Art Director of "UK skate" Magazine, Late 80's Moved to California 88 Bought Macintosh Computer 1990 Started Consciousness streetwear Lable Anarchic Adjustment Galvinzing West Coast Rave aesthetic/philosophy Founding Contributor to Wired Magazine Creator of T shirt Line "Shift" worked in Tokyo with animators at NHK Art Directed/ Illustrated Many experimental music projects for Independent Labels including astralwerks, Silent Records, Geffen Island Animation work has been featured on MTV music awards, AMP, C-Net, MSNBC, Entertainment Tonight, Next Step. Just Completed work on Orb Website for New release Orblivion and Interactive Music title "Radical Beauty" for Local record lable OM records</p>
+<p class="body-paragraph">will be showing:</p>
+<p class="body-paragraph">Radical Beauty, interactive music cd-rom project.</p>
+<p class="body-paragraph">(I'll need a fast PCI bus Mac (8500 or</p>
+<p class="body-paragraph list-item">with 1000's</p>
+<p class="body-paragraph">of cols display. 32 meg RAM and 250 meg Hardrive &amp; Projector &amp; Speakers)</p>
+<p class="body-paragraph">stewart mcsherry</p>
+<p class="body-paragraph">blobby boy. raytraced turds at eight.</p>
+<p class="body-paragraph">born on the bayou. committed at 18.</p>
+<p class="body-paragraph">kawaguchi wannabe.</p>
+<p class="body-paragraph">a prolific hankering for troublesome relationships with friends, family, and esp. females. the triple F hex. voodoo priesthood at age 7. result: long history of hypnotizing corporate patrons to allow computer access to poor miserable voodoo self, in order to fill that void in his life called "email".</p>
+<p class="body-paragraph">currently obsessed with shiny glowing objects.</p></div></details>
+      </div>
+    </article><article class="mail-card cyan" id="mail-3" data-stage="premise" data-search="Robb Gardner Jon Tojek Hey Well it looks like i&#x27;m very close to getting my machine. I have a lunch meeting
+with a sales lady at RFX tommorrow to go over prices etc, and I will find out
+more then. I think an Impact is a little beyond my price range at this point so
+i&#x27;m probably going to go with an o2. Just out of curiousity i&#x27;m wondering how
+feasible it is to go ahead with what we talked about? Anyway let me know what&#x27;s
+going on with your film. If you need my help try to let me know a few weeks in
+advance if you can, I know that there are a few things coming up in April that
+I have to do on the weekends. I can definitely give you some grip equipment and
+I have that 3 piece 1K light kit. As far as animation is concerned let me know
+if I can help out there as well. April looks like a pretty bad month for me as
+far as the shooting goes. What does Juneau think? Do you guys have a solid
+story yet? I&#x27;m trying to ask around to see if someone might be interested in
+doing storyboards. What about Jon Whistler? Have you thought about doing them
+your self in like Photoshop or some other paint program? I take it Juneau is
+going to be your camera man. What kind of lighting are you going for? Do you
+want gels  for a theatrical look, or maybe more of a higher contrast film noir
+look? Or are you going for natural looking or maybe flatly lit? Color or B &amp; W?
+Are you going to scan the film at Tippett, or is this going to be all for
+video? I think this is probably enough questions to keep you busy for a while.
+Let me know what&#x27;s up, talk to ya later...">
+      <div class="mail-card-top"><span class="mail-number">03</span><time datetime="1997-04-01 14:28:52">Apr 1, 1997</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_03.txt</span><span class="mail-window-stage">01 / The premise gets a name</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Robb Gardner</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Hey</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>Robb offers lights, grip gear, animation help, and a string of practical questions.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Well it looks like i'm very close to getting my machine. I have a lunch meeting with a sales lady at RFX tommorrow to go over prices etc, and I will find out more then. I think an Impact is a little beyond my price range at this point so i'm probably going to go with an o2. Just out of curiousity i'm wondering how feasible it is to go ahead with what we talked about? Anyway let me know what's going on with your film.</p>
+<p class="body-paragraph">If you need my help try to let me know a few weeks in advance if you can, I know that there are a few things coming up in April that I have to do on the weekends. I can definitely give you some grip equipment and I have that 3 piece 1K light kit. As far as animation is concerned let me know if I can help out there as well. April looks like a pretty bad month for me as far as the shooting goes.</p>
+<p class="body-paragraph">What does Juneau think? Do you guys have a solid story yet? I'm trying to ask around to see if someone might be interested in doing storyboards.</p>
+<p class="body-paragraph">What about Jon Whistler? Have you thought about doing them your self in like Photoshop or some other paint program? I take it Juneau is going to be your camera man. What kind of lighting are you going for?</p>
+<p class="body-paragraph">Do you want gels for a theatrical look, or maybe more of a higher contrast film noir look? Or are you going for natural looking or maybe flatly lit? Color or B &amp; W?</p>
+<p class="body-paragraph">Are you going to scan the film at Tippett, or is this going to be all for video? I think this is probably enough questions to keep you busy for a while. Let me know what's up, talk to ya later...</p></div></details>
+      </div>
+    </article></div></section><section class="story-stage violet" id="stage-night" data-stage="night"><div class="stage-header"><div class="stage-kicker"><span>02</span><i></i><b>MAY–JUL 1997</b></div><h2>The midnight hospital</h2><p>The idea becomes an operation: scrubs, lights, a 35mm camera, hospital access, and the search for Dr. Scott.</p><div class="stage-milestone"><span>Milestone</span>Overnight July 12–13, 1997 — reconstructed from the surrounding messages.</div></div><div class="stage-images">
+<figure class="stage-image reveal"><button class="image-button" data-full="media/images/caps-0022.webp" data-caption="The doctor in shadow" aria-label="Enlarge The doctor in shadow"><img loading="lazy" src="media/images/caps-0022.webp" alt="The doctor in shadow"></button><figcaption>The doctor in shadow</figcaption></figure>
+<figure class="stage-image reveal"><button class="image-button" data-full="media/images/caps-0018.webp" data-caption="Surgical instruments, ready for the take" aria-label="Enlarge Surgical instruments, ready for the take"><img loading="lazy" src="media/images/caps-0018.webp" alt="Surgical instruments ready for the take"></button><figcaption>Surgical instruments, ready for the take</figcaption></figure>
+<figure class="stage-image reveal"><button class="image-button" data-full="media/images/caps-0014.webp" data-caption="Dr. Scott / the medical world" aria-label="Enlarge Dr. Scott / the medical world"><img loading="lazy" src="media/images/caps-0014.webp" alt="Dr. Scott / the medical world"></button><figcaption>Dr. Scott / the medical world</figcaption></figure>
+<figure class="stage-image reveal"><button class="image-button" data-full="media/images/caps-0009.webp" data-caption="A surgeon in frame" aria-label="Enlarge A surgeon in frame"><img loading="lazy" src="media/images/caps-0009.webp" alt="A surgeon in frame"></button><figcaption>A surgeon in frame</figcaption></figure>
+</div><div class="stage-mail-grid"><article class="mail-card violet" id="mail-4" data-stage="night" data-search="Peter Juneau Jon Tojek Re: GUILT &gt; I was just thinking more about the 24-30 frames
+&gt; per second issue.  We had concluded that 24 frames
+&gt; per second will work fine but then I had a thought
+&gt; that this could now make our final output
+&gt; look slightly weird as the video tape will be 30fps.
+
+We need to resolve this. Can we tweak it on the way out
+of Composer without too much hassel?
+
+We could just shoot at 30fps, scanning rate isn&#x27;t an issue
+since the scanner just creates files- the original capture
+speed is irrelevant at this stage.
+
+&gt; What do you think.  I like 24fps for it is less
+&gt; data to deal with, but I would not want a timing
+&gt; issue to make things look weird.
+
+I hear you Sparkle boy.
+
+&gt; It looks like I am scedualed for
+&gt; a StudioPaint 3D demo next Friday 5/23
+&gt; for Stringer and whoever else wants.
+&gt; Bring your party hats.
+
+Heckle city Maaamma.
+
+&gt; This friday I am thinking about seeing
+&gt; Sneaker Pimps with A and William from
+&gt; Radium.  Joao and a dude from toronto
+&gt; mabey also.  Grab a ticket if you think
+&gt; you may want to go..
+
+Perhaps.
+
+&gt; No further news from
+&gt; joe but the plan is Saturday when the sun goes
+&gt; down we find him and take care of business
+&gt; at the hospital.
+
+We need to recruit him for the ER wardrobe as well.
+
+&gt; If the whole medical thing
+&gt; does not work out I was thinking we could just
+&gt; shoot some hardcore porn of Kat sucking you off
+&gt; at your old apartment.  We could play up the little
+&gt; girl thing and have her wear a little school dress,
+&gt; ponytails, and high pitched voice.  35mm film of
+&gt; that action would make us some cash.
+
+Is Alaina keeping you at bay again Jonny.
+
+&gt; I am listening to Dr. Octogon to get in the mood.
+
+So you checked him out- good. I will not do this project
+with you until you see Dead Ringers.
+
+I have a running file I update every day as we chew on this.
+
+The love.
+
+				     GUILT
+
+			      A Chicago Packing Co.
+			          production
+
+Preliminary Production Overlook
+
+  -Camera:   1- 35mm Mitchell or Fries.
+	     Full/1.85/tv groundglass
+             Intervelometer/fps abilities? (24fps-scan/30fps-telecine)
+	     1- 400&#x27; mag
+	     1- 10 to 1 zoom (Cooke or Panavision) vs. set of primes
+	     1- follow focus
+	     1- matte box (filters?)/sunshade/french flag
+	     1- tall/short? stix w/ head fluid or geared? Steady rig?
+
+	     -Misc.- 1- Minolta spot and incident meter
+                     1- Small changing tent
+
+  -Lighting: 2- tota kits (4 lights?)
+	     ?-	Snoots
+             ?- focal spots?
+             ?- high watt bulbs (outdoor style to augment house practicals)
+	        misc. small flags, stands, gobos, duvateen
+
+  -Lab:      -Kodak 5279 (500t)
+	      400&#x27;(apx. 4.4min.) roll= 210.80
+              1000&#x27;(apx. 11.1min.) @ .517 ft.= 517.00
+
+	     -Developing- .19 ft.
+	     -Dalies (timed to colour chart &amp; grey patch)- .34 ft.
+	     -Telecine? (if no scan)
+
+  -Post:     -Sgi or tiff?
+	     -Tracking markers?
+
+  -Makeup:   -In progress
+             -blood?, rubber gut?
+
+  -Location:
+
+  -Misc.- Food?
+	  Stopwatch?
+          Van?$29.00">
+      <div class="mail-card-top"><span class="mail-number">04</span><time datetime="1997-05-14 15:39:35">May 14, 1997</time><span class="mail-archive">Chicago</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_04.txt</span><span class="mail-window-stage">02 / The midnight hospital</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Peter Juneau</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Re: GUILT</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>Frame rate, scanning, and the first dark jokes around the medical premise.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph quoted">I was just thinking more about the 24-30 frames per second issue. We had concluded that 24 frames per second will work fine but then I had a thought that this could now make our final output look slightly weird as the video tape will be 30fps.</p>
+<p class="body-paragraph">We need to resolve this. Can we tweak it on the way out of Composer without too much hassel?</p>
+<p class="body-paragraph">We could just shoot at 30fps, scanning rate isn't an issue since the scanner just creates files- the original capture speed is irrelevant at this stage.</p>
+<p class="body-paragraph quoted">What do you think. I like 24fps for it is less data to deal with, but I would not want a timing issue to make things look weird.</p>
+<p class="body-paragraph">I hear you Sparkle boy.</p>
+<p class="body-paragraph quoted">It looks like I am scedualed for a StudioPaint 3D demo next Friday 5/23 for Stringer and whoever else wants. Bring your party hats.</p>
+<p class="body-paragraph">Heckle city Maaamma.</p>
+<p class="body-paragraph quoted">This friday I am thinking about seeing Sneaker Pimps with A and William from Radium. Joao and a dude from toronto mabey also. Grab a ticket if you think you may want to go..</p>
+<p class="body-paragraph">Perhaps.</p>
+<p class="body-paragraph quoted">No further news from joe but the plan is Saturday when the sun goes down we find him and take care of business at the hospital.</p>
+<p class="body-paragraph">We need to recruit him for the ER wardrobe as well.</p>
+<p class="body-paragraph quoted">If the whole medical thing does not work out I was thinking we could just shoot some hardcore porn of Kat sucking you off at your old apartment. We could play up the little girl thing and have her wear a little school dress, ponytails, and high pitched voice. 35mm film of that action would make us some cash.</p>
+<p class="body-paragraph">Is Alaina keeping you at bay again Jonny.</p>
+<p class="body-paragraph quoted">I am listening to Dr. Octogon to get in the mood.</p>
+<p class="body-paragraph">So you checked him out- good. I will not do this project with you until you see Dead Ringers.</p>
+<p class="body-paragraph">I have a running file I update every day as we chew on this.</p>
+<p class="body-paragraph">The love.</p>
+<p class="body-paragraph body-heading">GUILT</p>
+<p class="body-paragraph">A Chicago Packing Co. production</p>
+<p class="body-paragraph">Preliminary Production Overlook</p>
+<p class="body-paragraph list-item">Camera: 1- 35mm Mitchell or Fries.</p>
+<p class="body-paragraph">Full/1.85/tv groundglass Intervelometer/fps abilities? (24fps-scan/30fps-telecine) 1- 400' mag 1- 10 to 1 zoom (Cooke or Panavision) vs. set of primes 1- follow focus 1- matte box (filters?)/sunshade/french flag 1- tall/short? stix w/ head fluid or geared? Steady rig?</p>
+<p class="body-paragraph list-item">Misc.- 1- Minolta spot and incident meter</p>
+<p class="body-paragraph">1- Small changing tent</p>
+<p class="body-paragraph list-item">Lighting: 2- tota kits (4 lights?)</p>
+<p class="body-paragraph">?- Snoots ?- focal spots? ?- high watt bulbs (outdoor style to augment house practicals) misc. small flags, stands, gobos, duvateen</p>
+<p class="body-paragraph list-item">Lab: -Kodak 5279 (500t)</p>
+<p class="body-paragraph">400'(apx. 4.4min.) roll= 210.80 1000'(apx. 11.1min.) @ .517 ft.= 517.00</p>
+<p class="body-paragraph list-item">Developing- .19 ft.</p>
+<p class="body-paragraph list-item">Dalies (timed to colour chart &amp; grey patch)- .34 ft.</p>
+<p class="body-paragraph list-item">Telecine? (if no scan)</p>
+<p class="body-paragraph list-item">Post: -Sgi or tiff?</p>
+<p class="body-paragraph list-item">Tracking markers?</p>
+<p class="body-paragraph list-item">Makeup: -In progress</p>
+<p class="body-paragraph list-item">blood?, rubber gut?</p>
+<p class="body-paragraph list-item">Location:</p>
+<p class="body-paragraph list-item">Misc.- Food?</p>
+<p class="body-paragraph">Stopwatch? Van?$29.00</p></div></details>
+      </div>
+    </article><article class="mail-card violet" id="mail-5" data-stage="night" data-search="Peter Juneau Jon Tojek Re: Meat packing &gt; Boy I like the Chicago Packing Co. name.
+&gt; Good job on the Production overlook.
+&gt; I will have to print it out.
+
+Wait til&#x27; Friday, as it will be flushed out a bit.
+
+&gt; Tonight do you wanna see 5th Element?
+&gt; I am going with A and her Flame partner
+&gt; Annie to the 10:30 show at Cinema 21.
+
+Sounds good, dinner and drinky-winks prior?
+
+&gt; Since I do not have too much faith in
+&gt; the plot we will have to complement it
+&gt; with Valium and fermented cider beverages.
+
+I have faith in pharmacology... . and you Sparkle.
+
+OH GOD! HOLD ME NOW!">
+      <div class="mail-card-top"><span class="mail-number">05</span><time datetime="1997-05-14 16:55:59">May 14, 1997</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_05.txt</span><span class="mail-window-stage">02 / The midnight hospital</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Peter Juneau</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Re: Meat packing</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>The working title “Chicago Packing Co.” gets its production swagger.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph quoted">Boy I like the Chicago Packing Co. name. Good job on the Production overlook. I will have to print it out.</p>
+<p class="body-paragraph">Wait til' Friday, as it will be flushed out a bit.</p>
+<p class="body-paragraph quoted">Tonight do you wanna see 5th Element? I am going with A and her Flame partner Annie to the 10:30 show at Cinema 21.</p>
+<p class="body-paragraph">Sounds good, dinner and drinky-winks prior?</p>
+<p class="body-paragraph quoted">Since I do not have too much faith in the plot we will have to complement it with Valium and fermented cider beverages.</p>
+<p class="body-paragraph">I have faith in pharmacology... . and you Sparkle.</p>
+<p class="body-paragraph">OH GOD! HOLD ME NOW!</p></div></details>
+      </div>
+    </article><article class="mail-card violet" id="mail-6" data-stage="night" data-search="Peter Juneau Jon Tojek Chicago Packing Co. Dearest Jonny,
+
+Some penance for your guilt.
+
+Please ponder:
+
+	-Sgi or tiff?
+
+	-Tracking markers?
+
+	-Joe -Table colour- green instead of white?
+	     -Surgical cloths to lay around incision area.
+	     -Low profile surgical caps.
+	     -Know how to work lights/machines!
+	     -Observatory intercom?
+	     -How many people can we ACTUALLY bring in?  We need
+	        to know for several reasons.
+
+	-Actor? I have someone in mind. I think he would be perfect.
+	        You met him one night- remember we stopped by the liquor
+	        store where he works out in the avenues. He&#x27;s balding
+                with disturbing eyes and meaty paws. He&#x27;s a cross between
+                John Malchovich, Jack Nicholson and Jim Carrey. He can be
+                really animated and very intense. (He&#x27;s nuts)
+
+	-Actress?
+
+	-I&#x27;m working on the other details and will phisically inspect our
+         camera package in the next few days. I spoke with Robb this morning
+             about what he would be able to bring if he ends up flying.">
+      <div class="mail-card-top"><span class="mail-number">06</span><time datetime="1997-06-04 11:13:16">Jun 4, 1997</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_06.txt</span><span class="mail-window-stage">02 / The midnight hospital</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Peter Juneau</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Chicago Packing Co.</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>The checklist grows: table color, surgical cloths, intercom, cast, camera package.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Dearest Jonny,</p>
+<p class="body-paragraph">Some penance for your guilt.</p>
+<p class="body-paragraph">Please ponder:</p>
+<p class="body-paragraph list-item">Sgi or tiff?</p>
+<p class="body-paragraph list-item">Tracking markers?</p>
+<p class="body-paragraph list-item">Joe -Table colour- green instead of white?</p>
+<p class="body-paragraph list-item">Surgical cloths to lay around incision area.</p>
+<p class="body-paragraph list-item">Low profile surgical caps.</p>
+<p class="body-paragraph list-item">Know how to work lights/machines!</p>
+<p class="body-paragraph list-item">Observatory intercom?</p>
+<p class="body-paragraph list-item">How many people can we ACTUALLY bring in? We need</p>
+<p class="body-paragraph">to know for several reasons.</p>
+<p class="body-paragraph list-item">Actor? I have someone in mind. I think he would be perfect.</p>
+<p class="body-paragraph">You met him one night- remember we stopped by the liquor store where he works out in the avenues. He's balding with disturbing eyes and meaty paws. He's a cross between John Malchovich, Jack Nicholson and Jim Carrey. He can be really animated and very intense. (He's nuts)</p>
+<p class="body-paragraph list-item">Actress?</p>
+<p class="body-paragraph list-item">I'm working on the other details and will phisically inspect our</p>
+<p class="body-paragraph">camera package in the next few days. I spoke with Robb this morning about what he would be able to bring if he ends up flying.</p></div></details>
+      </div>
+    </article><article class="mail-card violet" id="mail-7" data-stage="night" data-search="Peter Juneau Jon Tojek Re: Chicago Packing Co. &gt; &gt; Dearest Jonny,
+&gt;
+&gt; &gt; You are the greatest.
+&gt;
+&gt; First of all thank you for the complement.
+&gt; You would know best.
+
+That&#x27;s odd, I don&#x27;t remember the inclusion of &quot;You are the greatest&quot; in my
+original mail. Anyway.. .  .
+
+&gt; &gt;         -Joe -Table colour- green instead of white?
+&gt; &gt;              -Surgical cloths to lay around incision area.
+&gt; &gt;              -Low profile surgical caps.
+&gt; &gt;              -Know how to work lights/machines!
+&gt; &gt;              -Observatory intercom?
+&gt; &gt;              -How many people can we ACTUALLY bring in?  We need
+&gt; &gt;                 to know for several reasons.
+&gt;
+&gt; Details we should work out ourselves as much as possible.
+&gt; We may need joe for those lights, but ideally we should
+&gt; […]
+
+I&#x27;m would rather not shoot with everyone wearing shower caps.
+If we can&#x27;t find out for sure about the o.r. intercom we have
+to rent walkie talkie$.
+&gt;
+&gt; &gt;         -Actor? I have someone in mind. I think he would be perfect.
+&gt; &gt;                 You met him one night- remember we stopped by the liquor
+&gt; &gt;                 store where he works out in the avenues. He&#x27;s balding
+&gt; &gt;                 with disturbing eyes and meaty paws. He&#x27;s a cross between
+&gt; &gt;                 John Malchovich, Jack Nicholson and Jim Carrey. He can be
+&gt; &gt;                 really animated and very intense. (He&#x27;s nuts)
+&gt;
+&gt; Yea man lets take the guy out for a drink before we talk about
+&gt; it.  I still think about traynor but I have not mentioned anything
+&gt; […]
+
+We can stop by there any time- but I&#x27;ll call him this week.
+&gt;
+&gt; &gt;         -Actress?
+&gt; &gt;
+&gt; That is another tough one.  Mabey one of us if Joe
+&gt; has a person limit, we will just grab someone for the
+&gt; patient will not be very involved.
+
+C&#x27;mon Velvet boy, I know you want a tender chickie?
+
+Peace,">
+      <div class="mail-card-top"><span class="mail-number">07</span><time datetime="1997-06-11 17:38:16">Jun 11, 1997</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_07.txt</span><span class="mail-window-stage">02 / The midnight hospital</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Peter Juneau</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Re: Chicago Packing Co.</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>The production details turn into a real plan for people, lights, and walkie-talkies.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph quoted">Dearest Jonny,</p>
+<p class="body-paragraph quoted">You are the greatest.</p>
+<p class="body-paragraph quoted">First of all thank you for the complement. You would know best.</p>
+<p class="body-paragraph">That's odd, I don't remember the inclusion of "You are the greatest" in my original mail. Anyway.. . .</p>
+<p class="body-paragraph quoted list-item">Joe -Table colour- green instead of white?</p>
+<p class="body-paragraph quoted list-item">Surgical cloths to lay around incision area.</p>
+<p class="body-paragraph quoted list-item">Low profile surgical caps.</p>
+<p class="body-paragraph quoted list-item">Know how to work lights/machines!</p>
+<p class="body-paragraph quoted list-item">Observatory intercom?</p>
+<p class="body-paragraph quoted list-item">How many people can we ACTUALLY bring in? We need</p>
+<p class="body-paragraph quoted">to know for several reasons.</p>
+<p class="body-paragraph quoted">Details we should work out ourselves as much as possible. We may need joe for those lights, but ideally we should</p>
+<p class="body-paragraph">I'm would rather not shoot with everyone wearing shower caps. If we can't find out for sure about the o.r. intercom we have to rent walkie talkie$.</p>
+<p class="body-paragraph quoted list-item">Actor? I have someone in mind. I think he would be perfect.</p>
+<p class="body-paragraph quoted">You met him one night- remember we stopped by the liquor store where he works out in the avenues. He's balding with disturbing eyes and meaty paws. He's a cross between John Malchovich, Jack Nicholson and Jim Carrey. He can be really animated and very intense. (He's nuts)</p>
+<p class="body-paragraph quoted">Yea man lets take the guy out for a drink before we talk about it. I still think about traynor but I have not mentioned anything</p>
+<p class="body-paragraph">We can stop by there any time- but I'll call him this week.</p>
+<p class="body-paragraph quoted list-item">Actress?</p>
+<p class="body-paragraph quoted">That is another tough one. Mabey one of us if Joe has a person limit, we will just grab someone for the patient will not be very involved.</p>
+<p class="body-paragraph">C'mon Velvet boy, I know you want a tender chickie?</p>
+<p class="body-paragraph">Peace,</p></div></details>
+      </div>
+    </article><article class="mail-card violet" id="mail-8" data-stage="night" data-search="Robb Gardner Jon Tojek Re: Hey jag-off Thanks! The hospital stuff looks awesome. Aren&#x27;t you glad you have seasoned
+Cinematographers working for you. Ha! Anyway that frame looks exactly like it
+did when we were just standing there. Keep it up Jonny baby.">
+      <div class="mail-card-top"><span class="mail-number">08</span><time datetime="1997-07-24 14:58:27">Jul 24, 1997</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_08.txt</span><span class="mail-window-stage">02 / The midnight hospital</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Robb Gardner</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Re: Hey jag-off</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>The first hospital material comes back with a vote of confidence.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Thanks! The hospital stuff looks awesome. Aren't you glad you have seasoned Cinematographers working for you. Ha! Anyway that frame looks exactly like it did when we were just standing there. Keep it up Jonny baby.</p></div></details>
+      </div>
+    </article><article class="mail-card violet" id="mail-9" data-stage="night" data-search="Fred P Jon Tojek Got any Images or what? Jon T
+
+whats the word.  what are you doin?  i havnt seen any shots from your
+hospital shoot, do you have any of those available?  id love to check
+one out.
+
+what happenin out in san fran?
+
+talk to you later man
+
+Fred">
+      <div class="mail-card-top"><span class="mail-number">09</span><time datetime="1997-09-27 16:04:35">Sep 27, 1997</time><span class="mail-archive">Chicago</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_09.txt</span><span class="mail-window-stage">02 / The midnight hospital</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Fred P</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Got any Images or what?</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>Friends are already asking to see the hospital frames.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Jon T</p>
+<p class="body-paragraph">whats the word. what are you doin? i havnt seen any shots from your hospital shoot, do you have any of those available? id love to check one out.</p>
+<p class="body-paragraph">what happenin out in san fran?</p>
+<p class="body-paragraph">talk to you later man</p>
+<p class="body-paragraph">Fred</p></div></details>
+      </div>
+    </article></div></section><section class="story-stage amber" id="stage-finish" data-stage="finish"><div class="stage-header"><div class="stage-kicker"><span>03</span><i></i><b>MAR–MAY 1999</b></div><h2>The long finish</h2><p>The work survives the slow part: floor shots, sound, scanning, prints, tapes, deadlines, and the first web presence.</p><div class="stage-milestone"><span>Milestone</span>The finished work enters SIGGRAPH and Prix Ars Electronica.</div></div><div class="stage-images">
+<figure class="stage-image reveal"><button class="image-button" data-full="media/images/caps-0020.webp" data-caption="A quiet beat between setups" aria-label="Enlarge A quiet beat between setups"><img loading="lazy" src="media/images/caps-0020.webp" alt="A quiet beat between setups"></button><figcaption>A quiet beat between setups</figcaption></figure>
+<figure class="stage-image reveal"><button class="image-button" data-full="media/images/scan-05.webp" data-caption="Surgical detail from the scan" aria-label="Enlarge Surgical detail from the scan"><img loading="lazy" src="media/images/scan-05.webp" alt="Surgical detail from the scan"></button><figcaption>Surgical detail from the scan</figcaption></figure>
+<figure class="stage-image reveal"><button class="image-button" data-full="media/images/caps-0015.webp" data-caption="LGM image study 15" aria-label="Enlarge LGM image study 15"><img loading="lazy" src="media/images/caps-0015.webp" alt="LGM image study 15"></button><figcaption>LGM image study 15</figcaption></figure>
+<figure class="stage-image reveal"><button class="image-button" data-full="media/images/caps-0024.webp" data-caption="A pause between setups" aria-label="Enlarge A pause between setups"><img loading="lazy" src="media/images/caps-0024.webp" alt="A pause between setups"></button><figcaption>A pause between setups</figcaption></figure>
+</div><div class="stage-mail-grid"><article class="mail-card amber" id="mail-10" data-stage="finish" data-search="adrian Jon Tojek Re: this sunday barbeque Jon,
+
+   I&#x27;m sorry we didn&#x27;t make it on Sunday, Violet and I we having a bad
+day. So how&#x27;s LGM going? For grins check out this website I&#x27;ve been
+working on for a band that I&#x27;ve become a member of..
+
+
+Later
+
+Adrian
+
+---Jon Tojek &lt;&gt; wrote:
+&gt;
+&gt; Hello people,
+&gt;
+&gt; This sunday
+&gt; 2/28 5:00pm
+&gt;
+&gt; Sunday Pantry Barbeque and drink at Jon and Juneau
+&gt; house of 16 doors.
+&gt;
+&gt; No real reason to celebrate, above and beyond the
+&gt; […]">
+      <div class="mail-card-top"><span class="mail-number">10</span><time datetime="1999-03-02 10:48:39">Mar 2, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_10.txt</span><span class="mail-window-stage">03 / The long finish</span></div>
+        <div class="mail-head"><div><span>From</span><strong>adrian</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Re: this sunday barbeque</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>LGM survives the social noise and keeps moving in the background.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Jon,</p>
+<p class="body-paragraph">I'm sorry we didn't make it on Sunday, Violet and I we having a bad day. So how's LGM going? For grins check out this website I've been working on for a band that I've become a member of..</p>
+<p class="body-paragraph">Later</p>
+<p class="body-paragraph">Adrian</p>
+<p class="body-paragraph list-item">--Jon Tojek &lt;&gt; wrote:</p>
+<p class="body-paragraph quoted">Hello people,</p>
+<p class="body-paragraph quoted">This sunday 2/28 5:00pm</p>
+<p class="body-paragraph quoted">Sunday Pantry Barbeque and drink at Jon and Juneau house of 16 doors.</p>
+<p class="body-paragraph quoted">No real reason to celebrate, above and beyond the</p></div></details>
+      </div>
+    </article><article class="mail-card amber" id="mail-11" data-stage="finish" data-search="adrian Jon Tojek Re: this sunday barbeque Jon,
+   I think it&#x27;s too late for Terminex!
+It&#x27;s the Christal Methodists not related to the chrystal method. We
+actually have copyrighted material prior to theirs.. This group
+evolved from an organized effort to waste christian radio air time
+with prank phone calls. This album and the last New World Odour are
+the first to have music mixed in with the prank calls. The next album
+will be more of a departure..I&#x27;ll be contributing the Digital Hardcore
+tracks on the next album and the tour projection video.
+
+So is the BBQ thing going to be called alcoholic barbequers
+convention;-) I&#x27;ll be there!
+
+Later
+
+Adrian
+
+---Jon Tojek &lt;&gt; wrote:
+&gt;
+&gt; adrian wrote:
+&gt;
+&gt; &gt; Jon,
+&gt; &gt;
+&gt; &gt;    I&#x27;m sorry we didn&#x27;t make it on Sunday, Violet and I we having a
+bad
+&gt; &gt; day. So how&#x27;s LGM going? For grins check out this website I&#x27;ve been
+&gt; &gt; working on for a band that I&#x27;ve become a member of..
+&gt; &gt; 
+&gt; &gt;
+&gt; &gt; Later
+&gt; &gt;
+&gt; &gt; Adrian
+&gt; &gt;
+&gt;
+&gt; Thats allright,
+&gt; […]">
+      <div class="mail-card-top"><span class="mail-number">11</span><time datetime="1999-03-02 14:59:16">Mar 2, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_11.txt</span><span class="mail-window-stage">03 / The long finish</span></div>
+        <div class="mail-head"><div><span>From</span><strong>adrian</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Re: this sunday barbeque</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>The floor shot is still alive; the film is moving, but slowly.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Jon, I think it's too late for Terminex! It's the Christal Methodists not related to the chrystal method. We actually have copyrighted material prior to theirs.. This group evolved from an organized effort to waste christian radio air time with prank phone calls. This album and the last New World Odour are the first to have music mixed in with the prank calls. The next album will be more of a departure..I'll be contributing the Digital Hardcore tracks on the next album and the tour projection video.</p>
+<p class="body-paragraph">So is the BBQ thing going to be called alcoholic barbequers convention;-) I'll be there!</p>
+<p class="body-paragraph">Later</p>
+<p class="body-paragraph">Adrian</p>
+<p class="body-paragraph list-item">--Jon Tojek &lt;&gt; wrote:</p>
+<p class="body-paragraph quoted">adrian wrote:</p>
+<p class="body-paragraph quoted">Jon,</p>
+<p class="body-paragraph quoted">I'm sorry we didn't make it on Sunday, Violet and I we having a</p>
+<p class="body-paragraph">bad</p>
+<p class="body-paragraph quoted">day. So how's LGM going? For grins check out this website I've been working on for a band that I've become a member of..</p>
+<p class="body-paragraph quoted">Later</p>
+<p class="body-paragraph quoted">Adrian</p>
+<p class="body-paragraph quoted">Thats allright,</p></div></details>
+      </div>
+    </article><article class="mail-card amber" id="mail-12" data-stage="finish" data-search="SIGGRAPH 99 Jon Tojek Your SIGGRAPH 99 Online Submission Account Information Your online submission account has been successfully created. You are now
+able to login, fill out forms, and upload materials.
+
+Here is your account information:
+
+             Name: Jon Tojek
+            Email: ">
+      <div class="mail-card-top"><span class="mail-number">12</span><time datetime="1999-03-04 13:20:05">Mar 4, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_12.txt</span><span class="mail-window-stage">03 / The long finish</span></div>
+        <div class="mail-head"><div><span>From</span><strong>SIGGRAPH 99</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Your SIGGRAPH 99 Online Submission Account Information</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>Submission machinery begins, even if the account email is mostly administrative.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Your online submission account has been successfully created. You are now able to login, fill out forms, and upload materials.</p>
+<p class="body-paragraph">Here is your account information:</p>
+<p class="body-paragraph">Name: Jon Tojek</p></div></details>
+      </div>
+    </article><article class="mail-card amber" id="mail-13" data-stage="finish" data-search="stewart mcsherry Jon Tojek Prix Ars Electronica 1999 ( april 25 deadline.  better for you than siggraph maybe.  more artistic.
+
+">
+      <div class="mail-card-top"><span class="mail-number">13</span><time datetime="1999-03-25 07:06:48">Mar 25, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_13.txt</span><span class="mail-window-stage">03 / The long finish</span></div>
+        <div class="mail-head"><div><span>From</span><strong>stewart mcsherry</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Prix Ars Electronica 1999 (http://prixars.orf.at/english/indexe.htm)</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>Stewart points Jon toward a more artistic competition and a deadline.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">april 25 deadline. better for you than siggraph maybe. more artistic.</p></div></details>
+      </div>
+    </article><article class="mail-card amber" id="mail-14" data-stage="finish" data-search="Joe Tojek Jon Tojek On the anniversary of the birth of Jon Tojek... Jon-
+
+I&#x27;m thinking about you today, on your day, and celebrating the meaning of your
+birth and your life, which has meant so much to my life that I just want to
+tell you that I love you dearly in a way that dwarfs any understanding of the
+world that I have as of yet undertaken.  Please know that you&#x27;re in my
+thoughts and I&#x27;ll try to get in touch with you later this afternoon.
+
+Happy 30th!!!!
+
+PS.  Nice clip!  I know you&#x27;re enjoying pleasure from the power of creating
+meaning in the medium. Your quote is good but may be slightly
+oversimplified...   I tried to fix it below, let me know if you like it...
+Is there any other dark dialog that needs to happen?  I&#x27;ll help if I can.
+
+For ease of use and comfort to the daily thinker
+take every concept perceived herein and synchronously
+validate and oppose it with everything you believe
+to be true about yourself
+
+Jon Tojek wrote:
+
+&gt; How is the country living?
+&gt;
+&gt; For ease of use and comfort to the daily thinker
+&gt; take every concept contained and believe it
+&gt; to mean the exact opposite.
+&gt;
+&gt; Does this sound familiar?
+&gt; Do you mind if I spout this out
+&gt; at the beginning of Let&#x27;s Get Medical.
+&gt; […]">
+      <div class="mail-card-top"><span class="mail-number">14</span><time datetime="1999-03-26 09:18:24">Mar 26, 1999</time><span class="mail-archive">Chicago</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_14.txt</span><span class="mail-window-stage">03 / The long finish</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Joe Tojek</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>On the anniversary of the birth of Jon Tojek...</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>A birthday message connects the film’s dark dialogue to Jon’s life and voice.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Jon-</p>
+<p class="body-paragraph">I'm thinking about you today, on your day, and celebrating the meaning of your birth and your life, which has meant so much to my life that I just want to tell you that I love you dearly in a way that dwarfs any understanding of the world that I have as of yet undertaken. Please know that you're in my thoughts and I'll try to get in touch with you later this afternoon.</p>
+<p class="body-paragraph">Happy 30th!!!!</p>
+<p class="body-paragraph">PS. Nice clip! I know you're enjoying pleasure from the power of creating meaning in the medium. Your quote is good but may be slightly oversimplified... I tried to fix it below, let me know if you like it... Is there any other dark dialog that needs to happen? I'll help if I can.</p>
+<p class="body-paragraph">For ease of use and comfort to the daily thinker take every concept perceived herein and synchronously validate and oppose it with everything you believe to be true about yourself</p>
+<p class="body-paragraph">Jon Tojek wrote:</p>
+<p class="body-paragraph quoted">How is the country living?</p>
+<p class="body-paragraph quoted">For ease of use and comfort to the daily thinker take every concept contained and believe it to mean the exact opposite.</p>
+<p class="body-paragraph quoted">Does this sound familiar? Do you mind if I spout this out at the beginning of Let's Get Medical.</p></div></details>
+      </div>
+    </article><article class="mail-card amber" id="mail-15" data-stage="finish" data-search="SIGGRAPH 99 Jon Tojek SIGGRAPH 99 Online Submission Acknowledgement Your SIGGRAPH 99 Computer Animation Festival Submission &amp; Authorization Form has been saved on the system.
+
+    Title: Let&#x27;s Get Medical
+
+You are free to review and make changes to your form up until the deadline on 7 October 1998 for Early Feedback Drafts, 10 February 1999 for Performance Proposals, and 7 April 1999 for Animation and Film Sequences.
+
+REMINDER:  Your submission is not complete until we receive your completed and signed Submission &amp; Authorization Form.  For complete submission instructions, see ">
+      <div class="mail-card-top"><span class="mail-number">15</span><time datetime="1999-03-29 18:33:26">Mar 29, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_15.txt</span><span class="mail-window-stage">03 / The long finish</span></div>
+        <div class="mail-head"><div><span>From</span><strong>SIGGRAPH 99</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>SIGGRAPH 99 Online Submission Acknowledgement</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>The finished title now has a formal SIGGRAPH submission record.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Your SIGGRAPH 99 Computer Animation Festival Submission &amp; Authorization Form has been saved on the system.</p>
+<p class="body-paragraph">Title: Let's Get Medical</p>
+<p class="body-paragraph">You are free to review and make changes to your form up until the deadline on 7 October 1998 for Early Feedback Drafts, 10 February 1999 for Performance Proposals, and 7 April 1999 for Animation and Film Sequences.</p>
+<p class="body-paragraph">REMINDER: Your submission is not complete until we receive your completed and signed Submission &amp; Authorization Form. For complete submission instructions, see</p></div></details>
+      </div>
+    </article><article class="mail-card amber" id="mail-16" data-stage="finish" data-search="Prix Ars Electronica Tojek You have submitted this entry for the Prix Ars Electronica 1999 (Computer Animation A-52) Jon,
+
+You have submitted the following data:
+
+First Name: Jon
+Last name: Tojek
+Comany/Institution:
+Email: 
+Title of the work: Let&#x27;s Get Medical
+Year the work was created: 99
+Hardware: 35mm film and SGI computer
+Length of the Animation (credits): 02:36
+Length of the Animation: 02:43
+Music information - title: Let&#x27;&#x27;s Get Medical Soundtrack
+Music information - author: Jon Tojek
+
+Please note your entry number if you have further enquiries.
+
+Please use the following check list to ensure that all the required Enclosures are included with your entry:
+* a completed and signed entry form
+* the jury version tape clearly labeled (do not orget your entry number!!); length up to 5 min. or precise TC-times of a segment
+* 6 stills from the entered animation (color slides)
+* photo/slide of the competition participant
+* biography of the competition participant
+* description of the entered animation (contents, concept, technical development, etc.)
+
+To avoid errors, please be sure to label all enclosures so that it is clearly recognizeable which enclosures belong with which entries
+Entry deadline incl. accompanying material: April 25, 1999 (postmark)
+
+Thank You very much for entering the competition.
+The Prix Ars Electronica Team">
+      <div class="mail-card-top"><span class="mail-number">16</span><time datetime="1999-03-30 02:05:19">Mar 30, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_16.txt</span><span class="mail-window-stage">03 / The long finish</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Prix Ars Electronica</strong></div><div><span>To</span><strong>Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>You have submitted this entry for the Prix Ars Electronica 1999 (Computer Animation A-52)</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>The Prix entry records the film as 35mm film and SGI computer work.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Jon,</p>
+<p class="body-paragraph">You have submitted the following data:</p>
+<p class="body-paragraph">First Name: Jon Last name: Tojek Comany/Institution: Title of the work: Let's Get Medical Year the work was created: 99 Hardware: 35mm film and SGI computer Length of the Animation (credits): 02:36 Length of the Animation: 02:43 Music information - title: Let''s Get Medical Soundtrack Music information - author: Jon Tojek</p>
+<p class="body-paragraph">Please note your entry number if you have further enquiries.</p>
+<p class="body-paragraph">Please use the following check list to ensure that all the required Enclosures are included with your entry:</p>
+<p class="body-paragraph list-item">a completed and signed entry form</p>
+<p class="body-paragraph list-item">the jury version tape clearly labeled (do not orget your entry number!!); length up to 5 min. or precise TC-times of a segment</p>
+<p class="body-paragraph list-item">6 stills from the entered animation (color slides)</p>
+<p class="body-paragraph list-item">photo/slide of the competition participant</p>
+<p class="body-paragraph list-item">biography of the competition participant</p>
+<p class="body-paragraph list-item">description of the entered animation (contents, concept, technical development, etc.)</p>
+<p class="body-paragraph">To avoid errors, please be sure to label all enclosures so that it is clearly recognizeable which enclosures belong with which entries Entry deadline incl. accompanying material: April 25, 1999 (postmark)</p>
+<p class="body-paragraph">Thank You very much for entering the competition. The Prix Ars Electronica Team</p></div></details>
+      </div>
+    </article><article class="mail-card amber" id="mail-17" data-stage="finish" data-search="Prix Ars Electronica Tojek You have submitted this entry for the Prix Ars Electronica 1999 (Visual Effects F-12) Jon,
+
+You have submitted the following data:
+
+First Name: Jon
+Last name: Tojek
+Comany/Institution:
+Email: 
+Title of the work: Let&#x27;s Get Medical
+Year the work was created: 1999
+Hardware: 35mm film and SGI computer
+Length of the Animation (credits): 02:36
+Length of the Animation: 02:43
+Music information - title: Let&#x27;&#x27;s Get Medical Soundtrack
+Music information - author: Jon Tojek
+
+Please note your entry number if you have further enquiries.
+
+Please use the following check list to ensure that all the required Enclosures are included with your entry:
+* a completed and signed entry form
+* the jury version tape clearly labeled (do not orget your entry number!!); length up to 5 min. or precise TC-times of a segment
+* 6 stills from the entered animation (color slides)
+* photo/slide of the competition participant
+* biography of the competition participant
+* description of the entered animation (contents, concept, technical development, etc.)
+To avoid errors, please be sure to label all enclosures so that it is clearly recognizeable which enclosures belong with which entries
+Entry deadline incl. accompanying material: April 25, 1999 (postmark)
+
+Thank You very much for entering the competition.
+The Prix Ars Electronica Team">
+      <div class="mail-card-top"><span class="mail-number">17</span><time datetime="1999-03-30 02:24:52">Mar 30, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_17.txt</span><span class="mail-window-stage">03 / The long finish</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Prix Ars Electronica</strong></div><div><span>To</span><strong>Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>You have submitted this entry for the Prix Ars Electronica 1999 (Visual Effects F-12)</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>The same film enters the Prix again under Visual Effects.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Jon,</p>
+<p class="body-paragraph">You have submitted the following data:</p>
+<p class="body-paragraph">First Name: Jon Last name: Tojek Comany/Institution: Title of the work: Let's Get Medical Year the work was created: 1999 Hardware: 35mm film and SGI computer Length of the Animation (credits): 02:36 Length of the Animation: 02:43 Music information - title: Let''s Get Medical Soundtrack Music information - author: Jon Tojek</p>
+<p class="body-paragraph">Please note your entry number if you have further enquiries.</p>
+<p class="body-paragraph">Please use the following check list to ensure that all the required Enclosures are included with your entry:</p>
+<p class="body-paragraph list-item">a completed and signed entry form</p>
+<p class="body-paragraph list-item">the jury version tape clearly labeled (do not orget your entry number!!); length up to 5 min. or precise TC-times of a segment</p>
+<p class="body-paragraph list-item">6 stills from the entered animation (color slides)</p>
+<p class="body-paragraph list-item">photo/slide of the competition participant</p>
+<p class="body-paragraph list-item">biography of the competition participant</p>
+<p class="body-paragraph list-item">description of the entered animation (contents, concept, technical development, etc.)</p>
+<p class="body-paragraph">To avoid errors, please be sure to label all enclosures so that it is clearly recognizeable which enclosures belong with which entries Entry deadline incl. accompanying material: April 25, 1999 (postmark)</p>
+<p class="body-paragraph">Thank You very much for entering the competition. The Prix Ars Electronica Team</p></div></details>
+      </div>
+    </article><article class="mail-card amber" id="mail-18" data-stage="finish" data-search="Robb Gardner Jon Tojek Re: Stuff If you send me files make sure there rgb or jpeg and preferrably under a
+meg. You can most definitely make prints. Just tell me when you need
+them.
+
+As far as tonight goes,I probably won&#x27;t make it. I think i&#x27;m coming down
+with something. Give Paula a call and ask her if she wants to go.
+
+P.S.-&gt; Tell Juneau I sent mail to Sonia from PDI inquiring about his
+reel, I haven&#x27;t heard back yet. What&#x27;s up with Hawaii?
+
+Later...
+
+-Robb G.
+
+Jon Tojek wrote:
+&gt;
+&gt; Robb Gardner wrote:
+&gt;
+&gt; &gt; Hey, I was in a class from 5 to 8pm last night so I didn&#x27;t get your
+&gt; &gt; message until this morning. How was Death Valley? Let&#x27;s hook up.
+&gt; &gt;
+&gt; &gt;  There&#x27;s a band I want to see next Monday at this club called the
+&gt; &gt; &quot;Bottom of the Hill&quot;. The name of the band is &quot;Mocket&quot;. Electronic stuff
+&gt; &gt; mostly, one of the guys in the group invented a phototheremin. It reacts
+&gt; […]">
+      <div class="mail-card-top"><span class="mail-number">18</span><time datetime="1999-04-21 14:45:15">Apr 21, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_18.txt</span><span class="mail-window-stage">03 / The long finish</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Robb Gardner</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Re: Stuff</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>Robb turns the project toward files, prints, and practical delivery.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">If you send me files make sure there rgb or jpeg and preferrably under a meg. You can most definitely make prints. Just tell me when you need them.</p>
+<p class="body-paragraph">As far as tonight goes,I probably won't make it. I think i'm coming down with something. Give Paula a call and ask her if she wants to go.</p>
+<p class="body-paragraph">P.S.-&gt; Tell Juneau I sent mail to Sonia from PDI inquiring about his reel, I haven't heard back yet. What's up with Hawaii?</p>
+<p class="body-paragraph">Later...</p>
+<p class="body-paragraph list-item">Robb G.</p>
+<p class="body-paragraph">Jon Tojek wrote:</p>
+<p class="body-paragraph quoted">Robb Gardner wrote:</p>
+<p class="body-paragraph quoted">Hey, I was in a class from 5 to 8pm last night so I didn't get your message until this morning. How was Death Valley? Let's hook up.</p>
+<p class="body-paragraph quoted">There's a band I want to see next Monday at this club called the "Bottom of the Hill". The name of the band is "Mocket". Electronic stuff mostly, one of the guys in the group invented a phototheremin. It reacts</p></div></details>
+      </div>
+    </article><article class="mail-card amber" id="mail-19" data-stage="finish" data-search="Robb Gardner Jon Tojek Re: Stuff Zip disk is no problem. That movie &quot;Pushing Tin&quot; that I just worked on
+came out in the theater last Friday. I might check it out tonight.
+
+Jon Tojek wrote:
+&gt;
+&gt; Robb Gardner wrote:
+&gt;
+&gt; &gt; How was the weekend? Did you go ride horses?
+&gt;
+&gt; Hello RG,
+&gt;
+&gt; Yes we went to Pacifica, but the horses were a little ragged run-down and
+&gt; tied up, so we did not ride them.  Instead toured around the white-trash
+&gt; […]">
+      <div class="mail-card-top"><span class="mail-number">19</span><time datetime="1999-04-26 13:50:04">Apr 26, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_19.txt</span><span class="mail-window-stage">03 / The long finish</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Robb Gardner</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Re: Stuff</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>The film becomes a file, a print, and something that can travel.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Zip disk is no problem. That movie "Pushing Tin" that I just worked on came out in the theater last Friday. I might check it out tonight.</p>
+<p class="body-paragraph">Jon Tojek wrote:</p>
+<p class="body-paragraph quoted">Robb Gardner wrote:</p>
+<p class="body-paragraph quoted">How was the weekend? Did you go ride horses?</p>
+<p class="body-paragraph quoted">Hello RG,</p>
+<p class="body-paragraph quoted">Yes we went to Pacifica, but the horses were a little ragged run-down and tied up, so we did not ride them. Instead toured around the white-trash</p></div></details>
+      </div>
+    </article><article class="mail-card amber" id="mail-20" data-stage="finish" data-search="stewart mcsherry Jon Tojek Re: David Cronenberg&#x27;s eXistenZ ( jt use a PC with macromedia software or get someone like sonic or other babe
+to do the website for ya
+
+cosmo is not really up to date unfortunately
+
+good luck with the lecture series and prize winning tour
+
+send me a video when you have it wrapped up and multiplied
+
+&gt; […]
+(
+
+&gt;stewart mcsherry wrote:
+&gt;
+&gt;&gt; hey man how did you do on the deadlines
+&gt;&gt;
+&gt;&gt; here is the new cronenberg supposed to have creepy effects
+&gt;
+&gt;Pretty good so far stuart.
+&gt;
+&gt;I am sending it all over the place now.
+&gt;
+&gt; […]">
+      <div class="mail-card-top"><span class="mail-number">20</span><time datetime="1999-04-27 17:10:49">Apr 27, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_20.txt</span><span class="mail-window-stage">03 / The long finish</span></div>
+        <div class="mail-head"><div><span>From</span><strong>stewart mcsherry</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Re: David Cronenberg&#x27;s eXistenZ (http://www.existenz.com/frame.html)</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>Final sound, the web page, and four submission routes become one machine.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">jt use a PC with macromedia software or get someone like sonic or other babe to do the website for ya</p>
+<p class="body-paragraph">cosmo is not really up to date unfortunately</p>
+<p class="body-paragraph">good luck with the lecture series and prize winning tour</p>
+<p class="body-paragraph">send me a video when you have it wrapped up and multiplied</p>
+<p class="body-paragraph">(</p>
+<p class="body-paragraph quoted">stewart mcsherry wrote:</p>
+<p class="body-paragraph quoted">hey man how did you do on the deadlines</p>
+<p class="body-paragraph quoted">here is the new cronenberg supposed to have creepy effects</p>
+<p class="body-paragraph quoted">Pretty good so far stuart.</p>
+<p class="body-paragraph quoted">I am sending it all over the place now.</p></div></details>
+      </div>
+    </article><article class="mail-card amber" id="mail-21" data-stage="finish" data-search="stewart mcsherry Jon Tojek Re: promotion machinery i think dot slash or whatever its called is better than dfilm, you should
+have the link to it i tink
+
+screw setting up your own website get some girl to do it for yuou
+
+shane sez  &quot;heil stewart&quot;
+
+&gt; […]
+
+&gt;stewart mcsherry wrote:
+&gt;
+&gt;&gt; heres a good one.
+&gt;&gt;
+&gt;&gt; dont forget DFILM also thats also a great festival
+&gt;&gt;
+&gt;&gt; shane is here now and he waves hello
+&gt;&gt;
+&gt;
+&gt;------------------------------------------
+&gt; […]">
+      <div class="mail-card-top"><span class="mail-number">21</span><time datetime="1999-04-27 21:22:10">Apr 27, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_21.txt</span><span class="mail-window-stage">03 / The long finish</span></div>
+        <div class="mail-head"><div><span>From</span><strong>stewart mcsherry</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Re: promotion machinery</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>The self-promotion machine gets a name and a sense of humor.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">i think dot slash or whatever its called is better than dfilm, you should have the link to it i tink</p>
+<p class="body-paragraph">screw setting up your own website get some girl to do it for yuou</p>
+<p class="body-paragraph">shane sez "heil stewart"</p>
+<p class="body-paragraph quoted">stewart mcsherry wrote:</p>
+<p class="body-paragraph quoted">heres a good one.</p>
+<p class="body-paragraph quoted">dont forget DFILM also thats also a great festival</p>
+<p class="body-paragraph quoted">shane is here now and he waves hello</p>
+<p class="body-paragraph quoted list-item">-----------------------------------------</p></div></details>
+      </div>
+    </article><article class="mail-card amber" id="mail-22" data-stage="finish" data-search="joao amorim Jon Tojek Re: check tapes sound It is not working Tojo, you gotta get another VCR...I need to talk to you
+imediatly, call me at ...
+
+&gt;From: Jon Tojek &lt;&gt;
+&gt;To: 
+&gt;Subject: check tapes sound
+&gt;Date: Thu, 06 May 1999 20:18:47 -0700
+&gt;
+&gt;
+&gt;
+&gt;--
+&gt;++++++++++++++++++++++
+&gt;   Let&#x27;s Get Medical
+&gt; […]">
+      <div class="mail-card-top"><span class="mail-number">22</span><time datetime="1999-05-18 07:02:41">May 18, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_22.txt</span><span class="mail-window-stage">03 / The long finish</span></div>
+        <div class="mail-head"><div><span>From</span><strong>joao amorim</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Re: check tapes sound</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>Even the finished tape hits one more technical obstacle.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">It is not working Tojo, you gotta get another VCR...I need to talk to you imediatly, call me at ...</p>
+<p class="body-paragraph quoted list-item">-</p>
+<p class="body-paragraph quoted">++++++++++++++++++++++ Let's Get Medical</p></div></details>
+      </div>
+    </article></div></section><section class="story-stage green" id="stage-public" data-stage="public"><div class="stage-header"><div class="stage-kicker"><span>04</span><i></i><b>JUN–JUL 1999</b></div><h2>The film leaves the room</h2><p>The short moves into user groups, screenings, parties, submissions, and the wider computer-art community.</p><div class="stage-milestone"><span>Milestone</span>June 17, 1999 — the Bay Area Maya User Group lists its long-awaited debut.</div></div><div class="stage-images">
+<figure class="stage-image reveal"><button class="image-button" data-full="media/images/scan-04.webp" data-caption="The production behind the public life" aria-label="Enlarge The production behind the public life"><img loading="lazy" src="media/images/scan-04.webp" alt="The production behind the public life"></button><figcaption>The production behind the public life</figcaption></figure>
+<figure class="stage-image reveal"><button class="image-button" data-full="media/images/still-02.webp" data-caption="Local project still" aria-label="Enlarge Local project still"><img loading="lazy" src="media/images/still-02.webp" alt="Local project still"></button><figcaption>Local project still</figcaption></figure>
+<figure class="stage-image reveal"><button class="image-button" data-full="media/images/caps-0025.webp" data-caption="LGM image study 25" aria-label="Enlarge LGM image study 25"><img loading="lazy" src="media/images/caps-0025.webp" alt="LGM image study 25"></button><figcaption>LGM image study 25</figcaption></figure>
+<figure class="stage-image reveal"><button class="image-button" data-full="media/images/caps-0027.webp" data-caption="LGM image study 27" aria-label="Enlarge LGM image study 27"><img loading="lazy" src="media/images/caps-0027.webp" alt="LGM image study 27"></button><figcaption>LGM image study 27</figcaption></figure>
+</div><div class="stage-mail-grid"><article class="mail-card green" id="mail-23" data-stage="public" data-search="Deanan DaSilva Jon Tojek Re: user group Hey Jon,
+
+Since you&#x27;re showing LGM at the bay area group,
+you should also show it at one of LA ones.
+I&#x27;m not handling that one any but I could
+arrange it with Will.
+
+BTW, I hear Rudy had some really cool
+master renderman shader he uses for everything.
+I&#x27;m helping Will setup and a Renderman page
+for lumis and that would be a cool
+one to put on there.
+
+Is the whole of LGM online?
+
+D">
+      <div class="mail-card-top"><span class="mail-number">23</span><time datetime="1999-06-04 08:17:48">Jun 4, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_23.txt</span><span class="mail-window-stage">04 / The film leaves the room</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Deanan DaSilva</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Re: user group</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>A Bay Area showing opens the door to a Los Angeles user group.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Hey Jon,</p>
+<p class="body-paragraph">Since you're showing LGM at the bay area group, you should also show it at one of LA ones. I'm not handling that one any but I could arrange it with Will.</p>
+<p class="body-paragraph">BTW, I hear Rudy had some really cool master renderman shader he uses for everything. I'm helping Will setup and a Renderman page for lumis and that would be a cool one to put on there.</p>
+<p class="body-paragraph">Is the whole of LGM online?</p>
+<p class="body-paragraph">D</p></div></details>
+      </div>
+    </article><article class="mail-card green" id="mail-24" data-stage="public" data-search="Ruieta Da Silva Jon Tojek Next Bay Area Maya User&#x27;s Group Meeting Bay Area Alias|Wavefront UserGroup Presents
+The Making of &quot;The Matrix&quot;
+
+WHEN:  Thursday, June 17th, 1999
+       6:30 - 7:30pm - Social Hour (No, it&#x27;s not going to be pizza again!) Eat, Drink &amp; Mingle!
+       7:30 - 10:00pm - Maya User Presentations
+
+WHERE: Fort Mason Center Landmark Bldg. A (Golden Gate Room?)
+       Marina Blvd. at Buchannan St.
+       San Francisco
+
+PRESENTATIONS:
+
+       Making of &quot;The Matrix:&quot;      The use of Maya for Mannix&#x27;s Box Office smash &quot;The Matrix.
+       Speakers:                    Rudy Poot, and Rodney Iwashina
+
+       Greenworks&#x27; xfrog software:  Worldwide leading virtual flora software.
+       Speakers:                    Stewart McSherry and Bernd Lintermann
+
+       H-Gun Labs:                  Chicago + San Francisco based post production house,
+       Speaker:                     Adrian Diamond
+
+      &quot;Let&#x27;s Get Medical&quot;:          The long awaited debut of the latest short from Jon Tojek and Peter Juneau.
+       Speaker:                     Jon Tojek
+
+An Open Forum will conclude the evening including a Q &amp; A for any Maya/Mel Script user
+problems.
+
+RSVP to Mike Tyau at: ">
+      <div class="mail-card-top"><span class="mail-number">24</span><time datetime="1999-06-09 20:07:00">Jun 9, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_24.txt</span><span class="mail-window-stage">04 / The film leaves the room</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Ruieta Da Silva</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Next Bay Area Maya User&#x27;s Group Meeting</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>The June user-group listing gives LGM a public debut and a room.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Bay Area Alias|Wavefront UserGroup Presents The Making of "The Matrix"</p>
+<p class="body-paragraph">WHEN: Thursday, June 17th, 1999 6:30 - 7:30pm - Social Hour (No, it's not going to be pizza again!) Eat, Drink &amp; Mingle! 7:30 - 10:00pm - Maya User Presentations</p>
+<p class="body-paragraph">WHERE: Fort Mason Center Landmark Bldg. A (Golden Gate Room?) Marina Blvd. at Buchannan St. San Francisco</p>
+<p class="body-paragraph">PRESENTATIONS:</p>
+<p class="body-paragraph">Making of "The Matrix:" The use of Maya for Mannix's Box Office smash "The Matrix. Speakers: Rudy Poot, and Rodney Iwashina</p>
+<p class="body-paragraph">Greenworks' xfrog software: Worldwide leading virtual flora software. Speakers: Stewart McSherry and Bernd Lintermann</p>
+<p class="body-paragraph">H-Gun Labs: Chicago + San Francisco based post production house, Speaker: Adrian Diamond</p>
+<p class="body-paragraph">"Let's Get Medical": The long awaited debut of the latest short from Jon Tojek and Peter Juneau. Speaker: Jon Tojek</p>
+<p class="body-paragraph">An Open Forum will conclude the evening including a Q &amp; A for any Maya/Mel Script user problems.</p>
+<p class="body-paragraph">RSVP to Mike Tyau at:</p></div></details>
+      </div>
+    </article><article class="mail-card green" id="mail-25" data-stage="public" data-search="Lisa Lo Jon Tojek Re: Let&#x27;s Get Medical SF showing Hi Jon,
+The niacin just gives you hives and activates your memory cells....
+As for LucasArts...
+No, because I was asking for too much money... plus I didn&#x27;t know 3D studio
+max...The range is quite different from
+the film industry.  When I looked around at LucasArts, the place looked
+neglected and disorganized...almost depressing.  I&#x27;ve submitted my stuff to
+LucasLearning . Because of their mission statement (no shoot-up games),
+I would lower my salary for them ...They called so I am in the running....
+I am also preparing to grow hemp on my family&#x27;s land in the big island...
+Sorry no THC there...
+Hope you were able to get your &quot;Let&#x27;s Get Medical&quot;out in time!!!
+Throw me some work!!!
+
+Lisa Lo
+Digital Forest
+Phone/Fax ">
+      <div class="mail-card-top"><span class="mail-number">25</span><time datetime="1999-06-12 08:55:46">Jun 12, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_25.txt</span><span class="mail-window-stage">04 / The film leaves the room</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Lisa Lo</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Re: Let&#x27;s Get Medical SF showing</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>The film is still being pushed while everyone’s career life keeps moving.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Hi Jon, The niacin just gives you hives and activates your memory cells.... As for LucasArts... No, because I was asking for too much money... plus I didn't know 3D studio max...The range is quite different from the film industry.</p>
+<p class="body-paragraph">When I looked around at LucasArts, the place looked neglected and disorganized...almost depressing. I've submitted my stuff to LucasLearning . Because of their mission statement (no shoot-up games), I would lower my salary for them ...They called so I am in the running.... I am also preparing to grow hemp on my family's land in the big island...</p>
+<p class="body-paragraph">Sorry no THC there... Hope you were able to get your "Let's Get Medical"out in time!!! Throw me some work!!!</p>
+<p class="body-paragraph">Lisa Lo Digital Forest Phone/Fax</p></div></details>
+      </div>
+    </article><article class="mail-card green" id="mail-26" data-stage="public" data-search="noel lawrence Jon Tojek Re: Film submission for the mission Jon,
+
+        Hi, I left a message for you on the number you gave me but I never
+got a response.  Here&#x27;s the situation:
+
+1. Artists&#x27; Television Access shows experimental and alternative works of
+video and film.  If your video falls under that definition, it&#x27;s worthy of
+consideration.
+
+2.  There are a number of parties where you could submit your video at
+ATA.  Craig Baldwin runs Other Cinema (you were looking at his website).
+Staff members of ATA curate various shows the rest of the time.   In your
+case, I would probably be the best person to look at your videotape.  I
+have been talking about putting together an experimental computer
+animation show with Molly Hankwitz (ATA board member) and David Cox (3D
+filmmaker) in December.  In the meantime, I might also show your video in
+the online gallery at the OtherCinema website (I am the webmaster).
+
+3.  As a budding 3D animator, I would love to speak with you about your
+craft.  I work in EIAS and Form-Z on Macintosh.  It would be interesting
+to know how my setup compares with using SGI workstations.  I would also
+be interested in getting tips in how to output for broadcast vs. film as
+well.
+
+4.  You can either call me at  or write me at this address.
+
+Thanks, Noel
+
+Jon Tojek wrote:
+
+&gt; Hello there,
+&gt;
+&gt; This is Jon Tojek, I am writing from the mission in San Francisco.
+&gt; Just saw your web page describing that you show films at 992 valencia.
+&gt; If you are looking for new materials I have just finished a 3 minute
+&gt; video that is shot on 35mm, and completely redone on SGI with
+&gt; 3D animation and  compositing.  It is a dark scary story of Dr.
+&gt; Scott a failing surgeon who is in love with the tools of the trade.
+&gt;
+&gt; […]">
+      <div class="mail-card-top"><span class="mail-number">26</span><time datetime="1999-06-21 11:05:58">Jun 21, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_26.txt</span><span class="mail-window-stage">04 / The film leaves the room</span></div>
+        <div class="mail-head"><div><span>From</span><strong>noel lawrence</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Re: Film submission for the mission</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>Artists’ Television Access offers a serious path for the finished video.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Jon,</p>
+<p class="body-paragraph">Hi, I left a message for you on the number you gave me but I never got a response. Here's the situation:</p>
+<p class="body-paragraph list-item">Artists' Television Access shows experimental and alternative works of</p>
+<p class="body-paragraph">video and film. If your video falls under that definition, it's worthy of consideration.</p>
+<p class="body-paragraph list-item">There are a number of parties where you could submit your video at</p>
+<p class="body-paragraph">ATA. Craig Baldwin runs Other Cinema (you were looking at his website). Staff members of ATA curate various shows the rest of the time. In your case, I would probably be the best person to look at your videotape. I have been talking about putting together an experimental computer animation show with Molly Hankwitz (ATA board member) and David Cox (3D filmmaker) in December. In the meantime, I might also show your video in the online gallery at the OtherCinema website (I am the webmaster).</p>
+<p class="body-paragraph list-item">As a budding 3D animator, I would love to speak with you about your</p>
+<p class="body-paragraph">craft. I work in EIAS and Form-Z on Macintosh. It would be interesting to know how my setup compares with using SGI workstations. I would also be interested in getting tips in how to output for broadcast vs. film as well.</p>
+<p class="body-paragraph list-item">You can either call me at or write me at this address.</p>
+<p class="body-paragraph">Thanks, Noel</p>
+<p class="body-paragraph">Jon Tojek wrote:</p>
+<p class="body-paragraph quoted">Hello there,</p>
+<p class="body-paragraph quoted">This is Jon Tojek, I am writing from the mission in San Francisco. Just saw your web page describing that you show films at 992 valencia. If you are looking for new materials I have just finished a 3 minute video that is shot on 35mm, and completely redone on SGI with 3D animation and compositing. It is a dark scary story of Dr. Scott a failing surgeon who is in love with the tools of the trade.</p></div></details>
+      </div>
+    </article><article class="mail-card green" id="mail-27" data-stage="public" data-search="Craig Schiller &#x27;Jon Tojek&#x27; RE: FW: Where am I? Jon- I only got a glimpse of your film at the party, and of course was far
+to wasted to remember,  let me know if your free to have a beer or dinner
+this week or next weekend, or if your in the area with a tape stop by.
+Craig
+
+&gt; -----Original Message-----
+&gt; From:	Jon Tojek [SMTP:]
+&gt; Sent:	Monday, July 12, 1999 10:31 AM
+&gt; To:	Craig Schiller
+&gt; Subject:	Re: FW: Where am I?
+&gt;
+&gt; &gt; working in Redwood City on a 6 month production cycle for a
+&gt; &gt; Playstation game that looks nothing like what you will see in the
+&gt; following
+&gt; &gt; URL.
+&gt; […]">
+      <div class="mail-card-top"><span class="mail-number">27</span><time datetime="1999-07-12 10:52:35">Jul 12, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_27.txt</span><span class="mail-window-stage">04 / The film leaves the room</span></div>
+        <div class="mail-head"><div><span>From</span><strong>Craig Schiller</strong></div><div><span>To</span><strong>&#x27;Jon Tojek&#x27;</strong></div><div class="mail-subject"><span>Subject</span><strong>RE: FW: Where am I?</strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>A party glimpse becomes another invitation to bring the tape around.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">Jon- I only got a glimpse of your film at the party, and of course was far to wasted to remember, let me know if your free to have a beer or dinner this week or next weekend, or if your in the area with a tape stop by. Craig</p>
+<p class="body-paragraph quoted list-item">----Original Message-----</p>
+<p class="body-paragraph quoted">working in Redwood City on a 6 month production cycle for a Playstation game that looks nothing like what you will see in the following</p>
+<p class="body-paragraph quoted body-heading">URL.</p></div></details>
+      </div>
+    </article><article class="mail-card green" id="mail-28" data-stage="public" data-search="stewart mcsherry Jon Tojek Re:  hi bro it turns out the fur.mll is bad.    you have to replace it with a new
+one from a/w.
+
+how could i be smart about that bro buy a vowel your employer fucked up no
+way to track that down from my side
+
+i think in a few months paint effects might be serious.  he added instancing
+so you can paint branches instead of whole
+trees and file textures so its less cartoony.  anyhow.
+
+henry ford sez  &quot; I love Xfrog its the best maya plugin ive used, EVER&quot;
+marilyn m sez &quot; i just cant live without my Xfrog plugin for organic
+structures&quot;
+you say &quot; i have extensively tested the xfrog plugin for maya and i have to
+say, WOW, it rules in my new lets get medical
+film that i worked on extensively for the past 6 months and which kicks ass
+a lot and i will become famous now all thanks to
+Xfrog. thanks guys for the cash in exchange for saying this and also be sure
+to buy lets get medical on ebay and yahoo
+and amazon as soon as possible&quot;
+
+what, no siggraph ?  whats in hawaii why that week hombre.   will be boring
+without you.   maybe i dont go i still cant get so
+excited about going to siggraph this time
+
+&gt; […]
+Sent: Wednesday, July 21, 1999 10:20 PM
+
+&gt; stewart mcsherry wrote:
+&gt;
+&gt; &gt; hi jon i just got 2.0 unlmited for NT.    i load it and everytnig runs,
+the
+&gt; &gt; first time, except i get some text error message about
+&gt; &gt; unable to move preferences mel error blah blah.
+&gt; &gt;
+&gt;
+&gt; Hey stew wort,
+&gt;
+&gt; I do not have an exact answer for this but I also had trouble with the
+&gt; NT software.  I would definately un-install any prior versions
+&gt; of maya, also delete or change name any prefs you have in
+&gt; the user dir.  I had a situation where I had to NOT install fur
+&gt; […]
+cartoonish
+&gt; &gt; so far, needs more textures.  will make a xfrog
+&gt; &gt; tree or whatever and throw some duncan stuff all around it.   that might
+&gt; &gt; actually do well as a marketing stunt.
+&gt;
+&gt; Yea man,
+&gt; Don&#x27;t sweat paint effects.  It is cool, but it does not replace making
+&gt; polygon trees and plants.
+&gt;
+&gt; &gt;
+&gt; &gt;
+&gt; […]
+and
+&gt; &gt; they still havent shipped 2.0 to us, we just have the
+&gt; &gt; cdroms.   also 2.0 unlimited update is missing a NT manual.    weird.
+&gt; &gt;
+&gt;
+&gt; Yes there have been many problems.
+&gt;
+&gt; &gt;
+&gt; &gt; sports arena, eh.
+&gt; &gt;
+&gt; &gt; dunno if i will make siggraph i dont seem very interested in going and
+&gt; […]">
+      <div class="mail-card-top"><span class="mail-number">28</span><time datetime="1999-07-21 23:00:51">Jul 21, 1999</time><span class="mail-archive">SanFran</span></div>
+      <div class="mail-window">
+        <div class="mail-window-bar"><span class="mail-led red"></span><span class="mail-led yellow"></span><span class="mail-led green"></span><span class="mail-window-title">message_28.txt</span><span class="mail-window-stage">04 / The film leaves the room</span></div>
+        <div class="mail-head"><div><span>From</span><strong>stewart mcsherry</strong></div><div><span>To</span><strong>Jon Tojek</strong></div><div class="mail-subject"><span>Subject</span><strong>Re: </strong></div></div>
+        <div class="mail-beat"><b>Why it matters</b><span>The film is still part of the conversation while the tools and plugins keep breaking.</span></div>
+        <details class="full-mail" open><summary>Cleaned historical message body</summary><div class="mail-body"><p class="body-paragraph">hi bro it turns out the fur.mll is bad. you have to replace it with a new one from a/w.</p>
+<p class="body-paragraph">how could i be smart about that bro buy a vowel your employer fucked up no way to track that down from my side</p>
+<p class="body-paragraph">i think in a few months paint effects might be serious. he added instancing so you can paint branches instead of whole trees and file textures so its less cartoony. anyhow.</p>
+<p class="body-paragraph">henry ford sez " I love Xfrog its the best maya plugin ive used, EVER" marilyn m sez " i just cant live without my Xfrog plugin for organic structures" you say " i have extensively tested the xfrog plugin for maya and i have to say, WOW, it rules in my new lets get medical film that i worked on extensively for the past 6 months and which kicks ass a lot and i will become famous now all thanks to Xfrog. thanks guys for the cash in exchange for saying this and also be sure to buy lets get medical on ebay and yahoo and amazon as soon as possible"</p>
+<p class="body-paragraph">what, no siggraph ? whats in hawaii why that week hombre. will be boring without you. maybe i dont go i still cant get so excited about going to siggraph this time</p>
+<p class="body-paragraph quoted">stewart mcsherry wrote:</p>
+<p class="body-paragraph quoted">hi jon i just got 2.0 unlmited for NT. i load it and everytnig runs,</p>
+<p class="body-paragraph">the</p>
+<p class="body-paragraph quoted">first time, except i get some text error message about unable to move preferences mel error blah blah.</p>
+<p class="body-paragraph quoted">Hey stew wort,</p>
+<p class="body-paragraph quoted">I do not have an exact answer for this but I also had trouble with the NT software. I would definately un-install any prior versions of maya, also delete or change name any prefs you have in the user dir. I had a situation where I had to NOT install fur</p>
+<p class="body-paragraph">cartoonish</p>
+<p class="body-paragraph quoted">so far, needs more textures. will make a xfrog tree or whatever and throw some duncan stuff all around it. that might actually do well as a marketing stunt.</p>
+<p class="body-paragraph quoted">Yea man, Don't sweat paint effects. It is cool, but it does not replace making polygon trees and plants.</p>
+<p class="body-paragraph">and</p>
+<p class="body-paragraph quoted">they still havent shipped 2.0 to us, we just have the cdroms. also 2.0 unlimited update is missing a NT manual. weird.</p>
+<p class="body-paragraph quoted">Yes there have been many problems.</p>
+<p class="body-paragraph quoted">sports arena, eh.</p>
+<p class="body-paragraph quoted">dunno if i will make siggraph i dont seem very interested in going and</p></div></details>
+      </div>
+    </article></div></section></section>
+<section class="credits"><div class="credits-card"><div class="kicker">CREDITS AND EVIDENCE</div><h2>Who made it</h2><ul><li><b>Jon Tojek</b> — director, animation, compositing, music, and web/presentation work.</li><li><b>Peter Juneau</b> — film and compositing collaborator; camera and production planning.</li><li><b>Robb Gardner</b> — grip, lighting, cinematography help, and early feedback.</li><li><b>Scott Kaminski</b> — Dr. Scott / lead actor, identified through the production record.</li><li><b>Sophia Longoria</b> — created the opening and closing credits.</li></ul><p class="telemetry">Built by Hermes Agent · local presentation layer only · canonical timeline and raw archives unchanged.</p></div><div class="notes"><div class="kicker">RESEARCH NOTES</div><h2>What remains open</h2><ul><li>The principal shoot date is labeled as a reconstruction, not a direct single-line fact.</li><li>The hospital exterior is current reference material; the production frames are labeled separately.</li><li>The selected bodies preserve useful correspondence while removing transport headers, signatures, credentials, contact details, and repeated mail-service material.</li><li>The local image set includes production frames, graphic interludes, and one clinical/reference scan; captions distinguish those categories.</li></ul><p class="telemetry">Source file: <code>data/lgm_timeline.json</code> · visible cards: 28 · stages: 4.</p></div></section>
+<section id="video" style="margin-top:30px"><div class="kicker">MOVING IMAGE</div><h2 style="font-size:38px;letter-spacing:-.05em;margin:8px 0">The surviving public versions</h2><p style="max-width:760px;color:#59616a">Local copies are available below for offline viewing. Public YouTube versions remain linked in the archive record.</p><video controls preload="metadata" style="width:min(900px,100%);border-radius:14px;background:#17191d;box-shadow:var(--shadow)"><source src="media/video/lgm_full_trimmed.mp4" type="video/mp4">Your browser does not support local video playback.</video><p class="telemetry"><a href="https://www.youtube.com/watch?v=3_ldy7pwy1Y">Original YouTube version</a> · <a href="https://www.youtube.com/watch?v=fDeWM3rRM5k">Redux / AI upscale</a> · <a href="https://www.youtube.com/@Tojek_VFX">Jon Tojek channel</a></p></section>
+
+<section class="festival-section reveal" id="festivals"><div class="festival-header"><div class="kicker">PUBLIC LIFE / FESTIVAL TRACE</div><h2>Where the film was sent — and where it surfaced</h2><p class="festival-lede">The surviving record contains one clear festival programme listing, a formal public debut, several documented submissions, and a number of later routes that were discussed but are not confirmed as selections. The categories below keep those histories separate.</p><div class="festival-toolbar" aria-label="Festival section navigation"><a href="#festival-screenings">Confirmed public appearances</a><a href="#festival-submissions">Documented submissions</a><a href="#festival-leads">Other routes and leads</a><a href="#festival-research">Research notes</a></div></div>
+<div class="festival-block" id="festival-screenings"><div class="festival-block-head"><h3>Confirmed public appearances</h3><p>Programme or event evidence exists for the film being shown or publicly presented.</p></div><div class="festival-grid"><article class="festival-card confirmed"><div class="festival-tag">Confirmed programme listing</div><h4>MicroCineFest 1999</h4><p class="festival-meta">November 3–7, 1999 · Baltimore, Maryland, USA</p><p>The archived 1999 programme lists <em>Let’s Get Medical</em> by Jon Tojek and Peter Juneau, 3:00, 35mm “shown on video.” This is the clearest surviving festival listing for the film.</p><p class="festival-source"><a href="https://microcinefest.org/MCF1999/MCF99.html" target="_blank" rel="noopener">1999 programme archive</a><a href="https://www.imdb.com/event/ev0000440/1999/1/" target="_blank" rel="noopener">Event record</a></p></article><article class="festival-card confirmed"><div class="festival-tag">Confirmed public debut · not a festival</div><h4>Bay Area Alias|Wavefront UserGroup</h4><p class="festival-meta">June 17, 1999 · Fort Mason Center, San Francisco, California</p><p>The archive invitation calls this the “long awaited debut” of the short, presented by Jon Tojek at the Bay Area Maya User’s Group meeting. It belongs in the public-life record, but it was a user-group event rather than a film festival.</p><p class="festival-source"><a href="#mail-24">Archive evidence · message 24</a></p></article></div></div>
+<div class="festival-block" id="festival-submissions"><div class="festival-block-head"><h3>Documented submissions and applications</h3><p>These records prove that the film was entered, sent, or identified as a submission target; they do not by themselves prove selection.</p></div><div class="festival-grid"><article class="festival-card submission"><div class="festival-tag">Formal submission documented</div><h4>SIGGRAPH ’99 Computer Animation Festival</h4><p class="festival-meta">August 8–13, 1999 · Los Angeles, California, USA</p><p>The archive contains the SIGGRAPH 99 account record and submission acknowledgement for <em>Let’s Get Medical</em>. No acceptance notice was found in the local record.</p><p class="festival-source"><a href="https://dl.acm.org/doi/proceedings/10.1145/312379?id" target="_blank" rel="noopener">ACM SIGGRAPH 99 record</a><a href="#mail-15">Archive evidence · message 15</a></p></article><article class="festival-card submission"><div class="festival-tag">Two formal entries documented</div><h4>Prix Ars Electronica 1999</h4><p class="festival-meta">1999 festival year · Linz, Austria</p><p>The film was entered twice: <strong>Computer Animation A-52</strong> and <strong>Visual Effects F-12</strong>. The local email record confirms both entries and the April 25, 1999 postmark deadline; exact 1999 festival dates were not recovered.</p><p class="festival-source"><a href="https://archive.aec.at/prix/" target="_blank" rel="noopener">Prix archive</a><a href="#mail-16">Archive evidence · animation entry</a><a href="#mail-17">Archive evidence · effects entry</a></p></article><article class="festival-card submission"><div class="festival-tag">Submission target named in archive</div><h4>Nomad VideoFilm Festival</h4><p class="festival-meta">1999 · West Coast touring showcase; cities varied</p><p>Jon’s April 27, 1999 correspondence names Nomad among the first four places the finished film was being sent. The surviving archive does not contain a selection notice or a confirmed LGM programme entry.</p><p class="festival-source"><a href="https://www.verticalpool.com/nomad.html" target="_blank" rel="noopener">Festival history</a><a href="#mail-20">Archive evidence · promotion route</a></p></article><article class="festival-card submission"><div class="festival-tag">Online festival target / web host</div><h4>Zoie Films Internet Film Festival</h4><p class="festival-meta">1999 · online; Zoie Films associated with Georgia</p><p>Zoie is named with SIGGRAPH, Prix Ars, and Nomad as an early destination. A June 1999 message also refers to an older video version being hosted at Zoie Films. No selection notice or exact 1999 festival dates were recovered.</p><p class="festival-source"><a href="#mail-20">Archive evidence · first four destinations</a><a href="#mail-21">Archive evidence · web promotion</a></p></article></div></div>
+<div class="festival-block" id="festival-leads"><div class="festival-block-head"><h3>Other routes and leads</h3><p>These are useful traces for future archive or Wayback research, but they are not presented as confirmed screenings.</p></div><div class="festival-grid"><article class="festival-card lead"><div class="festival-tag">Target discussed · not confirmed</div><h4>D.FILM Digital Film Festival</h4><p class="festival-meta">1999 target · exact event date and location not established</p><p>Stewart McSherry specifically calls D.FILM “a great festival,” and Jon replies that he planned to send the film after the final sound work. No selection notice was found.</p><p class="festival-source"><a href="#mail-21">Archive evidence · message 21</a></p></article><article class="festival-card lead"><div class="festival-tag">Hoped-for outlet · not confirmed</div><h4>RESFEST Digital Film Festival</h4><p class="festival-meta">1999 touring festival · multiple U.S. cities and international stops</p><p>A June 1999 message says the film would be shown somewhere again, “hoping ResFest.” That wording records a hope, not an acceptance. Contemporary reporting confirms the 1999 RESFEST touring circuit, but not LGM’s inclusion.</p><p class="festival-source"><a href="https://www.indiewire.com/news/general-news/festivals-resfest-1999-fest-wraps-u-s-tour-before-heading-to-japan-81964/" target="_blank" rel="noopener">1999 festival report</a></p></article><article class="festival-card lead"><div class="festival-tag">Submission route offered · not confirmed</div><h4>Artists’ Television Access / Other Cinema</h4><p class="festival-meta">June 1999 · 992 Valencia Street, San Francisco, California</p><p>Noel Lawrence describes ATA’s experimental film and video programmes, Craig Baldwin’s Other Cinema, a possible December computer-animation show, and a possible online gallery. The message does not confirm that LGM was selected.</p><p class="festival-source"><a href="#mail-26">Archive evidence · message 26</a></p></article></div></div>
+<div class="festival-block festival-research" id="festival-research"><div class="festival-block-head"><h3>Research notes</h3><p>How to read the evidence on this page.</p></div><ul><li><strong>Confirmed</strong> means a surviving programme, invitation, or event record names the film as shown or publicly presented.</li><li><strong>Documented submission</strong> means the local archive contains an entry, acknowledgement, or explicit statement that the film was sent there.</li><li><strong>Lead</strong> means the archive records a possible route, recommendation, or hope, but no acceptance or programme record has been found.</li><li>The festival names above use the formal names recovered from festival archives, contemporary reporting, or the organisations’ own historical pages rather than expanding the shorthand in the email by guesswork.</li><li>Sources checked for this section include the MicroCineFest 1999 programme archive, ACM’s SIGGRAPH 99 record, the Ars Electronica Prix archive, the Nomad VideoFilm Festival history, and contemporary RESFEST reporting.</li></ul><p class="festival-footnote"><strong>Archive boundary:</strong> this section reports what can currently be verified from the local LGM correspondence and surviving public records. It does not turn an application into an acceptance.</p></div></section>
+
+<section class="method-section reveal" id="how-this-site-was-made"><div class="method-grid"><div><div class="kicker">THE WORK BEHIND THE WORK</div><h2>How this site was made</h2><p class="method-lede">This site was assembled by Hermes Agent as a local, searchable way to turn a difficult private archive into a readable production history.</p><p>The original tar files were located, and three raw archive streams—compressed and encrypted at source—were searched and indexed without sending the archive to a remote service. Headers, dates, correspondents, and relationships were organized first; selected story material could then be assembled from the first email to the last in a clear chronological way.</p><p>That means the LGM story is not an isolated web page. It is one small, carefully selected part of a much larger main archive: <strong>1,081 emails</strong> involving <strong>1,367 indexed people and contact nodes</strong> across <strong>five calendar years, 1995–1999</strong>. The same structure can now support many different stories, each with its own beginning, middle, end, evidence, and visual record.</p><p>Everything here was created locally with Hermes and AI sovereignty: local files, local indexing, local presentation, and human direction at every meaningful step.</p><p>Jon Tojek does not claim to know anything about web design. He does, however, yell verbally at the computer—and at Hermes—until the page looks good. That is part of the production process too.</p><div class="method-stamp"><i></i><span>Local archive · human-directed · built with Hermes</span></div></div><div class="method-facts" aria-label="Archive scale"><div class="method-fact"><b>1,081</b><span>emails in the main archive</span></div><div class="method-fact"><b>1,367</b><span>indexed people and contact nodes</span></div><div class="method-fact"><b>1995–1999</b><span>five calendar years</span></div><div class="method-fact"><b>28</b><span>emails selected for this LGM story</span></div></div></div>
+</main>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer"><button class="lightbox-close" id="lightbox-close">Close ×</button><div><img id="lightbox-image" src="" alt=""><div class="lightbox-caption" id="lightbox-caption"></div></div></div>
+<script>(function(){const root=document.documentElement;root.classList.add('js-motion');const lb=document.getElementById('lightbox'),img=document.getElementById('lightbox-image'),cap=document.getElementById('lightbox-caption'),closeBtn=document.getElementById('lightbox-close');let lastFocus=null;function open(button){lastFocus=document.activeElement;img.src=button.dataset.full;img.alt=button.dataset.caption||'';cap.textContent=button.dataset.caption||'';lb.classList.add('open');document.body.style.overflow='hidden';closeBtn.focus();}function close(){lb.classList.remove('open');img.src='';document.body.style.overflow='';if(lastFocus)lastFocus.focus();}document.querySelectorAll('[data-full]').forEach(function(button,index){button.style.setProperty('--reveal-index',index%10);button.addEventListener('click',function(){open(button);});button.addEventListener('pointermove',function(e){if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;const r=button.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;button.style.setProperty('--ry',(x*5).toFixed(2)+'deg');button.style.setProperty('--rx',(-y*5).toFixed(2)+'deg');});button.addEventListener('pointerleave',function(){button.style.setProperty('--rx','0deg');button.style.setProperty('--ry','0deg');});});closeBtn.addEventListener('click',close);lb.addEventListener('click',function(e){if(e.target===lb)close();});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&lb.classList.contains('open'))close();if(e.key==='Tab'&&lb.classList.contains('open')){e.preventDefault();closeBtn.focus();}});const revealItems=document.querySelectorAll('.reveal');if('IntersectionObserver' in window){const observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}});},{threshold:.12,rootMargin:'0px 0px -40px'});revealItems.forEach(function(el){observer.observe(el);});}else{revealItems.forEach(function(el){el.classList.add('is-visible');});}})();</script>
+</body></html>

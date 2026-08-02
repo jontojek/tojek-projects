@@ -1,0 +1,212 @@
+{
+  "project": "Let's Get Medical",
+  "purpose": "GitHub-ready static website asset manifest",
+  "active": {
+    "entrypoint": "index.html",
+    "images": [
+      {
+        "file": "media/images/caps-0001.webp",
+        "width": 624,
+        "height": 416,
+        "bytes": 10594,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/caps-0003.webp",
+        "width": 624,
+        "height": 416,
+        "bytes": 12208,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/caps-0006-enhanced.webp",
+        "width": 1248,
+        "height": 832,
+        "bytes": 47572,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/caps-0008.webp",
+        "width": 624,
+        "height": 416,
+        "bytes": 12558,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/caps-0009.webp",
+        "width": 624,
+        "height": 416,
+        "bytes": 8164,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/caps-0010.webp",
+        "width": 624,
+        "height": 416,
+        "bytes": 9268,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/caps-0014.webp",
+        "width": 624,
+        "height": 416,
+        "bytes": 10026,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/caps-0015.webp",
+        "width": 624,
+        "height": 416,
+        "bytes": 10108,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/caps-0018.webp",
+        "width": 624,
+        "height": 416,
+        "bytes": 7734,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/caps-0020.webp",
+        "width": 624,
+        "height": 416,
+        "bytes": 16796,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/caps-0021.webp",
+        "width": 624,
+        "height": 416,
+        "bytes": 19842,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/caps-0022.webp",
+        "width": 624,
+        "height": 416,
+        "bytes": 8852,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/caps-0023.webp",
+        "width": 624,
+        "height": 416,
+        "bytes": 8764,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/caps-0024.webp",
+        "width": 624,
+        "height": 416,
+        "bytes": 10750,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/caps-0025.webp",
+        "width": 624,
+        "height": 416,
+        "bytes": 19288,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/caps-0027.webp",
+        "width": 624,
+        "height": 416,
+        "bytes": 8442,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/cpmc-pacific-campus-exterior.webp",
+        "width": 862,
+        "height": 575,
+        "bytes": 82944,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/scan-01.webp",
+        "width": 1772,
+        "height": 1172,
+        "bytes": 181150,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/scan-02.webp",
+        "width": 1772,
+        "height": 1099,
+        "bytes": 179168,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/scan-03.webp",
+        "width": 1104,
+        "height": 956,
+        "bytes": 103314,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/scan-04.webp",
+        "width": 1776,
+        "height": 1192,
+        "bytes": 142646,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/scan-05.webp",
+        "width": 1772,
+        "height": 1120,
+        "bytes": 107834,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/scan-06.webp",
+        "width": 1784,
+        "height": 1171,
+        "bytes": 147688,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/scan-07.webp",
+        "width": 1772,
+        "height": 1108,
+        "bytes": 192334,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/scan-09.webp",
+        "width": 1768,
+        "height": 1172,
+        "bytes": 169194,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/still-02.webp",
+        "width": 352,
+        "height": 262,
+        "bytes": 8026,
+        "format": "WEBP"
+      },
+      {
+        "file": "media/images/still-03.webp",
+        "width": 352,
+        "height": 262,
+        "bytes": 3314,
+        "format": "WEBP"
+      }
+    ],
+    "video": {
+      "file": "media/video/lgm_full_trimmed.mp4",
+      "bytes": 8280245
+    }
+  },
+  "quarantine": {
+    "used_originals": "media/Junk/source-images/",
+    "unused_assets": "media/Junk/unused-media/",
+    "note": "Files are retained for review and can be deleted later."
+  },
+  "verification": {
+    "local_html_asset_references": 28,
+    "missing_local_references": [],
+    "active_image_format": "WebP"
+  }
+}
