@@ -1,0 +1,12 @@
+{
+  "title": "ref2video — Heroines in a Miniature Bar",
+  "blurb": "Five action heroines composited into a Rolife miniature bar plate with Qwen-Image-Edit, animated through MiniMax H3, and cut into one continuous reel. The run report documents the locked quality recipe found across 20+ renders — bypass the Kontext scale node, feed refs at ~2MP, keep the plate at ~1MP — which took render time from ten minutes to two.",
+  "tags": ["Hermes Agent", "ComfyUI", "MiniMax H3"],
+  "date": "2026-08-05",
+  "cta": "Read the run report",
+  "thumb": {
+    "video": "assets/thumb_ref2video.mp4",
+    "poster": "assets/thumb_ref2video.jpg",
+    "alt": "An empty miniature bar set, then five action heroines composited into it one after another"
+  }
+}

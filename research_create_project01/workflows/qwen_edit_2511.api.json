@@ -1,0 +1,356 @@
+{
+  "41": {
+    "inputs": {
+      "image": "minibar_A7_0027_v02_sml_1344x768.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "195": {
+    "inputs": {
+      "filename_prefix": "Qwen_Edit_2511",
+      "format": "png",
+      "format.bit_depth": "8-bit",
+      "format.input_color_space": "sRGB",
+      "images": [
+        "170:158",
+        0
+      ]
+    },
+    "class_type": "SaveImageAdvanced",
+    "_meta": {
+      "title": "Save Image (Advanced)"
+    }
+  },
+  "196": {
+    "inputs": {
+      "image": "chosen_ref.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "170:145": {
+    "inputs": {
+      "shift": 3.1,
+      "model": [
+        "170:161",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingAuraFlow",
+    "_meta": {
+      "title": "ModelSamplingAuraFlow"
+    }
+  },
+  "170:146": {
+    "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "170:147": {
+    "inputs": {
+      "reference_latents_method": "index_timestep_zero",
+      "conditioning": [
+        "170:149",
+        0
+      ]
+    },
+    "class_type": "FluxKontextMultiReferenceLatentMethod",
+    "_meta": {
+      "title": "Edit Model Reference Method"
+    }
+  },
+  "170:148": {
+    "inputs": {
+      "reference_latents_method": "index_timestep_zero",
+      "conditioning": [
+        "170:151",
+        0
+      ]
+    },
+    "class_type": "FluxKontextMultiReferenceLatentMethod",
+    "_meta": {
+      "title": "Edit Model Reference Method"
+    }
+  },
+  "170:149": {
+    "inputs": {
+      "prompt": "",
+      "clip": [
+        "170:162",
+        0
+      ],
+      "vae": [
+        "170:146",
+        0
+      ],
+      "image1": [
+        "196",
+        0
+      ],
+      "image2": [
+        "41",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "170:151": {
+    "inputs": {
+      "prompt": "Place the female character (subject) from Image1 into the miniature bar scene of Image2. Maintain her exact identity, pose, and clothing from Image1, but relight and realistically scale her down to perfectly match the size of the miniature environment. She must be integrated into the diorama as if she is another detailed miniature figure or prop, standing on the bar floor. The resulting image must be a photorealistic depiction of a high-quality miniature set, not a composite of a full-sized person in a real bar.",
+      "clip": [
+        "170:162",
+        0
+      ],
+      "vae": [
+        "170:146",
+        0
+      ],
+      "image1": [
+        "196",
+        0
+      ],
+      "image2": [
+        "41",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus (Positive)"
+    }
+  },
+  "170:152": {
+    "inputs": {
+      "strength": 1,
+      "pre_cfg": false,
+      "model": [
+        "170:145",
+        0
+      ]
+    },
+    "class_type": "CFGNorm",
+    "_meta": {
+      "title": "CFGNorm"
+    }
+  },
+  "170:153": {
+    "inputs": {
+      "lora_name": "qwen\\Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "strength_model": 1,
+      "model": [
+        "170:152",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "170:154": {
+    "inputs": {
+      "value": 4
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "CFG"
+    }
+  },
+  "170:155": {
+    "inputs": {
+      "value": 1
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "CFG"
+    }
+  },
+  "170:156": {
+    "inputs": {
+      "pixels": [
+        "196",
+        0
+      ],
+      "vae": [
+        "170:146",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "170:161": {
+    "inputs": {
+      "unet_name": "qwen_image_edit_2511_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "170:162": {
+    "inputs": {
+      "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "170:163": {
+    "inputs": {
+      "switch": [
+        "170:168",
+        0
+      ],
+      "on_false": [
+        "170:152",
+        0
+      ],
+      "on_true": [
+        "170:153",
+        0
+      ]
+    },
+    "class_type": "ComfySwitchNode",
+    "_meta": {
+      "title": "Switch (Model)"
+    }
+  },
+  "170:165": {
+    "inputs": {
+      "value": 4
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Steps"
+    }
+  },
+  "170:166": {
+    "inputs": {
+      "value": 40
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Steps"
+    }
+  },
+  "170:168": {
+    "inputs": {
+      "value": false
+    },
+    "class_type": "PrimitiveBoolean",
+    "_meta": {
+      "title": "Enable 4steps LoRA?"
+    }
+  },
+  "170:164": {
+    "inputs": {
+      "switch": [
+        "170:168",
+        0
+      ],
+      "on_false": [
+        "170:154",
+        0
+      ],
+      "on_true": [
+        "170:155",
+        0
+      ]
+    },
+    "class_type": "ComfySwitchNode",
+    "_meta": {
+      "title": "Switch (CFG)"
+    }
+  },
+  "170:167": {
+    "inputs": {
+      "switch": [
+        "170:168",
+        0
+      ],
+      "on_false": [
+        "170:166",
+        0
+      ],
+      "on_true": [
+        "170:165",
+        0
+      ]
+    },
+    "class_type": "ComfySwitchNode",
+    "_meta": {
+      "title": "Switch (Steps)"
+    }
+  },
+  "170:169": {
+    "inputs": {
+      "seed": 276174131470882,
+      "steps": [
+        "170:167",
+        0
+      ],
+      "cfg": [
+        "170:164",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "170:163",
+        0
+      ],
+      "positive": [
+        "170:148",
+        0
+      ],
+      "negative": [
+        "170:147",
+        0
+      ],
+      "latent_image": [
+        "170:156",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "170:158": {
+    "inputs": {
+      "samples": [
+        "170:169",
+        0
+      ],
+      "vae": [
+        "170:146",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  }
+}

@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>research and create — Project 01 Action Hero</title>
+<meta name="description" content="High-quality reference images from the open web, ranked, image-edited with ComfyUI, then run through i2v with local MiniMax H3.">
+<style>
+  :root {
+    --ground:#F4F5F7; --surface:#FFFFFF; --sunk:#EBEDF1;
+    --ink:#15181C; --ink-soft:#4A5058; --ink-mute:#767E8A;
+    --rule:#D9DCE2; --rule-soft:#E6E9ED;
+    --agent:#3F6285; --human:#B26520; --human-tint:#FBF1E4; --human-edge:#E0B583;
+    --ok:#2F6B4F; --bad:#A33F2E;
+    --shadow:0 1px 2px rgba(21,24,28,.06), 0 8px 24px rgba(21,24,28,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground:#101318; --surface:#171B21; --sunk:#1D222A;
+      --ink:#E6E9EE; --ink-soft:#B3BAC5; --ink-mute:#838C99;
+      --rule:#2A303A; --rule-soft:#232932;
+      --agent:#86A9CB; --human:#E3A45C; --human-tint:#241D15; --human-edge:#5E452A;
+      --ok:#6FBF95; --bad:#E08272;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.28);
+    }
+  }
+  :root[data-theme="dark"] { --ground:#101318; --surface:#171B21; --sunk:#1D222A; --ink:#E6E9EE; --ink-soft:#B3BAC5; --ink-mute:#838C99; --rule:#2A303A; --rule-soft:#232932; --agent:#86A9CB; --human:#E3A45C; --human-tint:#241D15; --human-edge:#5E452A; --ok:#6FBF95; --bad:#E08272; --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.28); }
+  :root[data-theme="light"] { --ground:#F4F5F7; --surface:#FFFFFF; --sunk:#EBEDF1; --ink:#15181C; --ink-soft:#4A5058; --ink-mute:#767E8A; --rule:#D9DCE2; --rule-soft:#E6E9ED; --agent:#3F6285; --human:#B26520; --human-tint:#FBF1E4; --human-edge:#E0B583; --ok:#2F6B4F; --bad:#A33F2E; --shadow:0 1px 2px rgba(21,24,28,.06), 0 8px 24px rgba(21,24,28,.05); }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  code, kbd, pre, .mono { font-family:"Cascadia Code","Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; }
+  .wrap { max-width:68rem; margin:0 auto; padding:3rem 1.5rem 5rem; }
+  img { max-width:100%; height:auto; display:block; }
+  :where(a):focus-visible, :where(button):focus-visible { outline:2px solid var(--human); outline-offset:2px; }
+
+  header { border-bottom:1px solid var(--rule); padding-bottom:1.9rem; }
+  .eyebrow { font-family:"Cascadia Code",Consolas,ui-monospace,monospace; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-mute); margin:0 0 .9rem; }
+  h1 { font-size:clamp(1.9rem,4.5vw,2.7rem); line-height:1.08; margin:0 0 .8rem; letter-spacing:-.022em; font-weight:650; text-wrap:balance; }
+  .subhead { margin:0 0 .8rem; font-size:1.05rem; font-weight:550; color:var(--human); letter-spacing:-.01em; }
+  .standfirst { margin:0; max-width:46rem; font-size:1.06rem; color:var(--ink-soft); }
+  .meta { display:flex; flex-wrap:wrap; gap:.45rem 1.5rem; margin-top:1.5rem; font-family:"Cascadia Code",Consolas,ui-monospace,monospace; font-size:.75rem; color:var(--ink-mute); }
+  .meta b { color:var(--ink-soft); font-weight:500; }
+
+  .dl-banner { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1rem 1.5rem; margin-top:2rem; padding:1rem 1.2rem; border:1px solid var(--agent); border-left:5px solid var(--agent); border-radius:6px; background:linear-gradient(180deg,var(--surface),var(--sunk)); box-shadow:var(--shadow); }
+  .dl-text { display:flex; flex-direction:column; gap:.2rem; }
+  .dl-kicker { font-family:"Cascadia Code",Consolas,ui-monospace,monospace; font-size:.66rem; letter-spacing:.13em; text-transform:uppercase; color:var(--agent); }
+  .dl-title { font-weight:620; font-size:.98rem; color:var(--ink); }
+  .dl-links { display:flex; gap:.6rem; flex-wrap:wrap; }
+  .dl-btn { display:inline-flex; align-items:center; gap:.55rem; padding:.55rem .85rem; border:1px solid var(--rule); border-radius:4px; background:var(--surface); color:var(--ink); text-decoration:none; font-weight:600; font-size:.84rem; box-shadow:var(--shadow); transition:border-color .12s, transform .12s, box-shadow .12s; }
+  .dl-btn:hover { border-color:var(--agent); transform:translateY(-1px); box-shadow:0 2px 4px rgba(21,24,28,.08), 0 8px 24px rgba(21,24,28,.08); }
+  .dl-btn:active { transform:translateY(0); }
+  .dl-ico { font-size:1rem; line-height:1; }
+  .dl-file { font-family:"Cascadia Code",Consolas,ui-monospace,monospace; font-size:.66rem; color:var(--ink-mute); font-weight:400; }
+
+  section { margin-top:3.4rem; padding:1.4rem 1.5rem 1.1rem; border-radius:6px; border:1px solid var(--rule-soft); background:var(--surface); }
+  h2 { font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; font-family:"Cascadia Code",Consolas,ui-monospace,monospace; color:var(--ink-mute); font-weight:500; margin:0 0 1.3rem; padding-bottom:.6rem; border-bottom:1px solid var(--rule-soft); }
+  h2 .chip { display:inline-block; width:.6rem; height:.6rem; border-radius:2px; margin-right:.55rem; vertical-align:1px; }
+  section.s-pipe h2 { color:var(--agent); border-bottom-color:var(--agent); }
+  section.s-topics h2 { color:var(--ok); border-bottom-color:var(--ok); }
+  section.s-recipe h2 { color:var(--human); border-bottom-color:var(--human); }
+  section.s-sidecars h2 { color:#7A5C9E; border-bottom-color:#7A5C9E; }
+  section.s-built h2 { color:#1E7A78; border-bottom-color:#1E7A78; }
+  section.s-reel h2 { color:var(--bad); border-bottom-color:var(--bad); }
+  section.s-pipe { border-left:4px solid var(--agent); }
+  section.s-topics { border-left:4px solid var(--ok); }
+  section.s-recipe { border-left:4px solid var(--human); }
+  section.s-sidecars { border-left:4px solid #7A5C9E; }
+  section.s-built { border-left:4px solid #1E7A78; }
+  section.s-reel { border-left:4px solid var(--bad); }
+  section.s-topics { background:linear-gradient(180deg,var(--surface),var(--sunk)); }
+  section.s-recipe { background:linear-gradient(180deg,var(--surface),var(--sunk)); }
+  section.s-sidecars { background:linear-gradient(180deg,var(--surface),var(--sunk)); }
+  section.s-built { background:linear-gradient(180deg,var(--surface),var(--sunk)); }
+  p { margin:0 0 1rem; max-width:46rem; }
+
+  figure { margin:0 0 1.5rem; }
+  figure img { border:1px solid var(--rule); border-radius:3px; box-shadow:var(--shadow); }
+  figcaption { margin-top:.6rem; font-size:.8rem; color:var(--ink-mute); max-width:46rem; font-family:"Cascadia Code",Consolas,ui-monospace,monospace; line-height:1.5; }
+  figcaption b { color:var(--ink-soft); font-weight:500; }
+
+  .legend { display:flex; gap:2.2rem; flex-wrap:wrap; margin-bottom:1.7rem; font-family:"Cascadia Code",Consolas,ui-monospace,monospace; font-size:1.02rem; font-weight:600; }
+  .legend span { display:inline-flex; align-items:center; gap:.65rem; color:var(--ink); }
+  .legend .l-role { color:var(--ink-mute); font-weight:400; margin-right:.3rem; }
+  .swatch { width:1.05rem; height:1.05rem; flex:none; border-radius:2px; box-shadow:var(--shadow); }
+  .sw-agent { background:var(--agent); }
+  .sw-human { background:var(--human); }
+
+  .track { display:grid; grid-template-columns:1fr 1fr; column-gap:2.5rem; row-gap:.8rem; position:relative; }
+  .step { background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:.9rem 1rem; grid-column:1; }
+  .step.human { grid-column:2; background:var(--human-tint); border-color:var(--human-edge); }
+  .key { font-family:"Cascadia Code",Consolas,ui-monospace,monospace; font-size:.7rem; letter-spacing:.06em; color:var(--agent); display:block; margin-bottom:.3rem; }
+  .step.human .key, .gate .key { color:var(--human); }
+  .step h3 { margin:0 0 .25rem; font-size:.97rem; font-weight:620; letter-spacing:-.01em; }
+  .step p { margin:0; font-size:.86rem; line-height:1.5; color:var(--ink-soft); }
+  .topic-ex { display:grid; grid-template-columns:repeat(3,1fr); gap:.55rem; margin-top:.8rem; }
+  .topic-ex figure { margin:0; }
+  .topic-ex img { width:100%; aspect-ratio:3/2; object-fit:cover; border:1px solid var(--rule); border-radius:3px; box-shadow:var(--shadow); }
+  .topic-ex figcaption { margin-top:.3rem; font-size:.62rem; color:var(--ink-mute); font-family:"Cascadia Code",Consolas,ui-monospace,monospace; line-height:1.35; }
+  .lane-tag { display:none; }
+
+  .gate { grid-column:1/-1; background:var(--human-tint); border:1px solid var(--human-edge); border-radius:3px; padding:1.15rem 1.3rem; margin:.6rem 0; }
+  .step.result { grid-column:1/-1; background:var(--surface); border:1px solid var(--rule); border-left:4px solid var(--agent); padding:1.1rem 1.2rem; margin:.4rem 0; }
+  .step.result h3 { font-size:1.05rem; }
+  .step.result p { max-width:50rem; }
+  .gate h3 { margin:0 0 .45rem; font-size:1.1rem; font-weight:660; letter-spacing:-.012em; }
+  .gate p { max-width:48rem; font-size:.9rem; color:var(--ink-soft); margin:0 0 .8rem; }
+  .gate p:last-child { margin-bottom:0; }
+  .gate figure { margin:1rem 0 .9rem; }
+
+  pre { background:var(--sunk); border:1px solid var(--rule-soft); border-radius:3px; padding:.85rem 1rem; overflow-x:auto; margin:0 0 1rem; font-size:.81rem; line-height:1.65; }
+  .cmt { color:var(--ink-mute); }
+  code.i { background:var(--sunk); border:1px solid var(--rule-soft); padding:.08em .36em; border-radius:2px; font-size:.85em; white-space:nowrap; }
+
+  .heroes { display:grid; gap:1.25rem; grid-template-columns:repeat(3,1fr); }
+  .hero { border:1px solid var(--rule); border-radius:3px; overflow:hidden; background:var(--surface); }
+  .hero img { border:0; border-radius:0; box-shadow:none; width:100%; }
+  .hero .vlabel { padding:.6rem .85rem; font-family:"Cascadia Code",Consolas,ui-monospace,monospace; font-size:.72rem; line-height:1.5; border-top:1px solid var(--rule-soft); }
+  .hero .vhead { display:block; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.15rem; color:var(--agent); }
+  .hero .vwhy { color:var(--ink-mute); }
+
+  .tablewrap { overflow-x:auto; }
+  table { border-collapse:collapse; width:100%; font-size:.88rem; }
+  th, td { text-align:left; padding:.6rem .9rem .6rem 0; border-bottom:1px solid var(--rule-soft); vertical-align:top; }
+  th { font-family:"Cascadia Code",Consolas,ui-monospace,monospace; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-mute); font-weight:500; }
+  td:first-child { white-space:nowrap; padding-right:1.5rem; }
+  td.what { color:var(--ink-soft); }
+  td.num { font-variant-numeric:tabular-nums; font-family:"Cascadia Code",Consolas,ui-monospace,monospace; }
+
+  .note { border-left:3px solid var(--human); background:var(--human-tint); padding:1rem 1.25rem; border-radius:0 3px 3px 0; margin:0 0 1.25rem; }
+  .note p { margin:0; max-width:48rem; font-size:.92rem; }
+  .note strong { color:var(--ink); }
+  .note.ok { border-left-color:var(--ok); }
+
+  .status { list-style:none; padding:0; margin:0; }
+  .status li { display:flex; gap:.9rem; padding:.6rem 0; border-bottom:1px solid var(--rule-soft); font-size:.9rem; color:var(--ink-soft); align-items:baseline; }
+  .status li:last-child { border-bottom:0; }
+  .tick { font-family:"Cascadia Code",Consolas,ui-monospace,monospace; font-size:.67rem; letter-spacing:.09em; flex:none; width:5.6rem; text-transform:uppercase; }
+  .t-ok { color:var(--ok); } .t-warn { color:var(--human); }
+  .dim { color:var(--ink-mute); font-size:.78rem; font-weight:400; }
+  ol.flow { margin:0 0 1.6rem; padding:0 0 0 1.4rem; }
+  ol.flow li { margin-bottom:.75rem; font-size:.9rem; color:var(--ink-soft); line-height:1.55; padding-left:.35rem; }
+  ol.flow li b { color:var(--ink); font-weight:620; }
+
+  details.sidecar { border:1px solid var(--rule); border-radius:3px; background:var(--surface); margin:.5rem 0; }
+  details.sidecar summary { cursor:pointer; padding:.7rem .9rem; font-size:.86rem; color:var(--ink-soft); list-style:none; }
+  details.sidecar summary::-webkit-details-marker { display:none; }
+  details.sidecar summary::before { content:"▸ "; color:var(--agent); }
+  details.sidecar[open] summary::before { content:"▾ "; }
+  details.sidecar summary b { color:var(--ink); font-weight:620; }
+  details.sidecar summary code.i { font-size:.78rem; }
+  .sidecar-size { float:right; color:var(--ink-mute); font-size:.7rem; font-family:"Cascadia Code",Consolas,ui-monospace,monospace; }
+  pre.sidecar-body { margin:0; padding:.8rem .9rem 1rem; max-height:340px; overflow:auto; border-top:1px solid var(--rule); font-family:"Cascadia Code",Consolas,ui-monospace,monospace; font-size:.72rem; line-height:1.5; color:var(--ink-soft); white-space:pre-wrap; }
+  .sidecar-note { font-size:.82rem; color:var(--ink-mute); margin:.6rem 0 0; }
+
+  .sccolumn { display:grid; gap:.9rem; }
+  .scbox { display:grid; gap:.8rem; padding:1rem; border:1px solid var(--rule-soft); border-radius:6px; background:var(--surface); box-shadow:var(--shadow); }
+  .sclabel { display:flex; align-items:center; gap:.9rem; }
+  .scthumb { width:5.5rem; height:5.5rem; object-fit:cover; border-radius:4px; border:1px solid var(--rule); flex:none; box-shadow:var(--shadow); }
+  .sctext { display:flex; flex-direction:column; gap:.1rem; }
+  .scchar { font-family:"Cascadia Code",Consolas,ui-monospace,monospace; font-size:.68rem; letter-spacing:.08em; color:var(--ink-mute); }
+  .scname { font-weight:650; font-size:1.05rem; color:var(--ink); letter-spacing:-.01em; }
+  .scsub { font-size:.78rem; color:var(--ink-mute); }
+  .scbox details.sidecar { margin:0; }
+  .sctag { display:inline-block; font-family:"Cascadia Code",Consolas,ui-monospace,monospace; font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; padding:.14rem .4rem; border-radius:2px; margin-right:.4rem; vertical-align:1px; }
+  .t-qwen { background:var(--human-tint); color:var(--human); border:1px solid var(--human-edge); }
+  .t-video { background:var(--agent); color:#fff; border:1px solid transparent; }
+  .qwen { color:var(--human); font-weight:600; }
+  .video { color:var(--agent); font-weight:600; }
+  @media (max-width:600px) {
+    .sclabel { flex-direction:column; align-items:flex-start; }
+    .scthumb { width:100%; }
+  }
+
+  .videoembed { margin:0; max-width:44rem; }
+  .vframe { position:relative; width:100%; aspect-ratio:16/9; border:1px solid var(--rule); border-radius:3px; box-shadow:var(--shadow); overflow:hidden; background:#000; }
+  .vframe iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+  .setgrid { display:grid; grid-template-columns:1.4fr 1fr; gap:1.6rem; align-items:start; }
+  .setgrid figure { margin:0; }
+  .setgrid img { width:100%; border:1px solid var(--rule); border-radius:3px; box-shadow:var(--shadow); }
+  .setfacts ul { list-style:none; padding:0; margin:0; }
+  .setfacts li { padding:.55rem 0; border-bottom:1px solid var(--rule-soft); font-size:.9rem; color:var(--ink-soft); }
+  .setfacts li b { color:var(--ink); font-weight:620; }
+  .setlink { margin-top:1rem; }
+  .setlink a { color:var(--human); text-decoration:none; font-weight:600; }
+  .setlink a:hover { text-decoration:underline; }
+
+  footer { margin-top:3.5rem; padding-top:1.25rem; border-top:1px solid var(--rule); font-family:"Cascadia Code",Consolas,ui-monospace,monospace; font-size:.73rem; color:var(--ink-mute); }
+
+  @media (max-width:760px) {
+    .track { grid-template-columns:1fr; }
+    .step, .step.human, .gate { grid-column:1; }
+    .heroes { grid-template-columns:1fr; }
+    .setgrid { grid-template-columns:1fr; }
+    .lane-tag { display:inline-block; float:right; font-family:"Cascadia Code",Consolas,ui-monospace,monospace; font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-mute); }
+  }
+  @media (prefers-reduced-motion:reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">the pipeline</p>
+    <h1>Research and Create pipeline</h1>
+    <p class="subhead">Project 01 — Action Hero example</p>
+    <p class="standfirst">
+      Ask for a collection of high quality reference images downloaded from the open web,
+      ranked for visual quality, then image-edited with ComfyUI, then run through i2v
+      with local MiniMax H3, all managed by local Hermes Agent — uncensored video creation.
+    </p>
+    <div class="meta">
+      <span><b>Edit</b> Qwen-Image-Edit 2511</span>
+      <span><b>Video</b> MiniMax H3 (ref2v)</span>
+      <span><b>Output</b> 1904×1088 · 2.07MP</span>
+      <span><b>Updated</b> 2026-08-06</span>
+    </div>
+  </header>
+  <div class="dl-banner" role="note">
+    <div class="dl-text">
+      <span class="dl-kicker">Included with this project</span>
+      <span class="dl-title">Both ComfyUI workflows are attached — download, drag into ComfyUI, run.</span>
+    </div>
+    <div class="dl-links">
+      <a class="dl-btn" href="workflows/qwen_edit_2511.api.json" download><span class="dl-ico">&#129521;</span>Qwen-Image-Edit 2511<span class="dl-file">.api.json · 6 KB</span></a>
+      <a class="dl-btn" href="workflows/video_minimax_h3_r2v.json" download><span class="dl-ico">&#127916;</span>MiniMax H3 ref2v<span class="dl-file">.json · 5 KB</span></a>
+    </div>
+  </div>
+
+
+
+<section class="s-reel">
+    <h2><span class="chip"></span>The reel</h2>
+    <p>Five heroines, one miniature bar, one continuous cut with 12-frame
+      dissolves. Produced end-to-end by the pipeline below and posted to YouTube.</p>
+    <figure class="videoembed">
+      <div class="vframe">
+        <iframe src="https://www.youtube.com/embed/mewypnI67o4" title="5 Action Heroines × Rolife Miniature Bar with Hermes + ComfyUI + MiniMax H3 Pipeline"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen loading="lazy"></iframe>
+      </div>
+      <figcaption><b>video_edit_v03</b> — the chosen cut · also on YouTube: <a href="https://youtu.be/mewypnI67o4">youtu.be/mewypnI67o4</a></figcaption>
+    </figure>
+  </section>
+
+
+  <section class="s-pipe">
+    <h2><span class="chip"></span>How a run works</h2>
+    <div class="legend">
+      <span><i class="swatch sw-agent"></i><span class="l-role">Blue</span> Hermes — works unattended</span>
+      <span><i class="swatch sw-human"></i><span class="l-role">Orange</span> You — the operator / artist / curator — the run stops here</span>
+    </div>
+
+    <div class="track">
+
+      <div class="step human">
+        <span class="lane-tag">You</span>
+        <span class="key">00_topic</span>
+        <h3>You pick the topic</h3>
+        <p>Everything starts with a subject you name — it sets the search queries,
+           the single biggest quality lever in the pipeline. Specific beats vague.
+           This run's topic: <strong>Famous Hollywood female action heroes.</strong></p>
+        <div class="topic-ex">
+          <figure><img src="media/example_rockstar.webp" alt="Rock star on a concert stage." loading="lazy"><figcaption>Rock star on stage</figcaption></figure>
+          <figure><img src="media/example_reporter.webp" alt="TV reporter on location with a microphone." loading="lazy"><figcaption>Newscaster on scene</figcaption></figure>
+          <figure><img src="media/example_arrest.webp" alt="People being arrested." loading="lazy"><figcaption>Famous person arrested</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="lane-tag">Hermes</span>
+        <span class="key">01_search</span>
+        <h3>Search the open web</h3>
+        <p>DuckDuckGo, Bing, Openverse, Wikimedia. No API keys. Naming specific subjects in
+           the queries matters more than any filter downstream.</p>
+      </div>
+
+      <div class="step">
+        <span class="lane-tag">Hermes</span>
+        <span class="key">02_fetch</span>
+        <h3>Download &amp; record provenance</h3>
+        <p>Verifies each file, drops near-duplicates, and writes a sidecar per image — source
+           page, title, alt text, caption, licence, EXIF.</p>
+      </div>
+
+      <div class="step">
+        <span class="lane-tag">Hermes</span>
+        <span class="key">03_select</span>
+        <h3>Download &amp; quality-rank the haul</h3>
+        <p>Hermes downloads and quality-ranks about 50–100 images — as many as you
+           request. Sharpness, resolution, contrast, clipping. Collages and catalog
+           pages are rejected outright — one character only. Builds the contact sheet
+           so the curator can pick their favorite 5–10 images to keep working on.</p>
+      </div>
+
+      <div class="gate">
+        <span class="key">gate — 03_select</span>
+        <h3>You pick the reference</h3>
+        <p>The score measures sharpness and resolution. It knows nothing about whether the
+           pose, era or framing is right — and everything downstream inherits this choice.
+           On this run the pick was cand_018 (Lara Croft), with four backups kept.</p>
+        <figure>
+          <img src="media/contact_sheet.webp" alt="Contact sheet of ranked candidate film stills." loading="lazy">
+          <figcaption><b>contact_sheet.jpg</b> — the ranked survivors. You are choosing on everything the score can't see.</figcaption>
+        </figure>
+      </div>
+
+      <div class="step">
+        <span class="lane-tag">Hermes</span>
+        <span class="key">04_context</span>
+        <h3>Identify the subject</h3>
+        <p>A vision pass fills subject, work, year, creator, wardrobe, props, setting. Pages
+           mislabel images constantly, so the picture beats the metadata — and it flags the
+           conflict when they disagree.</p>
+      </div>
+
+      <div class="step human">
+        <span class="lane-tag">You</span>
+        <span class="key">check</span>
+        <h3>Sanity-check the identity</h3>
+        <p>Step 04's vision pass fills in <em>who this is</em> — the subject, the film
+           or show they're from, their wardrobe, their props. That summary drives both
+           the composite and the video prompt, so a wrong identification poisons
+           everything downstream. You are the second set of eyes: does the summary
+           match the picture? Web pages mislabel images constantly — on this run the
+           page said "Furiosa / Mad Max: Fury Road" but the picture was clearly
+           Lara Croft. If the summary is wrong, fix it by hand in one command, no
+           vision re-run:<br>
+           <code class="i">step 4 --via harvest --set subject="…"</code></p>
+      </div>
+
+      <div class="step human">
+        <span class="lane-tag">You</span>
+        <span class="key">05_design</span>
+        <h3>You design the edit</h3>
+        <p>Before the composite runs, you decide <em>what image edit to do</em>. This
+           run: drop the character into a chosen environment — our miniature bar scene.</p>
+        <figure>
+          <img src="media/plate.webp" alt="The miniature bar scene plate." loading="lazy">
+          <figcaption><b>plate.jpg</b> — the environment we chose for this run.</figcaption>
+        </figure>
+        <p>Anything else is fair game: the character as a cartoon, standing with
+           another character, restyled to a completely different era — any image-edit
+           workflow you want (Qwen-Edit, Kontext-Edit, anything) to produce a
+           cool, good-looking initial image that we later turn into videos.</p>
+      </div>
+
+      <div class="step">
+        <span class="lane-tag">Hermes</span>
+        <span class="key">05_edit</span>
+        <h3>Composite the still</h3>
+        <p>Qwen-Image-Edit 2511 places the subject into the plate. The instruction templates
+           against the identified fields, so it can name the wardrobe and props.</p>
+      </div>
+
+      <div class="gate">
+        <span class="key">gate — 05_edit</span>
+        <h3>You approve the composite</h3>
+        <p>Does the subject read clearly, is the lighting plausible, is the scale right? This
+           frame drives the entire video — it's the expensive commitment. Iterate with
+           <code class="i">reject 5 --note</code> and a new seed; the recipe below is what
+           makes these passes consistent.</p>
+      </div>
+
+      <div class="step result">
+        <span class="lane-tag">Result</span>
+        <span class="key">set</span>
+        <h3>The set</h3>
+        <p>The stage for every hero is a real miniature: the <strong>Rolife Leisurely
+          Cheers Bar</strong> Super Creator Miniature House (DW012) — a hand-assembled
+          prefab kit, about 16cm cubed. Photographed once, then reused as the
+          conditioning plate for every composite and every video.</p>
+        <div class="setgrid">
+          <figure>
+            <img src="media/plate.webp" alt="The miniature bar plate." loading="lazy">
+            <figcaption><b>plate_minibar_1344x768.png</b> — the photographed set, used at ~1MP for every composite.</figcaption>
+          </figure>
+          <div class="setfacts">
+            <ul>
+              <li><b>Kit</b> — Rolife Super Creator DW012, Leisurely Cheers Bar</li>
+              <li><b>Size</b> — 16.3 × 16.3 × 15.2 cm assembled</li>
+              <li><b>Build</b> — 142 pieces, ~60 min, difficulty ★☆☆☆☆</li>
+              <li><b>Role</b> — photographed once → the conditioning plate for Qwen-Edit composites → the bar every heroine walks into</li>
+            </ul>
+            <p class="setlink"><a href="https://www.rolifeonline.com/products/rolife-plastic-miniature-house-leisurely-cheers-bar-dw012" target="_blank" rel="noopener">Rolife product page →</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="step result">
+        <span class="lane-tag">Result</span>
+        <span class="key">heroes</span>
+        <h3>This run's heroes</h3>
+        <p>Five action heroines composited into the miniature bar at the locked recipe.</p>
+        <div class="heroes">
+          <div class="hero">
+            <img src="media/cand_018.webp" alt="Lara Croft in the miniature bar." loading="lazy">
+            <div class="vlabel"><span class="vhead">cand_018 — Lara Croft</span><span class="vwhy">Alicia Vikander · Tomb Raider 2018</span></div>
+          </div>
+          <div class="hero">
+            <img src="media/cand_019.webp" alt="Black Widow in white snow suit in the miniature bar." loading="lazy">
+            <div class="vlabel"><span class="vhead">cand_019 — Black Widow (snow)</span><span class="vwhy">Scarlett Johansson · Black Widow 2021</span></div>
+          </div>
+          <div class="hero">
+            <img src="media/cand_012.webp" alt="Black Widow with baton in the miniature bar." loading="lazy">
+            <div class="vlabel"><span class="vhead">cand_012 — Black Widow</span><span class="vwhy">Scarlett Johansson · Marvel</span></div>
+          </div>
+          <div class="hero">
+            <img src="media/cand_023.webp" alt="Lorraine Broughton / Atomic Blonde in the miniature bar." loading="lazy">
+            <div class="vlabel"><span class="vhead">cand_023 — Atomic Blonde</span><span class="vwhy">Charlize Theron · 2017</span></div>
+          </div>
+          <div class="hero">
+            <img src="media/cand_007.webp" alt="Alice from Resident Evil in the miniature bar." loading="lazy">
+            <div class="vlabel"><span class="vhead">cand_007 — Alice (RE)</span><span class="vwhy">Milla Jovovich · Resident Evil</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="lane-tag">Hermes</span>
+        <span class="key">06_prompt</span>
+        <h3>Write the video prompt</h3>
+        <p>Structure-validated against the <em>local</em> MiniMax H3 form — look paragraph,
+           <code class="i">SHOT n:</code> blocks, an <code class="i">Audio:</code> line.
+           Bracket syntax and the API schema are auto-rejected.</p>
+      </div>
+
+      <div class="step">
+        <span class="lane-tag">Hermes</span>
+        <span class="key">07_i2v</span>
+        <h3>Render the clip</h3>
+        <p>MiniMax H3 running locally on your GPU. Picture and sound generated together, so the
+           clip lands with audio already on it. Minutes, not seconds.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="s-topics">
+    <h2><span class="chip"></span>Here are examples of other topics this pipeline could run</h2>
+    <p>The subject is the only thing that changes between runs — everything from the
+      queries to the video prompt follows the topic you pick. A few directions the
+      same toolkit would hunt for:</p>
+    <div class="heroes">
+      <div class="hero">
+        <img src="media/example_rockstar.webp" alt="Rock star on a concert stage." loading="lazy">
+        <div class="vlabel"><span class="vhead">Rock stars on stage</span><span class="vwhy">singer, dramatic center-stage performance · CC-BY, Anirudh Koul</span></div>
+      </div>
+      <div class="hero">
+        <img src="media/example_reporter.webp" alt="TV reporter on location with a microphone." loading="lazy">
+        <div class="vlabel"><span class="vhead">Newscasters on scene</span><span class="vwhy">reporter live at the story, microphone in hand · CC-BY, Patrick Feller</span></div>
+      </div>
+      <div class="hero">
+        <img src="media/example_arrest.webp" alt="People being arrested." loading="lazy">
+        <div class="vlabel"><span class="vhead">Famous people arrested</span><span class="vwhy">news imagery of an arrest in progress · CC-BY, Brooke Anderson</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s-recipe">
+    <h2><span class="chip"></span>The locked quality recipe</h2>
+    <ol class="flow">
+      <li><b>Download a pile of candidates.</b> The search stage pulls dozens of
+        stills per subject — raw, untouched, and big. Many come in between
+        6 and 22 megapixels (e.g. <code class="i">cand_007.jpg</code> landed at
+        5760×3840, others at 3840×2160).</li>
+      <li><b>You pick the favorites.</b> The scorer ranks measurable quality —
+        sharpness, resolution, clipping — but you choose on everything it can't
+        see: pose, framing, whether the moment is right. One character, one
+        reference.</li>
+      <li><b>Only the chosen raws get normalized.</b> Each favorite is cropped to
+        the run's 1.75:1 ratio and scaled to a consistent
+        <b>1904×1088 (2.07MP)</b> — enough detail for a sharp face, ~2 min
+        renders, inside the model's training envelope.</li>
+      <li><b>The plate gets normalized too.</b> The miniature bar photograph is
+        also cropped to the 1.75:1 ratio and scaled to a consistent
+        <b>1344×768 (1MP)</b> — enough scene for the edit, but small enough that
+        the conditioning encoder isn't overflowed.</li>
+      <li><b>Feed the Qwen-Image-Edit 2511 stage.</b> The normalized reference
+        plus the normalized plate
+        (<code class="i">plate_minibar_1344x768.png</code>) go in together, with
+        the workflow's <code class="i">FluxKontextImageScale</code> node
+        bypassed.</li>
+      <li><b>Big, sharp masters come out.</b> With the scale node bypassed,
+        Qwen-Edit renders at full size — composites came back at 3000×1712
+        (5.1MP), 3776×2160 (8.2MP) and even 3840×2192 (8.4MP).</li>
+      <li><b>Standardize masters for the video stage.</b> The big composites are
+        downscaled to the same 1904×1088 working size used everywhere — the
+        masters stay big in <code class="i">edit/</code>, the working copies
+        feed MiniMax H3 ref2v.</li>
+      <li><b>Feed the ref2v stage with two references.</b> MiniMax H3
+        full-reference mode gets <code class="i">image0</code> = the composite
+        (scene placement, 1904×1088) and <code class="i">image1</code> = the
+        actress identity anchor (face fidelity, 1904×1088), with
+        <code class="i">ref_image_size: max</code>. Output: 1344×768,
+        243 frames @ 24fps, native audio.</li>
+    </ol>
+  </section>
+
+      <section class="s-sidecars">
+    <h2><span class="chip"></span>Sidecar prompts — one per hero</h2>
+    <p>Every approved image and every video has a sidecar text file saved beside
+      it — the exact prompt that produced it plus the important context. Here are
+      the two prompts for each of the five heroes: the <span class="qwen">Qwen-Image-Edit</span>
+      instruction that built the composite, and the <span class="video">MiniMax H3</span>
+      ref2v prompt that animated it (the exact files used for the chosen reel).
+      Click a reader to see the full verbatim text.</p>
+    <div class="sccolumn">
+    <div class="scbox">
+      <div class="sclabel">
+        <img class="scthumb" src="media/cand_007_sq.webp" alt="Alice in the miniature bar." loading="lazy">
+        <div class="sctext">
+          <span class="scchar">cand_007</span>
+          <span class="scname">Alice</span>
+          <span class="scsub">Resident Evil</span>
+        </div>
+      </div>
+      <details class="sidecar sc-qwen">
+        <summary><span class="sctag t-qwen">Qwen edit</span> <code class="i">raw/cand_007_v04_1904x1088.png.txt</code> <span class="sidecar-size">2 KB</span></summary>
+        <pre class="sidecar-body"># cand_007_v03_5760x3291.png
+
+## Provenance
+query             : Furiosa Mad Max Fury Road movie still
+source            : ddg
+page_title        : Mad Max Director Teases New Furiosa Story Set After Fury Road
+page_url          : https://movieweb.com/mad-max-new-furiosa-story-after-fury-road/
+image_url         : https://static1.moviewebimages.com/wordpress/wp-content/uploads/2024/05/furiosa-mad-max-fury-road.jpg
+og_title          : Mad Max Director Teases New Furiosa Story Set After Fury Road
+og_description    : George Miller teases another Furiosa film, set after Fury Road, exploring the character&#x27;s time as a leader.
+meta_description  : George Miller teases another Furiosa film, set after Fury Road, exploring the character&#x27;s time as a leader.
+alt_text          : Imperator Furiosa in Fury Road and the prequel, Furiosa: A Mad Max Saga.
+
+## Description
+subject           : a woman with tousled reddish-brown shoulder-length hair, dirt-smudged fair skin, wearing a ragged olive-drab tactical vest over a dark tank top
+subject_type      : person
+subject_identity  : Milla Jovovich as Alice
+work              : Resident Evil: The Final Chapter
+work_type         : film
+year              : 2016
+creator           : Paul W.S. Anderson
+scene             : Alice walking cautiously through a sunlit, ruined industrial interior, alert and scanning ahead
+action            : walking forward, gaze fixed intently off to the side, mouth slightly open as if breathing hard or about to speak
+wardrobe          : tattered olive-drab canvas vest/jacket with a hood, torn sleeve exposing a bloodied shoulder, dark tank top underneath, tactical belt with buckles, fingerless gloves, small American flag patch on the sleeve
+props             : none clearly visible in hands
+setting           : derelict industrial building or warehouse with concrete support beams and large glassless window openings, hazy bright daylight streaming in
+lighting          : strong warm backlight/sunlight through the windows creating haze and lens flare, subject lit softer and slightly underexposed against the bright background
+palette           : muted olive, khaki, and brown tones against a warm, hazy off-white/beige background
+camera            : medium shot, slightly low angle, shallow depth of field with background thrown out of focus
+confidence        : high
+notes             : The source page mislabels this as Furiosa/Mad Max: Fury Road, but the face, costume (American flag patch, tactical vest), and setting match Milla Jovovich&#x27;s Alice from the Resident Evil film series, most likely Resident Evil: The Final Chapter given the wardrobe style.</pre>
+      </details>
+      <details class="sidecar sc-video">
+        <summary><span class="sctag t-video">Video</span> <code class="i">prompts/cand_007_v02_vid03_ref.txt</code> <span class="sidecar-size">6 KB</span></summary>
+        <pre class="sidecar-body">subject_definitions:
+&lt;Subject 1&gt; is Alice, played by Milla Jovovich in the Resident Evil film series (specifically Resident Evil: The Final Chapter, 2016), whose appearance and identity come from &lt;Picture 2&gt; and whose scene placement comes from &lt;Picture 1&gt;, with her recognisable Ukrainian-Russian facial features, high cheekbones, wide-set grey-green eyes, strong jawline, full lips, brunette hair combed back on both sides with shorter layers, a tattered green army jacket with a United States flag patch on the left sleeve over a navy blue cropped tank top, black denim jeans, black lace-up combat boots, black fingerless padded gloves, front-laced shoulder holster straps across her chest, and a suppressed SIG Sauer handgun held low at her side.
+&lt;Subject 2&gt; is the miniature bar environment in &lt;Picture 1&gt;, a warmly lit interior with amber bottles, brass beer taps, a dark wood counter, a green tufted armchair, a glass side table, and a glowing &quot;ROLIFE BAR&quot; sign on the brick wall.
+&lt;Picture 1&gt; is the first frame of [Shot 1], showing &lt;Subject 1&gt; already standing in &lt;Subject 2&gt;.
+&lt;Picture 2&gt; is the identity anchor for &lt;Subject 1&gt;, an original film still of Milla Jovovich as Alice from Resident Evil: The Final Chapter, defining her exact facial features, bone structure, brunette hair, combat-worn complexion, and layered costume described above. The actress&#x27;s face from &lt;Picture 2&gt; must remain locked onto the character throughout every shot of the video — her specific high cheekbones, wide eyes, and strong jawline must be recognisable in every camera angle.
+
+summary:
+[keyframe completion + reference generation] The target video begins from &lt;Picture 1&gt;, showing Milla Jovovich as Alice from the Resident Evil film series standing armed in the miniature bar, and uses &lt;Picture 2&gt; to lock her facial identity in every frame. She clears the room with her suppressed handgun through four quick cuts with jump cuts and muzzle flash, shouting her name and a throwaway one-liner, and ends on a tense aim over the counter.
+
+retention_analysis:
+&lt;Subject 1&gt; (appears in [Shot 1], [Shot 2], [Shot 3], [Shot 4]): fully_preserved - Alice&#x27;s identity as played by Milla Jovovich, her exact facial features and bone structure from &lt;Picture 2&gt;, her green army jacket with US flag patch, navy crop top, black denim jeans, combat boots, fingerless gloves, shoulder holster straps, and suppressed SIG Sauer handgun are all retained without drifting.
+&lt;Subject 2&gt; (appears in [Shot 1], [Shot 2], [Shot 3], [Shot 4]): fully_preserved - the miniature bar&#x27;s amber bottles, brass taps, wood counter, green armchair, and &quot;ROLIFE BAR&quot; sign are retained.
+&lt;Picture 1&gt; ([Shot 1] first frame): fully_preserved - the shot opens exactly on the composited still, with Alice&#x27;s position, pose, and the bar layout intact.
+&lt;Picture 2&gt; (identity anchor for &lt;Subject 1&gt;): fully_preserved - Milla Jovovich&#x27;s distinctive Ukrainian-Russian facial features, high cheekbones, wide grey-green eyes, strong jawline, and brunette hair are carried into every shot without drifting, in every camera angle and under every lighting change.
+
+detailed_description:
+The target video is in a live-action, cinematic action-movie style with warm practical lighting and slight film grain, matching the gritty post-apocalyptic feel of the Resient Evil series.
+[Shot 1] The shot begins from &lt;Picture 1&gt;: a medium shot frames &lt;Subject 1&gt;, Milla Jovovich as Alice, with her distinctive high cheekbones, wide grey-green eyes, strong jawline, and brunette hair combed back, standing behind the dark wood counter of &lt;Subject 2&gt;, the miniature bar with its brass taps, stacked amber bottles, green tufted armchair, and the glowing &quot;ROLIFE BAR&quot; sign on the brick wall. Her face matches &lt;Picture 2&gt; exactly — the same determined, battle-hardened expression from the films. She raises her suppressed SIG Sauer handgun into a two-handed grip, scans the room with quick, deliberate head movements, and the battle-weary woman with a fierce, rasping voice (S1) shouts: &lt;d&gt;[English] I am Alice, from Resident Evil!&lt;/d&gt; The camera holds a static shot with small amplitude as dust motes drift in the warm amber bar light.
+[Shot 2] At 00:02.500, the camera cuts to a wide pull-out with large amplitude at fast speed, revealing the full miniature bar interior as &lt;Subject 1&gt; steps out from behind the counter, her green army jacket swinging open, gun still raised, sweeping the room. Her face remains clearly that of Milla Jovovich from &lt;Picture 2&gt;, her high cheekbones and strong jaw visible even in motion. Muzzle flash strobes bright as she fires two suppressed shots off the left edge of frame; spent brass spins through the air and a row of amber bottles bursts in a spray of glass and liquid, smoke curling through the warm light.
+[Shot 3] At 00:05.000, the camera cuts to a low-angle shot behind the stools as &lt;Subject 1&gt; drops to one knee behind the nearest stool, her layered brunette hair swinging forward, and levels the pistol across its seat cushion, her shoulder holster straps visible across the tank top. The camera trucks left with medium amplitude at normal speed, sliding past the green armchair, as she fires again — muzzle flash illuminating the drifting gunsmoke, glass shattering across the back bar, and a knocked-over lamp spilling a tongue of flame across a pool of liquor. In the close framing her facial features match &lt;Picture 2&gt; exactly: the wide grey-green eyes, strong jawline, and full lips of Milla Jovovich.
+[Shot 4] At 00:07.500, the camera cuts to a close side profile of &lt;Subject 1&gt;&#x27;s face and shoulders as she steadies her aim toward the darkened corner of the bar, a practised tactical breath, her fingerless gloved hand on the trigger, and the battle-weary woman (S1) growls: &lt;d&gt;[English] This place ain&#x27;t big enough for the both of us.&lt;/d&gt; The camera arcs around her with small amplitude at slow speed, ending on a tight over-the-shoulder shot down her gun sights, flame and smoke filling the background. Her distinctive face — Milla Jovovich&#x27;s high cheekbones, wide-set eyes, and strong jaw — remains unmistakable to the final frame.
+
+overall_soundscape:
+Her combat boots scuff across the wooden floorboards with each pivot and drop. Suppressed SIG Sauer shots crack with sharp muzzle reports, spent brass clinks across the floor, glass shatters in wet bursts, and liquor-fed flame crackles low in the background. The leather of her shoulder holster and gloves creaks with each movement. Low room ambience continues underneath throughout.
+
+non_diegetic_music:
+Low, sustained strings at a slow tempo with a deep brass pulse and a driving percussive heartbeat, increasing in volume and pace through the cuts, with a staccato drum fill locked to the gunfire and cutting out abruptly at her one-liner, holding a tense silence on the final aim.</pre>
+      </details>
+    </div>
+    <div class="scbox">
+      <div class="sclabel">
+        <img class="scthumb" src="media/cand_012_sq.webp" alt="Black Widow in the miniature bar." loading="lazy">
+        <div class="sctext">
+          <span class="scchar">cand_012</span>
+          <span class="scname">Black Widow</span>
+          <span class="scsub">Marvel</span>
+        </div>
+      </div>
+      <details class="sidecar sc-qwen">
+        <summary><span class="sctag t-qwen">Qwen edit</span> <code class="i">raw/cand_012_v04_1904x1088.png.txt</code> <span class="sidecar-size">2 KB</span></summary>
+        <pre class="sidecar-body"># cand_012_v03_3000x1714.png
+
+## Provenance
+query             : Furiosa Mad Max Fury Road movie still
+source            : ddg
+page_title        : Mad Max Director Teases New Furiosa Story Set After Fury Road
+page_url          : https://movieweb.com/mad-max-new-furiosa-story-after-fury-road/
+image_url         : https://static1.moviewebimages.com/wordpress/wp-content/uploads/2024/05/furiosa-mad-max-fury-road.jpg
+og_title          : Mad Max Director Teases New Furiosa Story Set After Fury Road
+og_description    : George Miller teases another Furiosa film, set after Fury Road, exploring the character&#x27;s time as a leader.
+meta_description  : George Miller teases another Furiosa film, set after Fury Road, exploring the character&#x27;s time as a leader.
+alt_text          : Imperator Furiosa in Fury Road and the prequel, Furiosa: A Mad Max Saga.
+
+## Description
+subject           : a woman with wavy auburn hair crouching low in a black tactical suit, gripping a collapsible baton
+subject_type      : person
+subject_identity  : Natasha Romanoff / Black Widow (Scarlett Johansson)
+work_type         : film
+creator           : Marvel Studios
+scene             : Black Widow crouched in a combat-ready stance on a light grey concrete surface, alert and watching something off-frame.
+action            : crouching low with one hand braced on the ground, the other hand gripping a black collapsible baton across her knee
+wardrobe          : black form-fitting tactical suit with zippered panels and mesh underarm inserts, black tactical glove on the right hand, black knee-high boots with reinforced knee guards, black leg holster straps
+props             : a black collapsible baton/stun stick, holster rig on the thigh
+setting           : an open concrete-paved area, possibly a rooftop or plaza, plain light grey ground with expansion joint lines
+lighting          : soft, even overcast daylight, low contrast, diffused
+palette           : muted grey concrete background against black suit and warm auburn hair
+camera            : medium-close, high angle looking down at the subject, slightly tilted
+confidence        : medium
+notes             : The source page/query labels this as Furiosa from Mad Max: Fury Road, but the image clearly shows Scarlett Johansson as Black Widow in her black tactical suit with a baton, not Furiosa. This appears to be a promotional still, likely from Captain America: Civil War (2016) based on the suit design and hair style, but exact film/year not confirmed.</pre>
+      </details>
+      <details class="sidecar sc-video">
+        <summary><span class="sctag t-video">Video</span> <code class="i">prompts/cand_012_v04_vid04_ref.txt</code> <span class="sidecar-size">6 KB</span></summary>
+        <pre class="sidecar-body">subject_definitions:
+&lt;Subject 1&gt; is Natasha Romanoff, played by Scarlett Johansson as Black Widow in the Marvel Cinematic Universe films (The Avengers, Iron Man 2, Captain America: The Winter Soldier), whose appearance and identity come from &lt;Picture 2&gt; and whose scene placement comes from &lt;Picture 1&gt;, with her recognisable facial features, high cheekbones, large blue-green eyes, rounded face with a defined jawline, shoulder-length strawberry blonde hair worn in a swept side part, a fitted black tactical bodysuit with a high Mandarin collar, gold zippered front panel, black straps across the chest and arms, black leather gloves with reinforced knuckles, gold wrist-mounted Widow&#x27;s Bite gauntlets, a red hourglass emblem on the chest, a wide black belt with gold buckle, and twin black collapsible batons (Elektrastun batons) holstered at each thigh.
+&lt;Subject 2&gt; is the miniature bar environment in &lt;Picture 1&gt;, a warmly lit interior with amber bottles, brass beer taps, a dark wood counter, a green tufted armchair, a glass side table, and a glowing &quot;ROLIFE BAR&quot; sign on the brick wall.
+&lt;Picture 1&gt; is the first frame of [Shot 1], showing &lt;Subject 1&gt; already standing in &lt;Subject 2&gt;.
+&lt;Picture 2&gt; is the identity anchor for &lt;Subject 1&gt;, an original film still of Scarlett Johansson as Natasha Romanoff / Black Widow, defining her exact facial features, bone structure, strawberry blonde hair, and the black tactical bodysuit with gold accents described above. The actress&#x27;s face from &lt;Picture 2&gt; must remain locked onto the character throughout every shot of the video — her distinctive high cheekbones, large blue-green eyes, and rounded facial structure with defined jawline must be recognisable in every camera angle.
+
+summary:
+[keyframe completion + reference generation] The target video begins from &lt;Picture 1&gt;, showing Scarlett Johansson as Black Widow / Natasha Romanoff from the Marvel Cinematic Universe standing in the miniature bar, and uses &lt;Picture 2&gt; to lock her facial identity in every frame. She clears the room with her collapsible batons through four quick cuts with jump cuts and combat movement, delivering a tough one-liner, and ends on a tense final pose.
+
+retention_analysis:
+&lt;Subject 1&gt; (appears in [Shot 1], [Shot 2], [Shot 3], [Shot 4]): fully_preserved - Black Widow&#x27;s identity as played by Scarlett Johansson, her exact facial features and bone structure from &lt;Picture 2&gt;, her strawberry blonde side-swept hair, fitted black tactical bodysuit with high Mandarin collar, gold front zipper, red hourglass emblem, gold Widow&#x27;s Bite wrist gauntlets, black gloves, and twin collapsible batons are all retained without drifting.
+&lt;Subject 2&gt; (appears in [Shot 1], [Shot 2], [Shot 3], [Shot 4]): fully_preserved - the miniature bar&#x27;s amber bottles, brass taps, wood counter, green armchair, and &quot;ROLIFE BAR&quot; sign are retained.
+&lt;Picture 1&gt; ([Shot 1] first frame): fully_preserved - the shot opens exactly on the composited still, with Black Widow&#x27;s position, pose, and the bar layout intact.
+&lt;Picture 2&gt; (identity anchor for &lt;Subject 1&gt;): fully_preserved - Scarlett Johansson&#x27;s distinctive high cheekbones, large blue-green eyes, rounded face with defined jawline, and strawberry blonde hair are carried into every shot without drifting, in every camera angle and under every lighting change.
+
+detailed_description:
+The target video is in a live-action, cinematic superhero-action style with warm practical lighting and slight film grain.
+[Shot 1] The shot begins from &lt;Picture 1&gt;: a medium shot frames &lt;Subject 1&gt;, Scarlett Johansson as Natasha Romanoff, Black Widow, with her distinctive high cheekbones, large blue-green eyes, rounded face, defined jawline, and strawberry blonde hair in a swept side part, standing behind the dark wood counter of &lt;Subject 2&gt;, the miniature bar with its brass taps, stacked amber bottles, green tufted armchair, and the glowing &quot;ROLIFE BAR&quot; sign on the brick wall. Her face matches &lt;Picture 2&gt; exactly — the same expression of cold tactical assessment from the Marvel films. She extends both electrified batons with a sharp crackle and blue arc of electricity to full length with a sharp metallic click, gold Widow&#x27;s Bite gauntlets glinting in the amber light, and drops into a low combat crouch. The battle-tested former KGB agent with a steady, mocking voice (S1) says: &lt;d&gt;[English] Natasha Romanoff. You know who I am.&lt;/d&gt; The camera holds a static shot with small amplitude.
+[Shot 2] At 00:03.000, the camera cuts to a wide pull-out with large amplitude at fast speed, revealing the full miniature bar interior as &lt;Subject 1&gt; vaults over the counter in a smooth tactical roll, her black bodysuit&#x27;s gold zipper catching the light, batons spinning, landing in a crouch between the stools. Her face remains clearly that of Scarlett Johansson from &lt;Picture 2&gt; — the high cheekbones and blue-green eyes visible even in motion. The red hourglass emblem on her chest is clearly visible as she lands.
+[Shot 3] At 00:06.000, the camera cuts to a low-angle shot through the legs of the bar stools as &lt;Subject 1&gt; springs up from her crouch and sweeps a baton in a wide arc, cracking a bottle off the back bar with a shower of sparks as the electrified baton clips the brass taps. The camera trucks left with medium amplitude at normal speed as glass shatters in a spray and amber liquid splashes across the floorboards. In the close framing her facial features match &lt;Picture 2&gt; exactly: Scarlett Johansson&#x27;s rounded face with high cheekbones, defined jawline, and blue-green eyes clearly visible.
+[Shot 4] At 00:09.000, the camera cuts to a close side profile of &lt;Subject 1&gt;&#x27;s face and shoulders as she holds both batons crossed in an X guard, the gold gauntlets glowing, her strawberry blonde hair sweeping across her cheek, gold Widow&#x27;s Bite gauntlet beside her face, and the battle-tested operative (S1) adds: &lt;d&gt;[English] Trust me, this is the fun part.&lt;/d&gt; The camera arcs around her with small amplitude at slow speed, ending on an over-the-shoulder shot down the bar toward the doorway. Her unmistakable face — Scarlett Johansson&#x27;s high cheekbones, blue-green eyes, and swept strawberry blonde hair — remain clear to the final frame.
+
+overall_soundscape:
+Her boots thud on the wooden floorboards as she lands from the vault. Batons snap open with sharp metallic clicks, glass shatters in a wet spray, and sparks crackle against the brass taps. Her tactical bodysuit creaks as the Widow&#x27;s Bite gauntlets hum with stored energy with each precise movement. Low room ambience continues underneath throughout.
+
+non_diegetic_music:
+Pulsing electronic action beat with driving percussion and low brass stabs, increasing in intensity through the cuts and cutting out abruptly at her one-liner, holding a tense silence before the final arc shot.</pre>
+      </details>
+    </div>
+    <div class="scbox">
+      <div class="sclabel">
+        <img class="scthumb" src="media/cand_018_sq.webp" alt="Lara Croft in the miniature bar." loading="lazy">
+        <div class="sctext">
+          <span class="scchar">cand_018</span>
+          <span class="scname">Lara Croft</span>
+          <span class="scsub">Tomb Raider 2018</span>
+        </div>
+      </div>
+      <details class="sidecar sc-qwen">
+        <summary><span class="sctag t-qwen">Qwen edit</span> <code class="i">raw/cand_018_v04_1904x1088.png.txt</code> <span class="sidecar-size">2 KB</span></summary>
+        <pre class="sidecar-body"># cand_018.jpg
+
+## Provenance
+query             : Furiosa Mad Max Fury Road movie still
+source            : ddg
+page_title        : Mad Max Director Teases New Furiosa Story Set After Fury Road
+page_url          : https://movieweb.com/mad-max-new-furiosa-story-after-fury-road/
+image_url         : https://static1.moviewebimages.com/wordpress/wp-content/uploads/2024/05/furiosa-mad-max-fury-road.jpg
+og_title          : Mad Max Director Teases New Furiosa Story Set After Fury Road
+og_description    : George Miller teases another Furiosa film, set after Fury Road, exploring the character&#x27;s time as a leader.
+meta_description  : George Miller teases another Furiosa film, set after Fury Road, exploring the character&#x27;s time as a leader.
+alt_text          : Imperator Furiosa in Fury Road and the prequel, Furiosa: A Mad Max Saga.
+
+## Description
+subject           : a lean, athletic young woman with dirt-smudged skin, damp tousled brown hair pulled back, and a bow and arrows slung across her back
+subject_type      : person
+subject_identity  : Lara Croft, played by Alicia Vikander
+work              : Tomb Raider
+work_type         : film
+year              : 2018
+creator           : Roar Uthaug
+scene             : A promotional character portrait of Lara Croft, battered and dirt-streaked after surviving ordeals on the island, gazing steadily at the camera.
+action            : Standing still, looking directly at the camera with a determined, weary expression, one hand lightly gripping the bowstring across her chest
+wardrobe          : Sleeveless grey-green tank top, cloth/bandage wrap around the upper arm, dirt and sweat smudged across skin
+props             : A wooden longbow and a quiver of fletched arrows slung over her shoulder
+setting           : Neutral studio backdrop with a stormy greenish sky and clouds composited behind her
+lighting          : Soft frontal key light with a glowing rim, moody teal-green ambient tone
+palette           : Muted greens, tan skin tones, warm brown wood and feather accents
+camera            : Medium close-up, slightly low angle, straight-on portrait framing
+confidence        : high
+notes             : The supplied caption (Furiosa / Mad Max: Fury Road) does not match the image at all -- this is clearly a promotional still of Alicia Vikander as Lara Croft from the 2018 Tomb Raider film, identifiable by her face, the bow and quiver, and the tank top/bandage costume. Trusting the picture over the mislabeled source text.</pre>
+      </details>
+      <details class="sidecar sc-video">
+        <summary><span class="sctag t-video">Video</span> <code class="i">prompts/cand_018_v10b_vid04_ref.txt</code> <span class="sidecar-size">6 KB</span></summary>
+        <pre class="sidecar-body">subject_definitions:
+&lt;Subject 1&gt; is Lara Croft, played by Alicia Vikander in Tomb Raider (2018), whose appearance and identity come from &lt;Picture 2&gt; and whose scene placement comes from &lt;Picture 1&gt;, with her recognisable Scandinavian facial features (Alicia Vikander is Swedish), high cheekbones, defined jawline, almond-shaped hazel eyes, naturally arched eyebrows, small upturned nose, light freckles across the nose and cheeks, dark brown hair tied back in a simple ponytail with shorter face-framing layers, a light stone-coloured sleeveless square-neck tank top (taupe/stone Hanro tank), a cloth bandage wrap on her left upper arm and another visible at her left knee, a wooden recurve bow with knurled grip in her hands, a leather quiver of arrows strapped across her back, slim-fit beige cargo trousers, brown leather work boots with ankle support, and a heavy brass compass on a leather cord visible around her neck, with dirt smudged across her skin from temple raiding.
+&lt;Subject 2&gt; is the miniature bar environment in &lt;Picture 1&gt;, a warmly lit interior with amber bottles, brass beer taps, a dark wood counter, a green tufted armchair, a glass side table, and a glowing &quot;ROLIFE BAR&quot; sign on the brick wall.
+&lt;Picture 1&gt; is the first frame of [Shot 1], showing &lt;Subject 1&gt; already standing in &lt;Subject 2&gt;.
+&lt;Picture 2&gt; is the identity anchor for &lt;Subject 1&gt;, an original film still of Alicia Vikander as Lara Croft, Tomb Raider (2018), defining her exact facial features, bone structure, dark hair, and survivalist costume described above. The actress&#x27;s face from &lt;Picture 2&gt; must remain locked onto the character throughout every shot of the video — her distinctive high cheekbones, almond hazel eyes, tiny nose, and freckled complexion must be recognisable in every camera angle.
+
+summary:
+[keyframe completion + reference generation] The target video begins from &lt;Picture 1&gt;, showing Alicia Vikander as Lara Croft, Tomb Raider (2018) standing in the miniature bar, and uses &lt;Picture 2&gt; to lock her facial identity in every frame. She clears the room with her recurve bow through four quick cuts with jump cuts and arrow impacts, announcing her name and film, and ends on a tense final release.
+
+retention_analysis:
+&lt;Subject 1&gt; (appears in [Shot 1], [Shot 2], [Shot 3], [Shot 4]): fully_preserved - Lara Croft&#x27;s identity as played by Alicia Vikander, her exact facial features and bone structure from &lt;Picture 2&gt;, her dark brown tied-back hair, light square-neck tank top, arm and knee bandages, leather quiver, recurve bow with knurled grip, beige cargo trousers, leather boots, compass necklace, and dirt-smudged skin are all retained without drifting.
+&lt;Subject 2&gt; (appears in [Shot 1], [Shot 2], [Shot 3], [Shot 4]): fully_preserved - the miniature bar&#x27;s amber bottles, brass taps, wood counter, green armchair, and &quot;ROLIFE BAR&quot; sign are retained.
+&lt;Picture 1&gt; ([Shot 1] first frame): fully_preserved - the shot opens exactly on the composited still, with Lara&#x27;s position, pose, and the bar layout intact.
+&lt;Picture 2&gt; (identity anchor for &lt;Subject 1&gt;): fully_preserved - Alicia Vikander&#x27;s distinctive Swedish facial features, high cheekbones, almond hazel eyes, small upturned nose, light freckles, and dark brown hair are carried into every shot without drifting, in every camera angle and under every lighting change.
+
+detailed_description:
+The target video is in a live-action, cinematic survival-action style with warm practical lighting and slight film grain, matching the grounded realism of the 2018 Tomb Raider film.
+[Shot 1] The shot begins from &lt;Picture 1&gt;: a medium shot frames &lt;Subject 1&gt;, Alicia Vikander as Lara Croft, Tomb Raider, with her distinctive high cheekbones, almond-shaped hazel eyes, small upturned nose, and light freckles visible across her nose and cheeks, standing behind the dark wood counter of &lt;Subject 2&gt;, the miniature bar with its brass taps, stacked amber bottles, green tufted armchair, and the glowing &quot;ROLIFE BAR&quot; sign on the brick wall. Her face matches &lt;Picture 2&gt; exactly — the same wary, determined expression from the film. She nocks an arrow from the leather quiver strapped across her back, draws the bowstring to her cheek — the compass pendant on its cord visible at her neck — sights down the bar, and the weathered survivor with a calm, low voice (S1) says: &lt;d&gt;[English] Lara Croft. Tomb Raider. I don&#x27;t miss.&lt;/d&gt; The camera holds a static shot with small amplitude.
+[Shot 2] At 00:03.000, the camera cuts to a wide pull-out with large amplitude at fast speed, revealing the full miniature bar interior as &lt;Subject 1&gt; vaults onto the countertop with a gymnast&#x27;s agility in a low crouch, her leather quiver shifting, bow held low, an arrow already nocked, scanning the room like a huntress. Her face remains clearly that of Alicia Vikander from &lt;Picture 2&gt; — the high cheekbones, almond eyes, and freckled complexion visible even as she moves.
+[Shot 3] At 00:06.000, the camera cuts to a low-angle shot behind the stools as &lt;Subject 1&gt; draws the bowstring to full tension, the knurled grip of the bow solid in her hand, and releases — the arrow cuts across the room and strikes a stacked row of bottles, which burst in a cascade of glass, amber liquid and a brief tongue of flame from a knocked-over lamp. The camera trucks right with medium amplitude at normal speed as smoke drifts through the shot. In the close framing her facial features match &lt;Picture 2&gt; exactly: the high cheekbones, hazel almond-shaped eyes, small nose, and light freckles of Alicia Vikander.
+[Shot 4] At 00:09.000, the camera cuts to a close side profile of &lt;Subject 1&gt;&#x27;s face and shoulders as she already has a third arrow already nocked, a full combat load ready, the bowstring taut beside her cheek, and the weathered survivor (S1) adds: &lt;d&gt;[English] Nice try.&lt;/d&gt; The camera pushes in with small amplitude at slow speed as she releases the second arrow and it cuts offscreen with a sharp whistle. Her face remains unmistakably that of Alicia Vikander — the defined cheekbone, dark swept hair, almond eye, and freckled complexion clear to the final frame.
+
+overall_soundscape:
+Her leather boots shift on the wooden countertop, the bowstring creaks and groans as she draws, and each arrow cuts the air with a sharp whistle at release. Glass bottles burst with a bright crash, liquid splashes, and a low crackle of flame rises from the knocked-over lamp. The leather of her quiver creaks with each movement. Low room ambience continues underneath throughout.
+
+non_diegetic_music:
+Low, brooding orchestral strings at a moderate tempo with a tribal drum pulse, building through the draw and cutting sharply at each arrow release, with a rising swell as the bottles burst and a tense hold as she nocks the second arrow.</pre>
+      </details>
+    </div>
+    <div class="scbox">
+      <div class="sclabel">
+        <img class="scthumb" src="media/cand_019_sq.webp" alt="Black Widow in the miniature bar." loading="lazy">
+        <div class="sctext">
+          <span class="scchar">cand_019</span>
+          <span class="scname">Black Widow</span>
+          <span class="scsub">snow suit · BW 2021</span>
+        </div>
+      </div>
+      <details class="sidecar sc-qwen">
+        <summary><span class="sctag t-qwen">Qwen edit</span> <code class="i">raw/cand_019_v04_1904x1088.png.txt</code> <span class="sidecar-size">2 KB</span></summary>
+        <pre class="sidecar-body"># cand_019_v03_3780x2160.png
+
+## Provenance
+query             : Furiosa Mad Max Fury Road movie still
+source            : ddg
+page_title        : Mad Max Director Teases New Furiosa Story Set After Fury Road
+page_url          : https://movieweb.com/mad-max-new-furiosa-story-after-fury-road/
+image_url         : https://static1.moviewebimages.com/wordpress/wp-content/uploads/2024/05/furiosa-mad-max-fury-road.jpg
+og_title          : Mad Max Director Teases New Furiosa Story Set After Fury Road
+og_description    : George Miller teases another Furiosa film, set after Fury Road, exploring the character&#x27;s time as a leader.
+meta_description  : George Miller teases another Furiosa film, set after Fury Road, exploring the character&#x27;s time as a leader.
+alt_text          : Imperator Furiosa in Fury Road and the prequel, Furiosa: A Mad Max Saga.
+
+## Description
+subject           : a red-haired woman with braided hair wielding a rifle, wearing a white tactical combat suit with armored shoulder pauldron and a sword sheathed on her back
+subject_type      : person
+subject_identity  : Natasha Romanoff / Black Widow (Scarlett Johansson)
+work              : Black Widow
+work_type         : film
+year              : 2021
+creator           : Cate Shortland (director), Marvel Studios
+scene             : Natasha Romanoff aims a rifle while standing on a snowy metal gantry during the film&#x27;s third-act assault on the Red Room facility.
+action            : aiming a submachine gun/rifle forward and slightly downward, gripping the barrel with a wrapped/bandaged hand
+wardrobe          : white and light-grey segmented tactical combat suit with an armored white shoulder pauldron, fingerless tactical gloves, a strapped harness across the chest
+props             : a suppressed automatic rifle with a drum magazine, a sword sheathed on her back, a snow-covered metal railing/scaffold in the foreground
+setting           : outdoors on an icy, snow-dusted metal structure (railing/gantry) against a clear pale blue sky
+lighting          : bright, hard daylight from upper left, strong highlights on hair and suit, clear sharp shadows
+palette           : pale blue sky, white/off-white suit, copper-red hair, rust-orange metal railing, muted grey gunmetal
+camera            : medium shot, low angle looking slightly up at the subject
+confidence        : high
+notes             : The search metadata labels this as Furiosa from Mad Max: Fury Road, but the image clearly shows Scarlett Johansson as Black Widow in her white snow-assault suit from the 2021 Marvel film Black Widow -- trusting the picture over the mislabeled query/alt text.</pre>
+      </details>
+      <details class="sidecar sc-video">
+        <summary><span class="sctag t-video">Video</span> <code class="i">prompts/cand_019_v02_vid03_ref.txt</code> <span class="sidecar-size">6 KB</span></summary>
+        <pre class="sidecar-body">subject_definitions:
+&lt;Subject 1&gt; is Natasha Romanoff, played by Scarlett Johansson as Black Widow in Black Widow (2021), whose appearance and identity come from &lt;Picture 2&gt; and whose scene placement comes from &lt;Picture 1&gt;, with her recognisable facial features, high cheekbones, large blue-green eyes, rounded face with a defined jawline, shoulder-length strawberry blonde hair in a swept side part, a white tactical snow-assault suit with a high mandarin collar, rubber-textured scuba-suit fabric panels, black armored inserts on the shoulders, thighs and forearms, black straps across the chest and waist, a black tactical webbing belt, black gloves with reinforced knuckles, black combat boots, a suppressed automatic rifle with a folding stock held in a two-handed grip, and the red hourglass emblem on the white chest panel.
+&lt;Subject 2&gt; is the miniature bar environment in &lt;Picture 1&gt;, a warmly lit interior with amber bottles, brass beer taps, a dark wood counter, a green tufted armchair, a glass side table, and a glowing &quot;ROLIFE BAR&quot; sign on the brick wall.
+&lt;Picture 1&gt; is the first frame of [Shot 1], showing &lt;Subject 1&gt; already standing in &lt;Subject 2&gt;.
+&lt;Picture 2&gt; is the identity anchor for &lt;Subject 1&gt;, an original film still of Scarlett Johansson as Black Widow in the white snow-assault suit from Black Widow (2021), defining her exact facial features, bone structure, strawberry blonde hair, and white tactical gear described above. The actress&#x27;s face from &lt;Picture 2&gt; must remain locked onto the character throughout every shot of the video — her distinctive high cheekbones, large blue-green eyes, and rounded facial structure must be recognisable in every camera angle.
+
+summary:
+[keyframe completion + reference generation] The target video begins from &lt;Picture 1&gt;, showing Scarlett Johansson as Natasha Romanoff, Black Widow from the 2021 film, standing in the miniature bar, and uses &lt;Picture 2&gt; to lock her facial identity in every frame. She clears the room with her suppressed rifle through four quick cuts with jump cuts and roaring gunfire, announcing her name and film, and ends on a tense final aim.
+
+retention_analysis:
+&lt;Subject 1&gt; (appears in [Shot 1], [Shot 2], [Shot 3], [Shot 4]): fully_preserved - Black Widow&#x27;s identity as played by Scarlett Johansson, her exact facial features and bone structure from &lt;Picture 2&gt;, her strawberry blonde swept hair, white snow-assault suit with rubber-textured fabric panels and scuba-suit construction, black armored inserts on thighs and forearms, black straps, tactical belt, black gloves, suppressed automatic rifle with folding stock, and red hourglass emblem on the white chest are all retained without drifting.
+&lt;Subject 2&gt; (appears in [Shot 1], [Shot 2], [Shot 3], [Shot 4]): fully_preserved - the miniature bar&#x27;s amber bottles, brass taps, wood counter, green armchair, and &quot;ROLIFE BAR&quot; sign are retained.
+&lt;Picture 1&gt; ([Shot 1] first frame): fully_preserved - the shot opens exactly on the composited still, with Black Widow&#x27;s position, pose, and the bar layout intact.
+&lt;Picture 2&gt; (identity anchor for &lt;Subject 1&gt;): fully_preserved - Scarlett Johansson&#x27;s distinctive high cheekbones, large blue-green eyes, rounded face with defined jawline, and strawberry blonde hair are carried into every shot without drifting, in every camera angle and under every lighting change.
+
+detailed_description:
+The target video is in a live-action, cinematic spy-thriller action style with warm practical lighting and slight film grain, matching the tone of the Black Widow (2021) film.
+[Shot 1] The shot begins from &lt;Picture 1&gt;: a medium shot frames &lt;Subject 1&gt;, Scarlett Johansson as Natasha Romanoff, Black Widow from the film Black Widow, with her distinctive high cheekbones, large blue-green eyes, rounded face with a defined jawline, and strawberry blonde hair in a swept side part, standing behind the dark wood counter of &lt;Subject 2&gt;, the miniature bar with its brass taps, stacked amber bottles, green tufted armchair, and the glowing &quot;ROLIFE BAR&quot; sign on the brick wall. Her face matches &lt;Picture 2&gt; exactly — the same focused, analytical expression from the film. She shoulders the suppressed automatic rifle with its folding stock, the white scuba-textured suit creasing at the elbows, the red hourglass emblem visible on her chest as she sweeps the room in one fluid motion. The cold-voiced operative with a dry, amused tone (S1) says: &lt;d&gt;[English] I am Natasha Romanoff, Black Widow.&lt;/d&gt; The camera holds a static shot with small amplitude.
+[Shot 2] At 00:02.500, the camera cuts to a wide pull-out with large amplitude at fast speed, revealing the full miniature bar interior as &lt;Subject 1&gt; vaults the counter in a tight roll, the white suit flaring, the folding stock of the rifle snapping into position as she brings it up to her shoulder landing. Her face remains clearly that of Scarlett Johansson from &lt;Picture 2&gt; — the high cheekbones and blue-green eyes visible even in the fast movement. Muzzle flash strobes bright as she opens fire off the left edge of frame; spent brass spins through the air and a row of amber bottles bursts in a spray of glass and liquid, smoke curling through the warm light.
+[Shot 3] At 00:05.000, the camera cuts to a low-angle shot through the legs of the bar stools as &lt;Subject 1&gt; drops to one knee, the white suit&#x27;s rubber-textured panels catching the bar&#x27;s amber glow, and opens fire, sweeping the line of fire across the bar — the suppressor flashes bright, spent brass cartridges arc through the air, bottles across the back bar shatter in bursts, and thick gunsmoke curls through the amber light. The camera pans right with medium amplitude at normal speed. In the close framing her facial features match &lt;Picture 2&gt; exactly: the high cheekbones, blue-green eyes, and swept strawberry blonde hair of Scarlett Johansson.
+[Shot 4] At 00:07.500, the camera cuts to a close side profile of &lt;Subject 1&gt;&#x27;s face and shoulders as she steadies her aim in the drifting smoke, the folding stock pressed to her shoulder, the red hourglass emblem on the white suit visible below her face, and the cold-voiced operative (S1) adds: &lt;d&gt;[English] Night, night.&lt;/d&gt; The camera arcs around her with small amplitude at slow speed, ending on an over-the-shoulder shot down the rifle sights. Her face remains unmistakably that of Scarlett Johansson — the defined high cheekbone, blue-green eye, and swept strawberry blonde hair clear to the final frame.
+
+overall_soundscape:
+Her boots crunch on the wooden floorboards as she lands from the vault. The suppressed rifle barks with sharp muzzle reports, spent brass clinks across the floor, glass shatters in bursts, and gunsmoke hisses in the air. The white scuba-textured tactical suit creaks with each precise movement. Low room ambience continues underneath throughout.
+
+non_diegetic_music:
+Tense, low synth drone with a slow heartbeat pulse and distant percussion, swelling through the cuts, with a staccato drum fill locked to the gunfire and dropping out abruptly at her one-liner, holding a cold silence on the final aim.</pre>
+      </details>
+    </div>
+    <div class="scbox">
+      <div class="sclabel">
+        <img class="scthumb" src="media/cand_023_sq.webp" alt="Atomic Blonde in the miniature bar." loading="lazy">
+        <div class="sctext">
+          <span class="scchar">cand_023</span>
+          <span class="scname">Atomic Blonde</span>
+          <span class="scsub">Charlize Theron · 2017</span>
+        </div>
+      </div>
+      <details class="sidecar sc-qwen">
+        <summary><span class="sctag t-qwen">Qwen edit</span> <code class="i">raw/cand_023_v04_1904x1088.png.txt</code> <span class="sidecar-size">2 KB</span></summary>
+        <pre class="sidecar-body"># cand_023_v03_3840x2194.png
+
+## Provenance
+query             : Furiosa Mad Max Fury Road movie still
+source            : ddg
+page_title        : Mad Max Director Teases New Furiosa Story Set After Fury Road
+page_url          : https://movieweb.com/mad-max-new-furiosa-story-after-fury-road/
+image_url         : https://static1.moviewebimages.com/wordpress/wp-content/uploads/2024/05/furiosa-mad-max-fury-road.jpg
+og_title          : Mad Max Director Teases New Furiosa Story Set After Fury Road
+og_description    : George Miller teases another Furiosa film, set after Fury Road, exploring the character&#x27;s time as a leader.
+meta_description  : George Miller teases another Furiosa film, set after Fury Road, exploring the character&#x27;s time as a leader.
+alt_text          : Imperator Furiosa in Fury Road and the prequel, Furiosa: A Mad Max Saga.
+
+## Description
+subject           : a woman with a platinum-blonde bob haircut and dark sunglasses, wearing a long dark green trench coat over a black dress
+subject_type      : person
+subject_identity  : Lorraine Broughton, played by Charlize Theron
+work              : Atomic Blonde
+work_type         : film
+year              : 2017
+creator           : David Leitch (director)
+scene             : Promotional key art of Lorraine Broughton walking toward camera against a graffiti-covered Cold War-era wall.
+action            : Walking directly toward camera, holding a pistol down at her side in one hand, other hand in coat pocket.
+wardrobe          : Long double-breasted dark green wool trench coat, black v-neck dress underneath, black fishnet stockings, black knee-high leather boots, dark sunglasses.
+props             : A silenced/suppressed handgun held in her right hand.
+setting           : Gritty urban wall covered in graffiti and a torn poster reading &#x27;11. Oktober &#x27;89&#x27;, evoking late-1980s Berlin.
+lighting          : Cool teal-cyan rim and ambient lighting with deep shadows, high-contrast moody cold tone.
+palette           : Teal, cyan, black, dark green, muted grey
+camera            : Medium-full shot, straight-on, slightly low angle, subject centered
+confidence        : high
+notes             : The web hint (Furiosa/Mad Max) is incorrect -- this is clearly promotional key art for Atomic Blonde (2017) starring Charlize Theron, identifiable by the platinum bob, sunglasses, green trench coat, fishnet stockings, gun, and the &#x27;11. Oktober &#x27;89&#x27; Berlin Wall reference in the background graffiti.</pre>
+      </details>
+      <details class="sidecar sc-video">
+        <summary><span class="sctag t-video">Video</span> <code class="i">prompts/cand_023_v01_vid04_ref.txt</code> <span class="sidecar-size">7 KB</span></summary>
+        <pre class="sidecar-body">subject_definitions:
+&lt;Subject 1&gt; is Lorraine Broughton, played by Charlize Theron as the MI6 agent in Atomic Blonde (2017), whose appearance and identity come from &lt;Picture 2&gt; and whose scene placement comes from &lt;Picture 1&gt;, with her recognisable South African facial features (Charlize Theron is from South Africa), extremely defined high cheekbones, striking ice-blue eyes, a long elegant face and jawline, an aquiline nose, short platinum blonde hair cropped close at the sides and slightly longer on top, her signature white patent leather John Galliano signature white vinyl trench coat with deep lapels and large black buttons, a black high-waisted pencil skirt, a black sleeveless sweater top, black thigh-high Stuart Weitzman Lowland thigh-high boots, a black leather Dior belt, a long black wool Max Mara or Burberry trench worn underneath the white coat, black fingerless gloves, and a SIG Sauer P226 handgun held in a marksman&#x27;s two-handed grip.
+&lt;Subject 2&gt; is the miniature bar environment in &lt;Picture 1&gt;, a warmly lit interior with amber bottles, brass beer taps, a dark wood counter, a green tufted armchair, a glass side table, and a glowing &quot;ROLIFE BAR&quot; sign on the brick wall.
+&lt;Picture 1&gt; is the first frame of [Shot 1], showing &lt;Subject 1&gt; already standing in &lt;Subject 2&gt;.
+&lt;Picture 2&gt; is the identity anchor for &lt;Subject 1&gt;, an original film still of Charlize Theron as Lorraine Broughton from Atomic Blonde (2017), defining her exact facial features, bone structure, platinum hair, and distinctive designer wardrobe described above. The actress&#x27;s face from &lt;Picture 2&gt; must remain locked onto the character throughout every shot of the video — her extremely defined high cheekbones, piercing ice-blue eyes, long face and defined jawline, and short platinum blonde crop must be recognisable in every camera angle.
+
+summary:
+[keyframe completion + reference generation] The target video begins from &lt;Picture 1&gt;, showing Charlize Theron as Lorraine Broughton, MI6 agent from Atomic Blonde (2017), standing in the miniature bar, and uses &lt;Picture 2&gt; to lock her facial identity in every frame. She clears the room with her SIG Sauer P226 through four quick cuts with jump cuts and atmospheric gunsmoke, announcing her name and film, and ends on a tense final reload.
+
+retention_analysis:
+&lt;Subject 1&gt; (appears in [Shot 1], [Shot 2], [Shot 3], [Shot 4]): fully_preserved - Lorraine Broughton&#x27;s identity as played by Charlize Theron, her exact facial features and bone structure from &lt;Picture 2&gt;, her short platinum blonde cropped hair, white patent leather John Galliano signature white vinyl trench coat with large black buttons, black high-waisted pencil skirt, black sleeveless sweater, black thigh-high Stuart Weitzman Lowland thigh-high boots, black fingerless gloves, and SIG Sauer P226 handgun are all retained without drifting.
+&lt;Subject 2&gt; (appears in [Shot 1], [Shot 2], [Shot 3], [Shot 4]): fully_preserved - the miniature bar&#x27;s amber bottles, brass taps, wood counter, green armchair, and &quot;ROLIFE BAR&quot; sign are retained.
+&lt;Picture 1&gt; ([Shot 1] first frame): fully_preserved - the shot opens exactly on the composited still, with Lorraine&#x27;s position, pose, and the bar layout intact.
+&lt;Picture 2&gt; (identity anchor for &lt;Subject 1&gt;): fully_preserved - Charlize Theron&#x27;s distinctive South African facial features, extremely defined high cheekbones, piercing ice-blue eyes, long elegant face and jawline, aquiline nose, and short platinum blonde crop are carried into every shot without drifting, in every camera angle and under every lighting change.
+
+detailed_description:
+The target video is in a live-action, cinematic cold-war spy-thriller style with warm practical lighting and slight film grain, matching the stylised 1980s neon-noir aesthetic of Atomic Blonde.
+[Shot 1] The shot begins from &lt;Picture 1&gt;: a medium shot frames &lt;Subject 1&gt;, Charlize Theron as Lorraine Broughton from Atomic Blonde, with her distinctive extremely defined high cheekbones, piercing ice-blue eyes, long face with a strong jawline, aquiline nose, and short platinum blonde hair cropped close at the sides, standing behind the dark wood counter of &lt;Subject 2&gt;, the miniature bar with its brass taps, stacked amber bottles, green tufted armchair, and the glowing &quot;ROLIFE BAR&quot; sign on the brick wall. Her face matches &lt;Picture 2&gt; exactly — the same cold, calculating expression from the 1989 Berlin-set film. She lowers the dark aviator sunglasses on a finger and levels her SIG Sauer P226 across the room in a marksman&#x27;s two-handed grip, the white patent leather John Galliano trench coat framing her shoulders with its oversized lapels and large black buttons visible. The ice-cold MI6 spy with a low, clipped voice (S1) says: &lt;d&gt;[English] Lorraine Broughton. MI6. Let&#x27;s get this over with.&lt;/d&gt; The camera holds a static shot with small amplitude as the neon glow of the &quot;ROLIFE BAR&quot; sign casts a warm red light across the white patented leather.
+[Shot 2] At 00:03.000, the camera cuts to a wide pull-out with large amplitude at fast speed, revealing the full miniature bar interior as &lt;Subject 1&gt; pivots and spins in a full circle, the white trench flaring like a cape, the white patent leather trench coat flaring dramatically, the large black buttons catching the light, the thumb-high Stuart Weitzman Lowland thigh-high boots pivoting on the floorboards as the SIG Sauer tracks the room. Her face remains clearly that of Charlize Theron from &lt;Picture 2&gt; — those extreme high cheekbones and ice-blue eyes unforgettable even in the spin.
+[Shot 3] At 00:06.000, the camera cuts to a low-angle shot behind the stools as &lt;Subject 1&gt; slides to one knee, the white trench coat sweeping the floorboards, and fires two controlled shots — muzzle flash strobes bright in the dim bar, spent brass spins through the air, bottles detonate in sprays of glass and amber liquid, and smoke wreathes the counter as a knocked-over lamp spills flame across a pool of liquor, neon light from the sign flickering across the white coat as the white coat. The camera trucks left with medium amplitude at normal speed. In the close framing her facial features match &lt;Picture 2&gt; exactly: those extraordinary high cheekbones, ice-blue eyes, the long elegant face with defined jaw, and short platinum crop of Charlize Theron.
+[Shot 4] At 00:09.000, the camera cuts to a close side profile of &lt;Subject 1&gt;&#x27;s face and shoulders as she drops the empty magazine, slaps in a fresh one with the ease of a professional spy, and the ice-cold operative (S1) adds: &lt;d&gt;[English] Sorry, the first round&#x27;s on me.&lt;/d&gt; The camera arcs around her with small amplitude at slow speed, ending on an over-the-shoulder shot down her SIG Sauer sights as flame and smoke fill the background behind the white patent leather trench. Her unmistakable face — Charlize Theron&#x27;s platinum crop, defining high cheekbones, and ice-blue eye — remains clear to the final frame.
+
+overall_soundscape:
+Her patent leather trench coat swishes as she spins, the Stuart Weitzman Lowland thigh-high boots scuff the wooden floorboards, and rapid SIG Sauer P226 shots crack across the bar with bright muzzle flash pops. Brass clinks on the floor as the magazine drops, glass shatters in wet bursts, and liquor-fed flame crackles low in the background. Low 1980s Berlin nightclub room ambience continues underneath throughout.
+
+non_diegetic_music:
+Cold, tense synthwave bassline with a driving beat, sparse piano stabs, and a filtered electronic pulse, building through the cuts, with a percussive swell locked to the gunfire and cutting out abruptly at her final one-liner, holding silence on the reload — evoking the New Order and 80s soundtrack from Atomic Blonde.</pre>
+      </details>
+    </div>
+    </div>
+  </section>
+  <section class="s-built">
+    <h2><span class="chip"></span>Built with</h2>
+    <p>The full toolchain behind this run — every step above is driven by a
+      local agent talking to local models and local tools.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Piece</th><th>What it did</th></tr></thead>
+        <tbody>
+          <tr><td><b>Hermes Agent</b></td><td class="what">The operator. Researched and ranked reference stills, wrote every prompt, ran the ComfyUI jobs, judged the results, built the compilations, and wrote this page. Human stays in the loop at every gate.</td></tr>
+          <tr><td><b>DeepSeek V4 Flash 0731</b></td><td class="what">The LLM inside the agent — served by the <b>NOUS platform</b>. All the searching, scoring, prompt-writing and judging ran on this model.</td></tr>
+          <tr><td><b>ComfyUI</b></td><td class="what">Hosted the edit and video workflows. Qwen-Image-Edit 2511 for the composites, MiniMax H3 for the motion.</td></tr>
+          <tr><td><b>Qwen-Image-Edit 2511</b></td><td class="what">Placed each heroine into the miniature bar plate at the locked recipe.</td></tr>
+          <tr><td><b>MiniMax H3 (local)</b></td><td class="what">Image-to-video / reference-to-video at 1344×768, 24fps, 243 frames per clip — picture and sound generated together on an RTX 5090.</td></tr>
+          <tr><td><b>ffmpeg</b></td><td class="what">The edit bay. Five 10.125s clips joined with a chained <code class="i">xfade</code> — a 12-frame (0.5s) cross-dissolve at each seam, audio crossfaded alongside video, 48.72s total at 1344×768.</td></tr>
+          <tr><td><b>Python + Pillow</b></td><td class="what">Contact sheets for the selection gates, QC frame extraction, and the versioned stills used in this page.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+    <footer>Detail per run: project01_action_hero/edit/project01_action_hero_edit_log.txt · this folder is self-contained — copy <code class="i">site/</code> anywhere and open index.html.</footer>
+
+</div>
+</body>
+</html>
