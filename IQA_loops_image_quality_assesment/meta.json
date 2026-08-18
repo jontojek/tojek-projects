@@ -1,0 +1,12 @@
+{
+  "title": "Autonomous IQA Evolution",
+  "blurb": "A 65-minute unattended loop on an RTX 5090: ComfyUI renders a frame, PIL scores its sharpness/colorfulness/brightness, a local vision LLM judges it out of 100 and rewrites the prompt, and the cycle repeats. Sixteen generations drift from a stained-glass mosaic seed to a 95/100 mandala ceiling, surviving four mid-run GPU timeouts along the way.",
+  "tags": ["ComfyUI", "LM Studio", "IQA"],
+  "date": "2026-08-17",
+  "cta": "Watch it evolve",
+  "thumb": {
+    "video": "assets/thumb_iqa.mp4",
+    "poster": "assets/thumb_iqa.jpg",
+    "alt": "A stained-glass mosaic prompt evolving generation by generation into a vibrant mandala ceiling, the top-scoring candidate"
+  }
+}
