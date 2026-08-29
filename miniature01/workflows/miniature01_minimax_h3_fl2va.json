@@ -1,0 +1,273 @@
+{
+ "92": {
+  "inputs": {
+   "filename_prefix": "video/mini01_fl2va_pair01_mmx",
+   "format": "auto",
+   "format.codec": "auto",
+   "codec": "auto",
+   "video": [
+    "105:91",
+    0
+   ]
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ },
+ "114": {
+  "inputs": {
+   "image": "Christopher_Boffoli_0041_v02.jpg"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ },
+ "115": {
+  "inputs": {
+   "aspect_ratio": "1:1 (Square)",
+   "megapixels": 1,
+   "multiple": 32
+  },
+  "class_type": "ResolutionSelector",
+  "_meta": {
+   "title": "Resolution Selector"
+  }
+ },
+ "105:11": {
+  "inputs": {
+   "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+  },
+  "class_type": "VAELoader",
+  "_meta": {
+   "title": "Load VAE"
+  }
+ },
+ "105:24": {
+  "inputs": {
+   "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+  },
+  "class_type": "VAELoader",
+  "_meta": {
+   "title": "Load VAE"
+  }
+ },
+ "105:23": {
+  "inputs": {
+   "samples": [
+    "105:14",
+    0
+   ],
+   "vae": [
+    "105:24",
+    0
+   ]
+  },
+  "class_type": "VAEDecodeAudio",
+  "_meta": {
+   "title": "VAE Decode Audio"
+  }
+ },
+ "105:10": {
+  "inputs": {
+   "samples": [
+    "105:14",
+    0
+   ],
+   "vae": [
+    "105:11",
+    0
+   ]
+  },
+  "class_type": "VAEDecode",
+  "_meta": {
+   "title": "VAE Decode"
+  }
+ },
+ "105:17": {
+  "inputs": {
+   "sampler_name": "res_multistep"
+  },
+  "class_type": "KSamplerSelect",
+  "_meta": {
+   "title": "KSamplerSelect"
+  }
+ },
+ "105:9": {
+  "inputs": {
+   "scheduler": "simple",
+   "steps": 20,
+   "denoise": 1,
+   "model": [
+    "105:6",
+    0
+   ]
+  },
+  "class_type": "BasicScheduler",
+  "_meta": {
+   "title": "BasicScheduler"
+  }
+ },
+ "105:14": {
+  "inputs": {
+   "noise": [
+    "105:15",
+    0
+   ],
+   "guider": [
+    "105:16",
+    0
+   ],
+   "sampler": [
+    "105:17",
+    0
+   ],
+   "sigmas": [
+    "105:9",
+    0
+   ],
+   "latent_image": [
+    "105:104",
+    1
+   ]
+  },
+  "class_type": "SamplerCustomAdvanced",
+  "_meta": {
+   "title": "SamplerCustomAdvanced"
+  }
+ },
+ "105:16": {
+  "inputs": {
+   "model": [
+    "105:6",
+    0
+   ],
+   "conditioning": [
+    "105:104",
+    0
+   ]
+  },
+  "class_type": "BasicGuider",
+  "_meta": {
+   "title": "Basic Guider"
+  }
+ },
+ "105:6": {
+  "inputs": {
+   "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+   "weight_dtype": "default"
+  },
+  "class_type": "UNETLoader",
+  "_meta": {
+   "title": "Load Diffusion Model"
+  }
+ },
+ "105:13": {
+  "inputs": {
+   "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+   "type": "minimax",
+   "device": "default"
+  },
+  "class_type": "CLIPLoader",
+  "_meta": {
+   "title": "Load CLIP"
+  }
+ },
+ "105:15": {
+  "inputs": {
+   "noise_seed": 2001
+  },
+  "class_type": "RandomNoise",
+  "_meta": {
+   "title": "RandomNoise"
+  }
+ },
+ "105:91": {
+  "inputs": {
+   "fps": 24,
+   "bit_depth": 8,
+   "color_space": "sRGB",
+   "images": [
+    "105:10",
+    0
+   ],
+   "audio": [
+    "105:23",
+    0
+   ]
+  },
+  "class_type": "CreateVideo",
+  "_meta": {
+   "title": "Create Video"
+  }
+ },
+ "105:104": {
+  "inputs": {
+   "prompt": "\nFor the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced. <Picture 2> (from [Shot 1]) is fully referenced at the exact effective end time of the target video.\nintegrated_multimodal_description: [Shot 1] Live-action miniature diorama, continuous single shot, no cuts. Preserve the square framing, seamless warm terracotta background, soft diffused light from the upper left, and the exact opening composition: a golden-brown glazed ring donut hangs from a twisted blue-and-white string above a light oatmeal ceramic mug on the left and a dark matte charcoal mug on the right; tiny construction workers in orange overalls and white hard hats stand on the mug rims and on the ground looking up. The donut slowly rotates and sways side to side while the workers on the dark mug reach up toward it and the ground workers crane their necks upward, all movements small and physically restrained. The background and props transition smoothly through warm light into the final composition: a flat-lay cream mat tabletop where a tiny mounted archer on a black horse gallops mid-stride, drawing a bow toward oversized swirled candy lollipops, one rainbow lollipop upper left with an arrow already stuck in it, one red-and-white lollipop held up by a real human hand on the right, and a red-yellow-green lollipop at the far right; a tiny blurred arrow is mid-flight toward the hand-held lollipop. Preserve the archer's painted resin figure, the black horse, the horse's blurred legs, the lollipop swirl colors, and the human hand exactly as shown. Camera drifts slightly closer as the scene changes, then holds a slightly overhead flat-lay view in the final frame.\noverall_soundscape: small boot steps on ceramic, a soft creak of the hanging string, a faint arrow whistle, distant playful carnival ambience.\nnon_diegetic_music: N/A\n",
+   "width": [
+    "115",
+    0
+   ],
+   "height": [
+    "115",
+    1
+   ],
+   "length": [
+    "105:107",
+    1
+   ],
+   "clip": [
+    "105:13",
+    0
+   ],
+   "vae": [
+    "105:11",
+    0
+   ],
+   "first_frame": [
+    "114",
+    0
+   ],
+   "last_frame": [
+    "116",
+    0
+   ]
+  },
+  "class_type": "MiniMaxH3ImageToVideo",
+  "_meta": {
+   "title": "MiniMax H3 Image to Video"
+  }
+ },
+ "105:107": {
+  "inputs": {
+   "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+   "values.a": [
+    "105:111",
+    0
+   ]
+  },
+  "class_type": "ComfyMathExpression",
+  "_meta": {
+   "title": "Math Expression"
+  }
+ },
+ "105:111": {
+  "inputs": {
+   "value": 8
+  },
+  "class_type": "PrimitiveFloat",
+  "_meta": {
+   "title": "Float (duration)"
+  }
+ },
+ "116": {
+  "inputs": {
+   "image": "Tatsuya_Tanaka_0005_v02.jpg"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Last Frame"
+  }
+ }
+}

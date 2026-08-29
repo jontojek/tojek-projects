@@ -1,0 +1,16 @@
+{
+  "title": "Theater Transition Stagecraft and Stop Motion Terms",
+  "blurb": "Ask a video model to get from one room to another and it dissolves. A stage has to do the same job in front of a live audience and it never gets to cut. So I gave the agent a stagecraft manual instead of a prompt guide, plus the stop-motion terms it needs to write FLF2VA prompts: fly systems, trap rooms, wagons, micro-prop animation, persists_50. It read six Lori Nix dioramas itself and wrote all twelve prompts.",
+  "tags": [
+    "MiniMax-H3",
+    "ComfyUI",
+    "FL2VA"
+  ],
+  "date": "2026-08-28",
+  "cta": "See the run",
+  "thumb": {
+    "video": "assets/thumb_miniature01.mp4",
+    "poster": "assets/thumb_miniature01.jpg",
+    "alt": "A miniature laundromat at night, its wall of washing machines tilted over at an angle halfway through being stood up into place"
+  }
+}

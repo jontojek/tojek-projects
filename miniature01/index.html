@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>miniature01 · Stagecraft and Stop Motion Terms for FLF2VA Prompts</title>
+<meta name="description" content="I gave the agent a stagecraft manual instead of a prompt guide. It read six diorama photographs and wrote all twelve first/last-frame video prompts itself.">
+<meta property="og:title" content="Theater Transition Stagecraft and Stop Motion Terms">
+<meta property="og:description" content="I gave the agent a stagecraft manual instead of a prompt guide. It read six diorama photographs and wrote all twelve prompts itself.">
+<meta property="og:image" content="https://projects.tojek.com/assets/thumb_miniature01.jpg">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --bg: #0b0b0d;
+    --surface: #141416;
+    --surface-2: #1b1b1e;
+    --border: #2a2a2f;
+    --text: #ececec;
+    --text-dim: #9b9ba3;
+    --accent: #d99a3e;
+    --accent-2: #5b9ea6;
+    --bad: #c96a5c;
+    --mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+  body {
+    margin: 0;
+    padding: 0 0 64px;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 18px; }
+
+  /* Full-bleed band of the six rooms, sliced thin. Colour before any words. */
+  .topband {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2px;
+    height: clamp(88px, 13vw, 150px);
+    background: var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .topband img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 58%;
+    display: block;
+    background: #000;
+  }
+  /* Six slices go to slivers on a phone, so drop to three. */
+  @media (max-width: 520px) {
+    .topband { grid-template-columns: repeat(3, 1fr); }
+    .topband img:nth-child(n+4) { display: none; }
+  }
+  .topband-rule {
+    height: 3px;
+    background: linear-gradient(90deg,
+      var(--accent) 0%, #b8763a 34%, var(--accent-2) 68%, #3f6f78 100%);
+  }
+
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(217,154,62,.35); }
+  a:hover { border-bottom-color: var(--accent); }
+
+  header { padding: 30px 0 24px; border-bottom: 1px solid var(--border); }
+  .kicker {
+    font: 600 11px/1.5 var(--mono);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  h1 {
+    margin: 0 0 16px;
+    font-size: clamp(23px, 4.4vw, 33px);
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -.02em;
+  }
+  .lede { max-width: 60ch; font-size: 17px; color: #d8d8dd; margin: 0 0 10px; }
+
+  section { padding: 40px 0 0; }
+  h2 { font-size: 20px; font-weight: 650; margin: 0 0 14px; letter-spacing: -.01em; }
+  h2 .num { font: 600 12px/1 var(--mono); color: var(--accent); margin-right: 9px; vertical-align: 2px; }
+  h3 { font-size: 15px; font-weight: 650; margin: 26px 0 8px; }
+  p { margin: 0 0 14px; max-width: 66ch; color: #d3d3d8; }
+  .note { color: var(--text-dim); font-size: 14px; }
+  ul { margin: 0 0 16px; padding-left: 20px; max-width: 66ch; color: #d3d3d8; }
+  li { margin-bottom: 8px; }
+  strong { color: #fff; font-weight: 620; }
+  em { color: #e4e4e8; }
+  code {
+    font-family: var(--mono);
+    font-size: .88em;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: #e6c894;
+  }
+
+  .video-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 0 18px;
+  }
+  .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 0 10px;
+  }
+  .fact { background: var(--surface); padding: 12px 14px; }
+  .fact dt {
+    font: 600 10px/1 var(--mono);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .fact dd { margin: 0; font-size: 14px; font-weight: 600; color: #fff; }
+  .fact .sub { display: block; font-size: 12px; font-weight: 400; color: var(--text-dim); margin-top: 3px; }
+
+  .readcard {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 14px;
+    align-items: start;
+    margin: 6px 0 14px;
+  }
+  @media (max-width: 640px) { .readcard { grid-template-columns: 1fr; } }
+  .readcard img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: zoom-in;
+    background: #000;
+  }
+  .card-json {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    line-height: 1.75;
+    color: #c9c9cf;
+    white-space: pre;
+  }
+  .card-json .k { color: var(--accent); }
+  .card-json .c { color: #6f6f78; }
+  .card-cap {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+
+  .devices {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 12px;
+    margin: 6px 0 18px;
+  }
+  .device {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 13px 15px;
+  }
+  .device b { display: block; color: #fff; font-size: 14px; margin-bottom: 4px; }
+  .device span { font-size: 13.5px; color: var(--text-dim); line-height: 1.5; }
+
+  .scenes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 14px;
+    margin: 4px 0 0;
+  }
+  .scene { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .scene img { display: block; width: 100%; height: auto; cursor: zoom-in; background: #000; }
+  .scene .cap { padding: 10px 13px 12px; }
+  .scene .t { font-weight: 650; font-size: 14.5px; color: #fff; }
+  .scene .s { font-size: 12.5px; color: var(--text-dim); margin-top: 3px; }
+
+  .pair {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    padding: 16px;
+    margin: 0 0 14px;
+  }
+  .pair-title { font-weight: 650; font-size: 15.5px; color: #fff; margin-bottom: 3px; }
+  .pair-sub { font-size: 13px; color: var(--text-dim); margin-bottom: 12px; }
+
+  .strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .strip figure { margin: 0; }
+  .strip img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    cursor: zoom-in;
+    background: #000;
+  }
+  .strip figcaption {
+    font: 600 10px/1.6 var(--mono);
+    letter-spacing: .08em;
+    color: var(--text-dim);
+    margin-top: 5px;
+    text-align: center;
+  }
+  .strip figure.mark img { border-color: var(--accent); }
+  .strip figure.mark figcaption { color: var(--accent); }
+
+  .verdict {
+    margin: 13px 0 0;
+    padding: 11px 13px;
+    background: var(--surface-2);
+    border-left: 2px solid var(--border);
+    border-radius: 0 4px 4px 0;
+    font-size: 14px;
+    color: #d3d3d8;
+    max-width: none;
+  }
+  .verdict.flag { border-left-color: var(--bad); }
+  .verdict.good { border-left-color: var(--accent); }
+  .verdict b { color: #fff; }
+
+  .model-row { margin-bottom: 14px; }
+  .model-name {
+    font: 600 11px/1 var(--mono);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .ltx .model-name { color: var(--accent-2); }
+  .mmx .model-name { color: var(--accent); }
+  .model-name .cost { color: var(--text-dim); letter-spacing: .03em; text-transform: none; font-weight: 400; margin-left: 7px; }
+
+  details {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  summary {
+    cursor: pointer;
+    padding: 12px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--accent); font-family: var(--mono); }
+  details[open] summary::after { content: "\2212"; }
+  summary:hover { background: var(--surface-2); }
+  .prompt-body {
+    padding: 12px 15px 15px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.75;
+    color: #c9c9cf;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .prompt-body .lbl { color: var(--accent); }
+
+  .dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+    margin: 4px 0 16px;
+  }
+  .dl a {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    transition: border-color .12s;
+  }
+  .dl a:hover { border-color: var(--accent); }
+  .dl .dl-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 5px;
+  }
+  .dl .dl-name { color: var(--accent); font-weight: 650; font-size: 14.5px; }
+  .dl .dl-size {
+    font: 400 11px/1 var(--mono);
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+  .dl .dl-what { display: block; font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+  .dl .dl-file {
+    display: block;
+    font: 400 11px/1.6 var(--mono);
+    color: #6f6f78;
+    margin-top: 6px;
+    word-break: break-all;
+  }
+
+  .steps { margin: 0 0 18px; }
+  .step {
+    display: grid;
+    grid-template-columns: 118px 1fr;
+    gap: 4px 16px;
+    padding: 11px 0;
+    border-top: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: 1px solid var(--border); }
+  .step b {
+    font: 600 10.5px/1.7 var(--mono);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .step span { font-size: 14px; color: #d3d3d8; }
+  @media (max-width: 560px) { .step { grid-template-columns: 1fr; } }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 13.5px;
+    color: var(--text-dim);
+  }
+  footer p { color: var(--text-dim); font-size: 13.5px; max-width: 70ch; margin-bottom: 12px; }
+
+  .lb { position: fixed; inset: 0; background: rgba(6,6,8,.95); z-index: 100; display: none; flex-direction: column; padding: 14px; }
+  .lb.open { display: flex; }
+  .lb-bar { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding-bottom: 10px; color: var(--text-dim); font-size: 13px; }
+  .lb-bar strong { color: #fff; font-weight: 600; }
+  .lb-close { background: none; border: 1px solid var(--border); color: var(--text); border-radius: 5px; padding: 7px 12px; font: 600 12px/1 var(--mono); cursor: pointer; }
+  .lb-close:hover { border-color: var(--accent); color: var(--accent); }
+  .lb-img { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+  .lb-img img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<div class="topband-rule"></div>
+<div class="topband" aria-hidden="true">
+  <img src="media/scene_01_bar.webp" alt="" loading="eager" decoding="async">
+  <img src="media/scene_03_chinese_take_out.webp" alt="" loading="eager" decoding="async">
+  <img src="media/scene_05_laundromat.webp" alt="" loading="eager" decoding="async">
+  <img src="media/scene_02_beauty_shop.webp" alt="" loading="eager" decoding="async">
+  <img src="media/scene_04_vacuum_showroom.webp" alt="" loading="eager" decoding="async">
+  <img src="media/scene_06_lions_tigers.webp" alt="" loading="eager" decoding="async">
+</div>
+
+<div class="wrap">
+
+  <header>
+    <div class="kicker">miniature01 · first/last-frame video · Aug 2026</div>
+    <h1>Theater transition stagecraft and stop motion animation terms to help
+      Hermes Agent write FLF2VA prompts</h1>
+    <p class="lede">
+      Ask a video model to get from one room to another and it dissolves. A stage has to do the
+      same job in front of a live audience and it never gets to cut. So I gave the agent a
+      stagecraft manual instead of a prompt guide. It read the six photographs itself and wrote
+      all twelve prompts.
+    </p>
+    <p class="lede note">
+      Photographs by Lori Nix &amp; Kathleen Gerber, used as a study. MiniMax-H3 on a local RTX 5090.
+    </p>
+  </header>
+
+  <!-- ============ REEL ============ -->
+  <section id="reel">
+    <div class="video-frame">
+      <iframe src="https://www.youtube-nocookie.com/embed/TPyokRCZ96E?rel=0&amp;modestbranding=1"
+              title="Miniature Diorama MiniMax-H3 Video — Lori Nix &amp; Kathleen Gerber"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+    </div>
+
+    <dl class="facts">
+      <div class="fact"><dt>Master</dt><dd>60.67 s<span class="sub">4K, 24 fps</span></dd></div>
+      <div class="fact"><dt>Passes</dt><dd>12<span class="sub">6 pairs, both directions</span></dd></div>
+      <div class="fact"><dt>Render</dt><dd>1920&times;1088<span class="sub">124 frames, 5.17 s each</span></dd></div>
+      <div class="fact"><dt>Machine</dt><dd>RTX 5090<span class="sub">ComfyUI, 25 steps</span></dd></div>
+    </dl>
+    <p class="note">Six rooms in a closed loop, run forward and then backwards. Upscaled with Topaz, cut in Premiere.</p>
+  </section>
+
+  <!-- ============ 01 READING ============ -->
+  <section id="reading">
+    <h2><span class="num">01</span>The agent looks at the picture first</h2>
+    <p>
+      Gemini 3.7 Flash has native vision, so the jpg itself goes to the model. It opens the
+      actual file and inspects the pixels. There's no caption sitting in between, and I never
+      describe the room to it.
+    </p>
+    <p>
+      Before any prompt exists, it writes one <strong>image card</strong> per still. Camera
+      height, where the horizon sits, what the floor is made of, the palette, and every object
+      in the frame with the grid cell it occupies. Then a second pass checks the card back
+      against the image and stamps <code>gate1_status</code>. A card that fails the check
+      doesn't get used.
+    </p>
+
+    <div class="readcard">
+      <img src="media/scene_01_bar.webp" width="800" height="452" loading="lazy"
+           alt="Miniature abandoned bar with a green felt pool table and taxidermy on the walls"
+           data-title="Bar" data-sub="What the model was handed">
+      <div class="card-json"><span class="c">// what it wrote back, abridged</span>
+<span class="k">"scene_name"</span>: "Abandoned Rustic Bar / Pool Hall",
+<span class="k">"camera_height"</span>: "eye-level",
+<span class="k">"horizon_visible"</span>: "horizontal tavern room
+   perspective looking across pool table
+   toward bar",
+<span class="k">"ground_plane"</span>: "dusty distressed wood-plank
+   flooring scattered with trash and bottles",
+<span class="k">"palette"</span>: [
+   "felt green (pool table surface)",
+   "deep vinyl red (booth upholstery)",
+   "exposed red brick (right wall)" ],
+<span class="k">"subjects"</span>: [ {
+   "literal_object": "worn green-felt pool
+      table with billiard balls and cue stick",
+   "grid_cell": "bottom-center, middle-center",
+   "pose": "positioned diagonally in the
+      foreground on wood-plank floor" } ],
+<span class="k">"props"</span>: [ {
+   "literal_object": "mounted taxidermy heads
+      (deer, ram, duck, fish)",
+   "grid_cell": "top-left and upper wall" } ],
+<span class="k">"burned_in_text"</span>: "none, labels degraded at scale",
+<span class="k">"gate1_status"</span>: "passed"</div>
+    </div>
+    <p class="card-cap">
+      Nobody told it there was a pinball machine. Read the pair 01 prompt in section 06 and
+      almost every noun in it came off this card. Green felt, red vinyl booth, taxidermy heads,
+      barstools, the pinball machine. All six cards are in the downloads.
+    </p>
+  </section>
+
+  <!-- ============ 02 THE BRIEF ============ -->
+  <section id="brief">
+    <h2><span class="num">02</span>What the agent was told</h2>
+    <p>
+      Two things. First, stagecraft. A scene change on a stage is heavy engineering on a
+      schedule, so I told it to pick one real piece of stage machinery per cut and make the
+      pixels obey it.
+    </p>
+
+    <div class="devices">
+      <div class="device"><b>Wagon</b><span>A set slides through frame in a straight line at constant speed. Every pair in this run used it.</span></div>
+      <div class="device"><b>Shifters in view</b><span>A hand or a figure already in the shot moves the set by hand. The most believable one, because the labour is visible.</span></div>
+      <div class="device"><b>Reveal by occlusion</b><span>Something crosses close to the lens and clears onto the new room. The honest workhorse when two rooms have nothing in common.</span></div>
+    </div>
+
+    <p>
+      Second, stop-motion. Nothing moves as a group. Every billiard ball, every laundry cart,
+      every hair dryer gets animated separately, and each one makes its own sound. These are the
+      terms the spec uses for that, and they all end up in the sidecar log.
+    </p>
+
+    <div class="devices">
+      <div class="device"><b>Micro-prop animation</b><span>Each small object is choreographed on its own, in ratchet increments, never as a group.</span></div>
+      <div class="device"><b>persists_50</b><span>The named object that has to be sharp and solid at the halfway frame. The hardest field to fill and the one that carries everything.</span></div>
+      <div class="device"><b>Hold / move / arrive / lock</b><span>The beat sheet. Four spans of the clip, written before any prose gets written.</span></div>
+    </div>
+    <p>
+      Then three hard rules. <strong>Never a full-frame dissolve</strong>, so something from
+      the outgoing room has to stay sharp the whole way through, sitting where physics says it
+      should be. One device per pair. And before writing a word, name the object that's still
+      standing there at the halfway mark. If you can't name it, the plan is a dissolve and the
+      render will prove it.
+    </p>
+  </section>
+
+  <!-- ============ 02 SIX ROOMS ============ -->
+  <section id="rooms">
+    <h2><span class="num">03</span>The six rooms</h2>
+    <p>
+      Photographs by <strong>Lori Nix and Kathleen Gerber</strong>. They build these rooms by
+      hand on a table in their Brooklyn apartment out of foam board, plaster, wire and
+      scavenged parts. Seven to fifteen months a set, then shot on an 8&times;10 view camera. I
+      cropped six of them to 16:9 and used them as anchor frames.
+    </p>
+    <p class="note">
+      Five from <a href="https://www.lorinix.net/the-city" target="_blank" rel="noopener">The City</a>,
+      one from <a href="https://www.lorinix.net/unnatural-history" target="_blank" rel="noopener">Unnatural History</a>.
+      Shown at 800 px. Go to lorinix.net for the real thing.
+    </p>
+
+    <div class="scenes">
+      <figure class="scene">
+        <img src="media/scene_01_bar.webp" width="800" height="452" loading="lazy"
+             alt="Miniature abandoned bar with a green felt pool table and taxidermy on the walls"
+             data-title="Bar" data-sub="The City">
+        <figcaption class="cap"><div class="t">Bar</div><div class="s">Green felt, red booth, trophy heads.</div></figcaption>
+      </figure>
+      <figure class="scene">
+        <img src="media/scene_02_beauty_shop.webp" width="800" height="452" loading="lazy"
+             alt="Miniature abandoned beauty salon with chrome hood dryers"
+             data-title="Beauty Shop" data-sub="The City">
+        <figcaption class="cap"><div class="t">Beauty Shop</div><div class="s">Chrome hood dryers, red chairs, ivy.</div></figcaption>
+      </figure>
+      <figure class="scene">
+        <img src="media/scene_03_chinese_take_out.webp" width="800" height="452" loading="lazy"
+             alt="Miniature abandoned Chinese take-out lobby with a blue scooter"
+             data-title="Chinese Take-Out" data-sub="The City">
+        <figcaption class="cap"><div class="t">Chinese Take-Out</div><div class="s">Lit menu boards, a scooter parked indoors.</div></figcaption>
+      </figure>
+      <figure class="scene">
+        <img src="media/scene_04_vacuum_showroom.webp" width="800" height="452" loading="lazy"
+             alt="Miniature abandoned vacuum cleaner showroom overgrown with plants"
+             data-title="Vacuum Showroom" data-sub="The City">
+        <figcaption class="cap"><div class="t">Vacuum Showroom</div><div class="s">Canister vacuums, plants pushing in.</div></figcaption>
+      </figure>
+      <figure class="scene">
+        <img src="media/scene_05_laundromat.webp" width="800" height="452" loading="lazy"
+             alt="Miniature abandoned laundromat at night with a wall of front-loading washers"
+             data-title="Laundromat at Night" data-sub="The City">
+        <figcaption class="cap"><div class="t">Laundromat at Night</div><div class="s">A wall of portholes, blue city outside.</div></figcaption>
+      </figure>
+      <figure class="scene">
+        <img src="media/scene_06_lions_tigers.webp" width="800" height="452" loading="lazy"
+             alt="Miniature monochrome workshop full of white plaster lions and tigers"
+             data-title="Lions &amp; Tigers" data-sub="Unnatural History">
+        <figcaption class="cap"><div class="t">Lions &amp; Tigers</div><div class="s">Monochrome, plaster casts mid-build.</div></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ 03 THREE PAIRS ============ -->
+  <section id="pairs">
+    <h2><span class="num">04</span>Three of the six joins</h2>
+    <p>
+      Forward passes, MiniMax-H3. First frame, midpoint, last frame. The midpoint is the whole
+      test, because that's where a dissolve shows up as mush.
+    </p>
+
+    <div class="pair">
+      <div class="pair-title">Bar &rarr; Beauty Shop</div>
+      <div class="pair-sub">Wagon. The left booth and the trophy wall hold.</div>
+      <div class="strip">
+        <figure><img src="media/pair01_f000.webp" width="800" height="453" loading="lazy" alt="The bar" data-title="Bar → Beauty Shop · 0%" data-sub="MiniMax-H3"><figcaption>0%</figcaption></figure>
+        <figure class="mark"><img src="media/pair01_f050.webp" width="800" height="453" loading="lazy" alt="Midpoint: a pale wall crosses the left third with the salon behind it" data-title="Bar → Beauty Shop · 50%" data-sub="MiniMax-H3"><figcaption>50%</figcaption></figure>
+        <figure><img src="media/pair01_f100.webp" width="800" height="453" loading="lazy" alt="The beauty shop" data-title="Bar → Beauty Shop · 100%" data-sub="MiniMax-H3"><figcaption>100%</figcaption></figure>
+      </div>
+      <p class="verdict">
+        Clean, and faster than I wanted. A pale wall panel crosses the left third and the room
+        behind it is already the salon. Nothing mushes, but the machine's done by halfway and
+        the rest is just the salon settling.
+      </p>
+    </div>
+
+    <div class="pair">
+      <div class="pair-title">Chinese Take-Out &rarr; Vacuum Showroom</div>
+      <div class="pair-sub">Wagon. Nothing holds, because these two rooms share no object.</div>
+      <div class="strip">
+        <figure><img src="media/pair03_f000.webp" width="800" height="453" loading="lazy" alt="The take-out lobby" data-title="Chinese Take-Out → Vacuum Showroom · 0%" data-sub="MiniMax-H3"><figcaption>0%</figcaption></figure>
+        <figure class="mark"><img src="media/pair03_f050.webp" width="800" height="453" loading="lazy" alt="Midpoint: an invented mustard and turquoise staircase in an empty grey room" data-title="The invented staircase · 50%" data-sub="MiniMax-H3"><figcaption>50%</figcaption></figure>
+        <figure><img src="media/pair03_f100.webp" width="800" height="453" loading="lazy" alt="The vacuum showroom" data-title="Chinese Take-Out → Vacuum Showroom · 100%" data-sub="MiniMax-H3"><figcaption>100%</figcaption></figure>
+      </div>
+      <p class="verdict flag">
+        <b>This one went somewhere else.</b> The prompt asked for mustard and turquoise display
+        plinths sliding forward. At the midpoint the model built a mustard and turquoise
+        <em>staircase</em> in an empty grey room. It's sharp and it's solid, so it didn't
+        dissolve, but it isn't either of my rooms. The two sets share nothing, so there was
+        nothing honest to name at 50%, and it filled the gap with the only thing it had. The
+        colours.
+      </p>
+    </div>
+
+    <div class="pair">
+      <div class="pair-title">Vacuum Showroom &rarr; Laundromat at Night</div>
+      <div class="pair-sub">Wagon, with the day-to-night grade riding under it.</div>
+      <div class="strip">
+        <figure><img src="media/pair04_f000.webp" width="800" height="453" loading="lazy" alt="The vacuum showroom" data-title="Vacuum Showroom → Laundromat · 0%" data-sub="MiniMax-H3"><figcaption>0%</figcaption></figure>
+        <figure class="mark"><img src="media/pair04_f050.webp" width="800" height="453" loading="lazy" alt="Midpoint: the wall of washing machines tilted over at an angle, mid-move" data-title="The wall being walked in · 50%" data-sub="MiniMax-H3"><figcaption>50%</figcaption></figure>
+        <figure><img src="media/pair04_f100.webp" width="800" height="453" loading="lazy" alt="The laundromat at night" data-title="Vacuum Showroom → Laundromat · 100%" data-sub="MiniMax-H3"><figcaption>100%</figcaption></figure>
+      </div>
+      <p class="verdict good">
+        <b>My favourite frame in the run.</b> At the midpoint the bank of washing machines is
+        lying over at thirty degrees, hinged at the floor, halfway through being stood up.
+        That's a flat being walked into place. I never wrote hinge or flat anywhere in the
+        prompt. It only said the bank tracks forward with a metallic rumble.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ 04 MODELS ============ -->
+  <section id="models">
+    <h2><span class="num">05</span>LTX-2.5 against MiniMax-H3</h2>
+    <p>Same pair, same prompt, same GPU. Only the model changed. Not the result I expected.</p>
+
+    <div class="pair">
+      <div class="pair-title">Bar &rarr; Beauty Shop</div>
+
+      <div class="model-row ltx">
+        <div class="model-name">LTX-2.5 <span class="cost">60 s per pass</span></div>
+        <div class="strip">
+          <figure><img src="media/ab_pair01_ltx_f000.webp" width="800" height="452" loading="lazy" alt="LTX first frame, the bar" data-title="LTX-2.5 · 0%" data-sub="Bar → Beauty Shop"><figcaption>0%</figcaption></figure>
+          <figure class="mark"><img src="media/ab_pair01_ltx_f050.webp" width="800" height="452" loading="lazy" alt="LTX midpoint: salon dryers and chairs standing inside the bar" data-title="LTX-2.5 · 50% — both rooms at once" data-sub="Bar → Beauty Shop"><figcaption>50%</figcaption></figure>
+          <figure><img src="media/ab_pair01_ltx_f100.webp" width="800" height="452" loading="lazy" alt="LTX last frame, the beauty shop" data-title="LTX-2.5 · 100%" data-sub="Bar → Beauty Shop"><figcaption>100%</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="model-row mmx">
+        <div class="model-name">MiniMax-H3 <span class="cost">450 s per pass, 7.5&times; the cost</span></div>
+        <div class="strip">
+          <figure><img src="media/ab_pair01_mmx_f000.webp" width="800" height="452" loading="lazy" alt="MiniMax first frame, the bar" data-title="MiniMax-H3 · 0%" data-sub="Bar → Beauty Shop"><figcaption>0%</figcaption></figure>
+          <figure class="mark"><img src="media/ab_pair01_mmx_f050.webp" width="800" height="452" loading="lazy" alt="MiniMax midpoint: a dark panel crossing left with the salon already behind it" data-title="MiniMax-H3 · 50% — already arrived" data-sub="Bar → Beauty Shop"><figcaption>50%</figcaption></figure>
+          <figure><img src="media/ab_pair01_mmx_f100.webp" width="800" height="452" loading="lazy" alt="MiniMax last frame, the beauty shop" data-title="MiniMax-H3 · 100%" data-sub="Bar → Beauty Shop"><figcaption>100%</figcaption></figure>
+        </div>
+      </div>
+
+      <p class="verdict">
+        LTX does the thing the spec is actually asking for. At the midpoint the chrome dryers
+        and red salon chairs are standing <em>on the bar floor</em>, under the bar's own wood
+        ceiling, with the trophy wall untouched. Two rooms in one space. MiniMax holds the bar,
+        crosses a dark panel, and it's already in the salon.
+      </p>
+    </div>
+
+    <h3>What I took from it</h3>
+    <ul>
+      <li><strong>LTX gives you the better middle and it will lie to you.</strong> When two rooms share a floor and an eyeline, it puts both on screen at once, which is the strongest thing this kind of model can do. When they've got nothing in common, it invents a third room and sits there.</li>
+      <li>MiniMax rarely invents, and it rarely transitions either. It treats the job as an arrival. Hold, cross one edge, land, wait.</li>
+      <li>The 7.5&times; render time buys reliability. It doesn't buy motion. 60 s a pass against 450 s, same GPU, same prompt.</li>
+      <li>The final twelve ran on MiniMax because a closed loop has to survive twelve joins, and one invented room breaks the whole reel. For a single hero shot I'd run LTX and take the re-rolls.</li>
+    </ul>
+  </section>
+
+  <!-- ============ 05 PROMPTS ============ -->
+  <section id="prompts">
+    <h2><span class="num">06</span>The prompts, as submitted</h2>
+    <p>
+      The agent wrote these, I didn't. No device names, no theatre words, nothing abstract in
+      them. Every clause names an object and gives it a direction and a sound. The model
+      renders the audio from that last line.
+    </p>
+
+    <details>
+      <summary><span>Bar &rarr; Beauty Shop</span></summary>
+      <div class="prompt-body"><span class="lbl">integrated_multimodal_description:</span> [Shot 1] Live-action, hand-crafted stop-motion miniature diorama, continuous single shot, no cuts. The camera holds a steady eye-level view. The scene opens on Picture 1. In energetic, rapid stop-motion increments, the wooden billiard balls roll fast across the green felt, loudly dropping and thudding into the leather drop pockets. The wooden cue stick slides briskly off the rail with a sharp scrape, while the pool table rattles on floor casters as it glides out to the left. The vintage pinball machine and arcade cabinet rumble and clatter across the floorboards as they roll out to the right. Round vinyl barstools loudly spin on swivel stems, squeaking in quick rotation, while liquor bottles and glassware clink, rattle, and slide off tiered shelves as the heavy wooden bar counter tracks away. From the right, vintage chrome hooded hair dryers on slender stands roll into the room with metallic clicks and rattling tripod casters. Red vinyl salon styling chairs swivel in rapid increments with loud hydraulic squeaks, sliding forward into place before mirrored vanity counters. Rectangular vanity mirrors slide down with sharp wooden taps along the plaster walls, and scattered plastic hair curlers and glass shards jitter across the floor. Peeling floral wallpaper and creeping green ivy vines settle into place, locking every miniature prop firmly into the exact layout, lighting, and composition of Picture 2.
+
+<span class="lbl">overall_soundscape:</span> Loud stop-motion ratchet clicks, wooden billiard balls violently clacking and thudding into leather pockets, small metal caster rattles, loud squeaking vinyl chair swivels, metallic chrome clicks, glass bottles clinking and rattling, cue stick sliding scrape.</div>
+    </details>
+
+    <details>
+      <summary><span>Chinese Take-Out &rarr; Vacuum Showroom</span></summary>
+      <div class="prompt-body"><span class="lbl">integrated_multimodal_description:</span> [Shot 1] Live-action, hand-crafted stop-motion miniature diorama, continuous single shot, no cuts. The camera holds a steady eye-level view. The scene opens on Picture 1. In energetic, rapid stop-motion increments, the blue Vespa scooter rolls away to the left with small tire squeaks, the order counter and glass partition slide backward with mechanical track rattles, and framed menu placards lift off the walls with wooden clicks. Folded paper takeout cartons and crumpled newspapers rustle and sweep cleanly across the floor. From the background and sides, tiered geometric concrete display plinths painted mustard yellow and turquoise slide forward with heavy grinding scrapes across the cracked floor slabs. Individual vintage canister and upright vacuum cleaners with chrome handles and ribbed hoses roll and pivot onto the risers in sharp stop-motion steps, trailing ribbed plastic hoses with rattling clicks. Large plate-glass showroom windows settle into the background framing brick city facades outside, and wild green grass and vines push through concrete cracks, locking every miniature prop firmly into the exact layout, lighting, and composition of Picture 2.
+
+<span class="lbl">overall_soundscape:</span> Small rubber wheel roll and squeak, crisp paper carton rustle, heavy concrete plinth grinding scrape, vintage chrome vacuum handle clicks, ribbed plastic hose rattle and dragging clatter.</div>
+    </details>
+
+    <details>
+      <summary><span>Vacuum Showroom &rarr; Laundromat at Night</span></summary>
+      <div class="prompt-body"><span class="lbl">integrated_multimodal_description:</span> [Shot 1] Live-action, hand-crafted stop-motion miniature diorama, continuous single shot, no cuts. The camera holds a steady eye-level view. The scene opens on Picture 1. In energetic, rapid stop-motion increments, vintage canister and upright vacuum cleaners pivot on small plastic wheels with sharp clatters and glide off-screen, trailing ribbed hoses. The tiered yellow and turquoise display risers slide backward and separate with heavy grinding friction. The daytime city skyline outside the plate-glass windows deepens into nocturnal dark blue shadows. Along the left wall, a fixed bank of commercial front-loading washing machines with round glass portholes tracks forward with a loud metallic rumble. A bright orange plastic laundry basket rolls forward on tiny plastic wheels with a loud rattle into the center foreground across moss-covered floor tiles, and fluorescent light fixtures dangle from the deteriorating ceiling grid with light metallic clinks, locking every miniature prop firmly into the exact layout, lighting, and composition of Picture 2.
+
+<span class="lbl">overall_soundscape:</span> Small plastic wheel rolls and rattles on concrete, chrome appliance clicks, heavy washing machine cabinet metallic rumble, metallic ceiling grid clink, quiet nocturnal room hum.</div>
+    </details>
+  </section>
+
+  <!-- ============ 06 DOWNLOADS ============ -->
+  <section id="downloads">
+    <h2><span class="num">07</span>Download the files</h2>
+    <p>
+      The two ComfyUI graphs the run used, the image cards the vision model wrote, and all
+      twelve prompts in one text file. Take them and change what you like.
+    </p>
+
+    <div class="dl">
+      <a href="workflows/miniature01_minimax_h3_fl2va.json" download>
+        <span class="dl-top">
+          <span class="dl-name">MiniMax-H3 FL2VA graph</span>
+          <span class="dl-size">6.0 KB · JSON</span>
+        </span>
+        <span class="dl-what">The graph that rendered the final twelve passes. 19 nodes. Both anchor
+          frames wired in, then a video and an audio VAE decode.</span>
+        <span class="dl-file">miniature01_minimax_h3_fl2va.json</span>
+      </a>
+
+      <a href="workflows/miniature01_ltx_2_5_flf.json" download>
+        <span class="dl-top">
+          <span class="dl-name">LTX-2.5 first/last frame graph</span>
+          <span class="dl-size">13.4 KB · JSON</span>
+        </span>
+        <span class="dl-what">The head-to-head graph from section 05. 52 nodes, dual-CFG guider and a
+          latent spatial upscaler.</span>
+        <span class="dl-file">miniature01_ltx_2_5_flf.json</span>
+      </a>
+
+      <a href="workflows/miniature01_image_cards.json" download>
+        <span class="dl-top">
+          <span class="dl-name">The six image cards</span>
+          <span class="dl-size">14.8 KB · JSON</span>
+        </span>
+        <span class="dl-what">What the vision model wrote after looking at each photograph, before
+          any prompt existed.</span>
+        <span class="dl-file">miniature01_image_cards.json</span>
+      </a>
+
+      <a href="workflows/miniature01_prompts_all_12.txt" download>
+        <span class="dl-top">
+          <span class="dl-name">All twelve prompts</span>
+          <span class="dl-size">24.9 KB · TXT</span>
+        </span>
+        <span class="dl-what">Every pass in both directions, exactly as submitted. The page only
+          shows three of them.</span>
+        <span class="dl-file">miniature01_prompts_all_12.txt</span>
+      </a>
+    </div>
+
+    <p class="note">
+      Both graphs are saved in ComfyUI's <strong>API format</strong>, so load them with
+      Workflow &rarr; Open (API Format) or post them straight to <code>/prompt</code>. Regular
+      drag and drop onto the canvas won't read them. You'll need the model files listed in the
+      loader nodes, and the two LoadImage nodes still point at whatever test stills were sitting
+      in the input folder, so set your own first and last frame before you queue anything.
+    </p>
+  </section>
+
+  <!-- ============ 07 STACK ============ -->
+  <section id="stack">
+    <h2><span class="num">08</span>The stack</h2>
+
+    <div class="steps">
+      <div class="step"><b>Read</b><span>Native vision on the source jpg, one image card per still, checked back against the image before use. Section 01. Gemini 3.7 Flash on the final run, DeepSeek-V4-Flash via Nous on earlier passes of the same spec.</span></div>
+      <div class="step"><b>Plan</b><span>Classify the pair, pick one device, name the constant and the object that holds at 50%, split the clip into hold / move / arrive / lock.</span></div>
+      <div class="step"><b>Write</b><span>One paragraph, present tense, camera-observable only. Theatre words get stripped before anything is queued.</span></div>
+      <div class="step"><b>Render</b><span>ComfyUI, MiniMax-H3 FL2VA, 25 steps, 1920&times;1088, 124 frames at 24 fps, local RTX 5090. Twelve passes.</span></div>
+      <div class="step"><b>Check</b><span>Frames pulled at 0 / 25 / 50 / 75 / 100 percent of every pass and eyeballed. A sidecar .txt lands beside every clip with the prompt, the device and the ffprobe output.</span></div>
+      <div class="step"><b>Finish</b><span>Topaz Precise Starlight 2.6 to 4K, cut in Premiere with three-frame handles, native Foley under two archive tracks.</span></div>
+    </div>
+
+    <h3>Next time</h3>
+    <ul>
+      <li>Order the loop so every neighbouring pair shares an object, and reject any pair where nothing can honestly be named at 50%. Both failures came from that.</li>
+      <li>Give the move a duration in seconds. Nothing in the prompt says how long it should take, so the model finishes early and parks.</li>
+      <li>Colour arrives after geometry every time. Grade the two anchors closer before rendering.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>
+      <strong>Artwork.</strong> Photographs by Lori Nix and Kathleen Gerber, from <em>The City</em>
+      and <em>Unnatural History</em>, shown at 800 px as a study.
+      <a href="https://www.lorinix.net" target="_blank" rel="noopener">lorinix.net</a> &middot;
+      <a href="https://www.nixgerberstudio.com" target="_blank" rel="noopener">nixgerberstudio.com</a> &middot;
+      <a href="https://www.instagram.com/nix_gerber_studio/" target="_blank" rel="noopener">@nix_gerber_studio</a>
+    </p>
+    <p>
+      <strong>Music.</strong> "Old Blue Spaceship" by Lobo Loco, CC BY-NC-SA 4.0.
+      "Happy Li'l Sal" by Margret Hellar, public domain. Both via the Free Music Archive.
+    </p>
+    <p><a href="../">&larr; back to projects.tojek.com</a></p>
+  </footer>
+
+</div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Enlarged image">
+  <div class="lb-bar">
+    <div><strong id="lbTitle"></strong> <span id="lbSub"></span></div>
+    <button class="lb-close" id="lbClose" type="button">CLOSE &nbsp;ESC</button>
+  </div>
+  <div class="lb-img"><img id="lbImg" src="" alt=""></div>
+</div>
+
+<script>
+(function () {
+  var lb = document.getElementById('lb');
+  var lbImg = document.getElementById('lbImg');
+  var lbTitle = document.getElementById('lbTitle');
+  var lbSub = document.getElementById('lbSub');
+  var lastFocus = null;
+
+  function open(img) {
+    lastFocus = document.activeElement;
+    lbImg.src = img.currentSrc || img.src;
+    lbImg.alt = img.alt || '';
+    lbTitle.textContent = img.dataset.title || '';
+    lbSub.textContent = img.dataset.sub || '';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('lbClose').focus();
+  }
+
+  function close() {
+    lb.classList.remove('open');
+    lbImg.src = '';
+    document.body.style.overflow = '';
+    if (lastFocus) { lastFocus.focus(); }
+  }
+
+  document.querySelectorAll('.scene img, .strip img').forEach(function (img) {
+    img.tabIndex = 0;
+    img.addEventListener('click', function () { open(img); });
+    img.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(img); }
+    });
+  });
+
+  document.getElementById('lbClose').addEventListener('click', close);
+  lb.addEventListener('click', function (e) { if (e.target === lb || e.target.parentNode === lb) { close(); } });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && lb.classList.contains('open')) { close(); }
+  });
+})();
+</script>
+
+</body>
+</html>

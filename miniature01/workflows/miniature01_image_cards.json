@@ -1,0 +1,297 @@
+{
+  "_about": "Image cards for miniature01. Written by Gemini 3.7 Flash from the source photographs using native vision, before any prompt existed. One card per still. gate1_status records that the card was checked back against the image before it was allowed to be used.",
+  "_artwork": "Photographs by Lori Nix and Kathleen Gerber. lorinix.net",
+  "cards": [
+    {
+      "image_filename": "Lori_Nix_0008_v02.jpg",
+      "scene_name": "Abandoned Rustic Bar / Pool Hall",
+      "set_id": "nix_the_city_bar",
+      "camera_height": "eye-level",
+      "camera_angle": 0,
+      "horizon_visible": "horizontal tavern room perspective looking across pool table toward bar",
+      "viewpoint_block": "green-felt pool table in foreground, red vinyl booth on left wall, curved bar counter with stools and liquor shelves in back",
+      "ground_plane": "dusty distressed wood-plank flooring scattered with trash, debris, and bottles",
+      "palette": [
+        "felt green (pool table surface)",
+        "deep vinyl red (booth upholstery)",
+        "warm amber / walnut brown (wood-paneled wall, bar counter, floor)",
+        "exposed red brick (right wall)",
+        "taxidermy natural tones (mounted deer, ram, fish trophies)"
+      ],
+      "subjects": [
+        {
+          "literal_object": "worn green-felt pool table with billiard balls and cue stick",
+          "what_it_depicts": "abandoned barroom billiard table",
+          "grid_cell": "bottom-center and middle-center",
+          "pose": "positioned diagonally in the foreground on wood-plank floor"
+        },
+        {
+          "literal_object": "long red vinyl booth bench with small wood tables",
+          "what_it_depicts": "tavern seating area",
+          "grid_cell": "middle-left and bottom-left",
+          "pose": "running along the left wood-paneled wall under horizontal windows"
+        },
+        {
+          "literal_object": "curved wooden bar counter with round vinyl barstools and tiered bottle back-bar",
+          "what_it_depicts": "tavern service bar",
+          "grid_cell": "middle-right and center-back",
+          "pose": "stretching across the mid-rear under hanging lamp fixtures"
+        }
+      ],
+      "props": [
+        {
+          "literal_object": "multiple mounted taxidermy animal heads (deer, ram, duck, fish)",
+          "what_it_depicts": "hunting trophies",
+          "grid_cell": "top-left and upper wall",
+          "pose": "mounted across the left wood-paneled wall above booth"
+        },
+        {
+          "literal_object": "vintage pinball machine, arcade cabinet, dartboard, and triangular pennant banner",
+          "what_it_depicts": "barroom games and decor",
+          "grid_cell": "middle-right and far-right",
+          "pose": "standing against the exposed red brick wall"
+        }
+      ],
+      "burned_in_text": "none — posters and labels degraded at scale",
+      "gate1_status": "passed",
+      "gate1_date": "2026-08-25",
+      "artwork_title": "Bar"
+    },
+    {
+      "image_filename": "Lori_Nix_0009_v02.jpg",
+      "scene_name": "Abandoned Beauty Parlor / Hair Salon",
+      "set_id": "nix_the_city_beauty_parlor",
+      "camera_height": "eye-level",
+      "camera_angle": 0,
+      "horizon_visible": "interior salon perspective looking across styling stations",
+      "viewpoint_block": "row of vintage chrome hooded salon hair dryers on the left, red vinyl styling chairs on chrome hydraulic bases, vanity mirrors with lightbulbs along the right wall",
+      "ground_plane": "distressed linoleum salon flooring scattered with shattered glass, curlers, debris, and creeping green vines",
+      "palette": [
+        "metallic chrome and teal (hooded salon dryers)",
+        "crimson red (vinyl styling chairs)",
+        "peeling floral rose and cream (wallpaper)",
+        "lush leafy green (invasive vines and hanging foliage)"
+      ],
+      "subjects": [
+        {
+          "literal_object": "row of vintage hemispherical hooded salon hair dryers on vertical chrome stands",
+          "what_it_depicts": "beauty parlor drying station",
+          "grid_cell": "middle-left and bottom-left",
+          "pose": "standing in a neat row along the left wall with dome hoods angled forward"
+        },
+        {
+          "literal_object": "red vinyl salon styling chairs with hydraulic chrome bases facing vanity mirrors",
+          "what_it_depicts": "hairdresser stations",
+          "grid_cell": "middle-right and center",
+          "pose": "positioned in front of mirrored styling counters with product bottles"
+        }
+      ],
+      "props": [
+        {
+          "literal_object": "peeling vintage floral wallpaper and encroaching green ivy vines",
+          "what_it_depicts": "decaying salon interior",
+          "grid_cell": "top and background walls",
+          "pose": "curling off plaster walls with foliage draping down from ceiling"
+        }
+      ],
+      "burned_in_text": "none",
+      "gate1_status": "passed",
+      "gate1_date": "2026-08-25",
+      "artwork_title": "Beauty Shop"
+    },
+    {
+      "image_filename": "Lori_Nix_0012_v02.jpg",
+      "scene_name": "Abandoned Chinese Takeout Restaurant",
+      "set_id": "nix_the_city_chinese_takeout",
+      "camera_height": "eye-level",
+      "camera_angle": 0,
+      "horizon_visible": "central one-point perspective looking down takeout lobby toward order counter",
+      "viewpoint_block": "blue motor scooter parked against left wood-paneled wall, large temple painting and photo food menus on left, order counter with glass partition and open doorway in back, right glass booth partition",
+      "ground_plane": "tiled linoleum floor littered with dirt, moss, dry leaves, crumpled newspapers, and folded paper takeout cartons",
+      "palette": [
+        "matte cornflower blue (vintage motor scooter)",
+        "deep maroon / burgundy (lower wall trim)",
+        "warm wood-grain tan (wainscoting and frames)",
+        "warm food photo tones (menu boards)",
+        "earthy olive and soil brown (floor debris and moss)"
+      ],
+      "subjects": [
+        {
+          "literal_object": "hand-made toy-scale blue motor scooter / Vespa leaning against lower left wall",
+          "what_it_depicts": "delivery scooter parked inside lobby",
+          "grid_cell": "bottom-left",
+          "pose": "resting at an angle on its kickstand against wood wainscoting with a plastic takeout bag on handlebar"
+        },
+        {
+          "literal_object": "takeout order service counter with Plexiglas partition and open doorway",
+          "what_it_depicts": "restaurant order counter",
+          "grid_cell": "center-back and middle-right",
+          "pose": "stretching across the back wall beneath illuminated overhead food menu signs"
+        },
+        {
+          "literal_object": "miniature red fox figure peeking through bottom of open kitchen doorway",
+          "what_it_depicts": "wildlife scavenging the abandoned restaurant",
+          "grid_cell": "bottom-center-right",
+          "pose": "standing alert in the threshold between order counter and kitchen"
+        }
+      ],
+      "props": [
+        {
+          "literal_object": "large framed wall painting of the Temple of Heaven pagoda and framed photo food menu boards",
+          "what_it_depicts": "Chinese restaurant wall decor",
+          "grid_cell": "top-left and upper wall",
+          "pose": "mounted horizontally above the burgundy wall trim"
+        },
+        {
+          "literal_object": "scattered takeout food boxes, trash bags, and old newspaper sheets on mossy floor",
+          "what_it_depicts": "abandoned restaurant floor debris",
+          "grid_cell": "bottom-center and floor plane",
+          "pose": "littered across the tiled floor among patches of growing moss"
+        }
+      ],
+      "burned_in_text": "General Tso's Chicken, Happy Family, Chicken Wing, Pepper Beef (menu placards)",
+      "gate1_status": "passed",
+      "gate1_date": "2026-08-25",
+      "artwork_title": "Chinese Take-Out"
+    },
+    {
+      "image_filename": "Lori_Nix_0016_v02.jpg",
+      "scene_name": "Abandoned Vacuum Cleaner Showroom",
+      "set_id": "nix_the_city_vacuum_showroom",
+      "camera_height": "eye-level",
+      "camera_angle": 0,
+      "horizon_visible": "eye-level perspective looking through showroom windows toward city buildings across the street",
+      "viewpoint_block": "vintage canister and upright vacuum cleaners displayed on tiered geometric plinths in a ruined mid-century modern showroom",
+      "ground_plane": "cracked concrete showroom floor with water puddles, overgrown with wild grass, vines, and moss",
+      "palette": [
+        "mustard yellow and turquoise (display plinths)",
+        "weathered concrete grey (walls and floor)",
+        "chrome and retro plastic colors (vintage vacuums)",
+        "lush overgrown green (foliage entering through cracks)"
+      ],
+      "subjects": [
+        {
+          "literal_object": "hand-made miniature vintage canister and upright vacuum cleaners with chrome handles and ribbed hoses",
+          "what_it_depicts": "appliance showroom merchandise",
+          "grid_cell": "center, left, and right",
+          "pose": "arranged on tiered display risers and scattered across cracked floor"
+        },
+        {
+          "literal_object": "tiered mid-century modern concrete display plinths painted yellow and turquoise",
+          "what_it_depicts": "showroom product risers",
+          "grid_cell": "middleground",
+          "pose": "geometric pedestals standing amidst broken concrete slabs"
+        }
+      ],
+      "props": [
+        {
+          "literal_object": "large plate-glass showroom windows with views of brick facade across the street",
+          "what_it_depicts": "storefront window looking outside",
+          "grid_cell": "background",
+          "pose": "large glass panes framing the exterior urban view"
+        },
+        {
+          "literal_object": "wild vegetation, vines, and tall grass pushing through cracked floor and ceiling",
+          "what_it_depicts": "overgrowing nature",
+          "grid_cell": "foreground and edges",
+          "pose": "dense green growth climbing over concrete and appliances"
+        }
+      ],
+      "burned_in_text": "none",
+      "gate1_status": "passed",
+      "gate1_date": "2026-08-25",
+      "artwork_title": "Vacuum Showroom"
+    },
+    {
+      "image_filename": "Lori_Nix_0032_v02.jpg",
+      "scene_name": "Abandoned Laundromat at Night",
+      "set_id": "nix_the_city_laundromat_night",
+      "camera_height": "eye-level",
+      "camera_angle": 0,
+      "horizon_visible": "eye-level perspective looking across wash banks toward nocturnal storefront windows",
+      "viewpoint_block": "commercial front-load washing machines with round glass portholes along left wall, orange plastic laundry basket on mossy floor, large front windows showing dark night sky",
+      "ground_plane": "grimy tile and concrete floor covered in dense green moss, scattered clothes, and fallen ceiling debris",
+      "palette": [
+        "desaturated sage / teal green (washing machine panels)",
+        "safety rust orange (plastic laundry basket)",
+        "deep nocturnal navy blue and black (exterior night window view)",
+        "olive moss green (floor overgrowth)",
+        "weathered off-white (peeling interior walls)"
+      ],
+      "subjects": [
+        {
+          "literal_object": "hand-made dollhouse-scale commercial front-loading washing machines with round porthole doors",
+          "what_it_depicts": "abandoned laundromat wash bank",
+          "grid_cell": "middle-left and rear wall",
+          "pose": "fixed row along the left and back walls with coin meters on top"
+        },
+        {
+          "literal_object": "orange plastic wheeled laundry cart with wire frame",
+          "what_it_depicts": "laundry basket on floor",
+          "grid_cell": "bottom-center-left",
+          "pose": "standing upright on the moss-covered floor"
+        }
+      ],
+      "props": [
+        {
+          "literal_object": "large plate-glass storefront windows looking out into dark nocturnal city night",
+          "what_it_depicts": "laundromat storefront windows",
+          "grid_cell": "right and background",
+          "pose": "framing deep blue night sky and urban shadows"
+        },
+        {
+          "literal_object": "hanging fluorescent light fixtures and dangling electrical wires",
+          "what_it_depicts": "decaying ceiling grid",
+          "grid_cell": "top",
+          "pose": "suspended at uneven angles with peeling ceiling plaster"
+        }
+      ],
+      "burned_in_text": "none",
+      "gate1_status": "passed",
+      "gate1_date": "2026-08-25",
+      "artwork_title": "Laundromat at Night"
+    },
+    {
+      "image_filename": "Lori_Nix_0050_v02.jpg",
+      "scene_name": "Vintage Taxidermy Workshop Studio",
+      "set_id": "nix_the_city_taxidermy_studio",
+      "camera_height": "eye-level",
+      "camera_angle": 0,
+      "horizon_visible": "eye-level studio interior looking across central workbench and specimen shelves",
+      "viewpoint_block": "vintage taxidermy workshop with animal pelts, mounted bird forms, deer heads, plaster molds, and taxidermist tools on wooden workbenches",
+      "ground_plane": "distressed wooden studio plank floor littered with wood shavings, tools, and specimen armatures",
+      "palette": [
+        "monochrome black and white / sepia tones",
+        "charcoal grey and slate",
+        "faded parchment and bone white (casts and skulls)",
+        "aged timber dark grey-brown (workbenches and shelving)"
+      ],
+      "subjects": [
+        {
+          "literal_object": "hand-crafted dollhouse-scale taxidermy workbench with animal forms, pelts, and carving tools",
+          "what_it_depicts": "taxidermist preparation workstation",
+          "grid_cell": "center and foreground",
+          "pose": "large wooden table covered with mounted specimens, molds, and sculpting implements"
+        },
+        {
+          "literal_object": "animal heads, mounted bird figures, and drying hides hanging from walls and ceiling",
+          "what_it_depicts": "completed and in-progress taxidermy trophies",
+          "grid_cell": "middle-left, middle-right, and upper background",
+          "pose": "mounted on wooden wall plaques and suspended from workshop rafters"
+        }
+      ],
+      "props": [
+        {
+          "literal_object": "tall wooden shelving units lined with chemical jars, plaster casts, and anatomical skull specimens",
+          "what_it_depicts": "taxidermist supply cabinets",
+          "grid_cell": "background walls",
+          "pose": "receding into the studio background under soft window light"
+        }
+      ],
+      "burned_in_text": "none",
+      "gate1_status": "passed",
+      "gate1_date": "2026-08-25",
+      "artwork_title": "Lions & Tigers"
+    }
+  ]
+}

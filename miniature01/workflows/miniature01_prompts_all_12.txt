@@ -1,0 +1,193 @@
+miniature01 - FL2VA prompts, all twelve passes
+================================================================
+Written by Hermes Agent from the source photographs. One theatrical
+stage device per pair, never named in the prompt text itself.
+
+Model     MiniMax-H3 FL2VA, ComfyUI, 25 steps, res_multistep / simple
+Render    1920x1088, 124 frames at 24 fps, 5.17 s per pass
+Anchors   Photographs by Lori Nix and Kathleen Gerber, cropped to 16:9
+
+Picture 1 is pinned to 0.00 s. Picture 2 is pinned to 5.17 s. Everything
+between the two is generated.
+================================================================
+
+
+----------------------------------------------------------------
+miniature01_pair01_forward
+first frame : Bar
+last frame  : Beauty Shop
+----------------------------------------------------------------
+
+How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 1) aligns with the 5.17-second mark of the target video.
+
+integrated_multimodal_description: [Shot 1] Live-action, hand-crafted stop-motion miniature diorama, continuous single shot, no cuts. The camera holds a steady eye-level view. The scene opens on Picture 1. In energetic, rapid stop-motion increments, the wooden billiard balls roll fast across the green felt, loudly dropping and thudding into the leather drop pockets. The wooden cue stick slides briskly off the rail with a sharp scrape, while the pool table rattles on floor casters as it glides out to the left. The vintage pinball machine and arcade cabinet rumble and clatter across the floorboards as they roll out to the right. Round vinyl barstools loudly spin on swivel stems, squeaking in quick rotation, while liquor bottles and glassware clink, rattle, and slide off tiered shelves as the heavy wooden bar counter tracks away. From the right, vintage chrome hooded hair dryers on slender stands roll into the room with metallic clicks and rattling tripod casters. Red vinyl salon styling chairs swivel in rapid increments with loud hydraulic squeaks, sliding forward into place before mirrored vanity counters. Rectangular vanity mirrors slide down with sharp wooden taps along the plaster walls, and scattered plastic hair curlers and glass shards jitter across the floor. Peeling floral wallpaper and creeping green ivy vines settle into place, locking every miniature prop firmly into the exact layout, lighting, and composition of Picture 2. Preserve: dollhouse scale, stop-motion animation, pool table, billiard balls, pinball machine, barstools, chrome hooded hair dryers, red styling chairs, vanity mirrors, peeling floral wallpaper, green vines.
+
+overall_soundscape: Loud stop-motion ratchet clicks, wooden billiard balls violently clacking and thudding into leather pockets, small metal caster rattles, loud squeaking vinyl chair swivels, metallic chrome clicks, glass bottles clinking and rattling, cue stick sliding scrape.
+
+non_diegetic_music: N/A
+
+
+----------------------------------------------------------------
+miniature01_pair01_backward
+first frame : Beauty Shop
+last frame  : Bar
+----------------------------------------------------------------
+
+How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 1) aligns with the 5.17-second mark of the target video.
+
+integrated_multimodal_description: [Shot 1] Live-action, hand-crafted stop-motion miniature diorama, continuous single shot, no cuts. The camera holds a steady eye-level view. The scene opens on Picture 1. In energetic, rapid stop-motion increments, individual chrome hooded hair dryers roll backwards to the left on small caster wheels with loud tripod clicks, spinning slightly as they exit. Red vinyl salon styling chairs rotate on their chrome hydraulic stems with sharp swivel squeaks and glide out to the right. Vanity mirrors slide upward off the wall with wooden scrapes as scattered hair curlers, shampoo bottles, and glass shards rattle and sweep across the linoleum floor. From the background and left, round barstools spin loudly into place across the wood floor, followed by the wooden bar counter rolling in with small liquor bottles and steins clattering onto tiered shelves. The vintage pinball machine and arcade cabinet track into position against the right brick wall with metallic thuds. The green-felt pool table glides smoothly into the center foreground, while individual wooden billiard balls roll and violently clack into pockets and a wooden cue stick drops onto the rail with a sharp rap, locking every miniature prop firmly into the exact layout, lighting, and composition of Picture 2. Preserve: dollhouse scale, stop-motion animation, chrome hooded hair dryers, red styling chairs, vanity mirrors, green felt pool table, billiard balls, pinball machine, barstools, wooden bar counter.
+
+overall_soundscape: Loud stop-motion ratchet clicks, small caster wheel roll and clatter on wood, sharp vinyl swivel squeaks, glass bottle rattles, cue stick slide, billiard ball clack and pocket thud.
+
+non_diegetic_music: N/A
+
+
+----------------------------------------------------------------
+miniature01_pair02_forward
+first frame : Beauty Shop
+last frame  : Chinese Take-Out
+----------------------------------------------------------------
+
+How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 1) aligns with the 5.17-second mark of the target video.
+
+integrated_multimodal_description: [Shot 1] Live-action, hand-crafted stop-motion miniature diorama, continuous single shot, no cuts. The camera holds a steady eye-level view. The scene opens on Picture 1. In energetic, rapid stop-motion increments, the chrome hooded hair dryers roll backwards in single file, wheels rattling loudly across linoleum seams. Red vinyl salon styling chairs swivel in tight circles with pronounced hydraulic squeaks and slide out to the right. Rectangular vanity mirrors slide upward off the plaster wall with a wooden scrape, while glass shards, hair curlers, and bottles rattle and sweep across the floor plane. From the upper left, framed photo food menu placards and the large Temple of Heaven painting slide down with solid thuds along the wood wainscoting. The takeout order counter with its glass partition glides forward with a heavy mechanical track rattle. The miniature matte blue Vespa delivery scooter rolls briskly forward on rubber tires into the lower left foreground with a light motor click and tire hum, while a tiny red fox figure steps into the kitchen doorway threshold. Folded paper takeout cartons and dry newspapers rustle and scatter across the floor, locking every miniature prop firmly into the exact layout, lighting, and composition of Picture 2. Preserve: dollhouse scale, stop-motion animation, chrome hooded hair dryers, red styling chairs, vanity mirrors, blue Vespa scooter, Temple of Heaven painting, order counter, takeout boxes, red fox figure.
+
+overall_soundscape: Loud stop-motion mechanical clicks, pronounced rubber scooter tire roll on tile, vinyl chair swivel squeaks, glass partition tracking rattle, crisp paper takeout box rustling, sharp wooden frame taps against wainscoting.
+
+non_diegetic_music: N/A
+
+
+----------------------------------------------------------------
+miniature01_pair02_backward
+first frame : Chinese Take-Out
+last frame  : Beauty Shop
+----------------------------------------------------------------
+
+How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 1) aligns with the 5.17-second mark of the target video.
+
+integrated_multimodal_description: [Shot 1] Live-action, hand-crafted stop-motion miniature diorama, continuous single shot, no cuts. The camera holds a steady eye-level view. The scene opens on Picture 1. In energetic, rapid stop-motion increments, the miniature blue Vespa scooter rolls backwards with a loud rubber tire squeak on tile, while the tiny red fox figure darts into the kitchen. The takeout order counter with its glass partition glides backwards with a heavy mechanical track rattle, while framed menu boards and the Temple of Heaven painting slide upward off the wood wainscoting with sharp wooden taps. Folded takeout cartons and dry newspapers rustle and sweep cleanly away. From the right, red vinyl styling chairs roll forward in fast stop-motion steps, swiveling on chrome hydraulic stems with sharp squeaks, while tall vanity mirrors slide down into place along the plaster wall. A neat row of vintage chrome hooded hair dryers rolls in from the left on metal stands with loud tripod caster clicks, and creeping green ivy vines extend across peeling floral wallpaper, locking every miniature prop firmly into the exact layout, lighting, and composition of Picture 2. Preserve: dollhouse scale, stop-motion animation, blue Vespa scooter, order counter, takeout boxes, Temple of Heaven painting, chrome hooded hair dryers, red styling chairs, vanity mirrors, peeling floral wallpaper.
+
+overall_soundscape: Loud rubber scooter tire roll and squeak, crisp paper takeout box rustle, heavy glass partition glide, sharp vinyl chair swivel squeaks, loud metallic chrome tripod clicks, ratchet clicks.
+
+non_diegetic_music: N/A
+
+
+----------------------------------------------------------------
+miniature01_pair03_forward
+first frame : Chinese Take-Out
+last frame  : Vacuum Showroom
+----------------------------------------------------------------
+
+How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 1) aligns with the 5.17-second mark of the target video.
+
+integrated_multimodal_description: [Shot 1] Live-action, hand-crafted stop-motion miniature diorama, continuous single shot, no cuts. The camera holds a steady eye-level view. The scene opens on Picture 1. In energetic, rapid stop-motion increments, the blue Vespa scooter rolls away to the left with small tire squeaks, the order counter and glass partition slide backward with mechanical track rattles, and framed menu placards lift off the walls with wooden clicks. Folded paper takeout cartons and crumpled newspapers rustle and sweep cleanly across the floor. From the background and sides, tiered geometric concrete display plinths painted mustard yellow and turquoise slide forward with heavy grinding scrapes across the cracked floor slabs. Individual vintage canister and upright vacuum cleaners with chrome handles and ribbed hoses roll and pivot onto the risers in sharp stop-motion steps, trailing ribbed plastic hoses with rattling clicks. Large plate-glass showroom windows settle into the background framing brick city facades outside, and wild green grass and vines push through concrete cracks, locking every miniature prop firmly into the exact layout, lighting, and composition of Picture 2. Preserve: dollhouse scale, stop-motion animation, blue Vespa scooter, order counter, takeout boxes, vintage canister vacuums, upright vacuums, yellow and turquoise display plinths, plate glass windows.
+
+overall_soundscape: Small rubber wheel roll and squeak, crisp paper carton rustle, heavy concrete plinth grinding scrape, vintage chrome vacuum handle clicks, ribbed plastic hose rattle and dragging clatter.
+
+non_diegetic_music: N/A
+
+
+----------------------------------------------------------------
+miniature01_pair03_backward
+first frame : Vacuum Showroom
+last frame  : Chinese Take-Out
+----------------------------------------------------------------
+
+How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 1) aligns with the 5.17-second mark of the target video.
+
+integrated_multimodal_description: [Shot 1] Live-action, hand-crafted stop-motion miniature diorama, continuous single shot, no cuts. The camera holds a steady eye-level view. The scene opens on Picture 1. In energetic, rapid stop-motion increments, vintage canister and upright vacuum cleaners roll and pivot off display risers with loud plastic wheel clicks and dragging ribbed hoses. The tiered yellow and turquoise concrete plinths slide backward and lower into the floor plane with a heavy grinding scrape, while overgrown grass and vines retract across cracked concrete slabs. From the background and left, wood-paneled wainscoting and the takeout order counter with glass partition track forward with a solid mechanical clatter. Framed photo menu placards and the large Temple of Heaven painting slide down along the wall with sharp wooden thuds. In the lower left foreground, a miniature matte blue Vespa scooter rolls into place on small rubber tires with a light motor click and tire squeak, and a tiny red fox figure steps alertly into the kitchen doorway, locking every miniature prop firmly into the exact layout, lighting, and composition of Picture 2. Preserve: dollhouse scale, stop-motion animation, vintage canister vacuums, upright vacuums, display plinths, blue Vespa scooter, order counter, takeout boxes, Temple of Heaven painting, red fox figure.
+
+overall_soundscape: Ribbed plastic hose drag and rattle, vintage vacuum wheels clattering on concrete, heavy plinth grinding glide, rubber scooter tire roll and squeak on tile, crisp takeout carton rustle.
+
+non_diegetic_music: N/A
+
+
+----------------------------------------------------------------
+miniature01_pair04_forward
+first frame : Vacuum Showroom
+last frame  : Laundromat at Night
+----------------------------------------------------------------
+
+How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 1) aligns with the 5.17-second mark of the target video.
+
+integrated_multimodal_description: [Shot 1] Live-action, hand-crafted stop-motion miniature diorama, continuous single shot, no cuts. The camera holds a steady eye-level view. The scene opens on Picture 1. In energetic, rapid stop-motion increments, vintage canister and upright vacuum cleaners pivot on small plastic wheels with sharp clatters and glide off-screen, trailing ribbed hoses. The tiered yellow and turquoise display risers slide backward and separate with heavy grinding friction. The daytime city skyline outside the plate-glass windows deepens into nocturnal dark blue shadows. Along the left wall, a fixed bank of commercial front-loading washing machines with round glass portholes tracks forward with a loud metallic rumble. A bright orange plastic laundry basket rolls forward on tiny plastic wheels with a loud rattle into the center foreground across moss-covered floor tiles, and fluorescent light fixtures dangle from the deteriorating ceiling grid with light metallic clinks, locking every miniature prop firmly into the exact layout, lighting, and composition of Picture 2. Preserve: dollhouse scale, stop-motion animation, vintage vacuum cleaners, display plinths, commercial front-load washing machines, round glass portholes, orange laundry basket, nocturnal window view.
+
+overall_soundscape: Small plastic wheel rolls and rattles on concrete, chrome appliance clicks, heavy washing machine cabinet metallic rumble, metallic ceiling grid clink, quiet nocturnal room hum.
+
+non_diegetic_music: N/A
+
+
+----------------------------------------------------------------
+miniature01_pair04_backward
+first frame : Laundromat at Night
+last frame  : Vacuum Showroom
+----------------------------------------------------------------
+
+How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 1) aligns with the 5.17-second mark of the target video.
+
+integrated_multimodal_description: [Shot 1] Live-action, hand-crafted stop-motion miniature diorama, continuous single shot, no cuts. The camera holds a steady eye-level view. The scene opens on Picture 1. In energetic, rapid stop-motion increments, the orange plastic laundry basket rolls backward with loud plastic wheel clatters, while the bank of commercial washing machines on the left wall slides backward into shadows with a heavy metal rumble. The dark nocturnal exterior view outside the windows brightens into daylight city buildings across the street. Across the cracked concrete showroom floor, tiered geometric display plinths painted mustard yellow and turquoise glide forward with a solid grinding scrape. Individual miniature vintage canister and upright vacuum cleaners with chrome handles and ribbed hoses roll into position on top of the risers with sharp metallic clicks and hose rattles, and lush green grass pushes up through concrete floor cracks, locking every miniature prop firmly into the exact layout, lighting, and composition of Picture 2. Preserve: dollhouse scale, stop-motion animation, commercial washing machines, orange laundry basket, vintage canister vacuums, upright vacuums, yellow and turquoise display plinths, plate glass windows.
+
+overall_soundscape: Small plastic wheel rattle on tile, heavy washing machine steel scrape, concrete plinth grinding glide, chrome vacuum handle click, ribbed hose clatter.
+
+non_diegetic_music: N/A
+
+
+----------------------------------------------------------------
+miniature01_pair05_forward
+first frame : Laundromat at Night
+last frame  : Lions & Tigers
+----------------------------------------------------------------
+
+How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 1) aligns with the 5.17-second mark of the target video.
+
+integrated_multimodal_description: [Shot 1] Live-action, hand-crafted stop-motion miniature diorama, continuous single shot, no cuts. The camera holds a steady eye-level view. The scene opens on Picture 1. In energetic, rapid stop-motion increments, the orange plastic laundry basket rolls out of frame with a loud plastic rattle, and the bank of commercial washing machines on the left glides backward into shadows with a heavy metal scrape. The large storefront windows and nocturnal night sky shift into warm sepia studio lighting. A heavy dark wooden taxidermy workbench slides into the center foreground with a deep timber rumble, while wood shavings and metal carving tools clatter and jitter onto the table surface. Mounted bird specimens, deer trophies, and animal pelts step down along the walls and rafters on mounting plaques with sharp wooden taps. Tall wooden supply shelves lined with chemical jars, plaster casts, and anatomical skull specimens track into the background along the weathered plank floor with glass clinks, locking every miniature prop firmly into the exact layout, lighting, and monochrome composition of Picture 2. Preserve: dollhouse scale, stop-motion animation, commercial washing machines, orange laundry basket, taxidermy workbench, mounted deer head, bird specimens, plaster molds, specimen shelves.
+
+overall_soundscape: Small plastic wheel rattle, washing machine metal friction rumble, heavy timber workbench glide, wood shaving rustle, specimen glass jar clinks and thuds.
+
+non_diegetic_music: N/A
+
+
+----------------------------------------------------------------
+miniature01_pair05_backward
+first frame : Lions & Tigers
+last frame  : Laundromat at Night
+----------------------------------------------------------------
+
+How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 1) aligns with the 5.17-second mark of the target video.
+
+integrated_multimodal_description: [Shot 1] Live-action, hand-crafted stop-motion miniature diorama, continuous single shot, no cuts. The camera holds a steady eye-level view. The scene opens on Picture 1. In energetic, rapid stop-motion increments, mounted animal heads and bird specimens lift off wall plaques with wooden taps, while the central wooden workbench with its tools, pelts, and plaster casts glides backward out of frame with a deep timber scrape. The warm sepia workshop lighting transitions into deep nocturnal dark blue. Along the left wall, a commercial bank of front-loading washing machines with circular glass portholes tracks forward into place with a heavy metallic rumble on mossy floor tiles. A bright orange plastic laundry basket rolls forward on small plastic wheels with a loud clattering rattle into the center foreground, and plate-glass windows settle in the background revealing the nocturnal city sky, locking every miniature prop firmly into the exact layout, lighting, and composition of Picture 2. Preserve: dollhouse scale, stop-motion animation, taxidermy workbench, mounted specimens, plaster casts, commercial washing machines, round porthole doors, orange laundry basket, nocturnal window view.
+
+overall_soundscape: Wood workbench scrape, plaster mold rattle, heavy washing machine steel track glide, loud plastic basket wheel rattle on concrete, quiet nighttime hum.
+
+non_diegetic_music: N/A
+
+
+----------------------------------------------------------------
+miniature01_pair06_forward
+first frame : Lions & Tigers
+last frame  : Bar
+----------------------------------------------------------------
+
+How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 1) aligns with the 5.17-second mark of the target video.
+
+integrated_multimodal_description: [Shot 1] Live-action, hand-crafted stop-motion miniature diorama, continuous single shot, no cuts. The camera holds a steady eye-level view. The scene opens on Picture 1. In energetic, rapid stop-motion increments, animal forms, carving tools, and plaster molds clatter and jitter off the central taxidermy workbench as the table glides out of the foreground with a heavy timber scrape. The monochrome sepia workshop light warms into rich tavern amber. Along the left wall, a long red vinyl booth bench and wood-paneled walls with mounted hunting trophies track forward with solid thuds. A worn green-felt pool table rolls smoothly on wooden legs with a loud floor rumble into the center foreground, while wooden billiard balls roll and violently clack into pockets and a cue stick drops onto the rail with a sharp wooden rap. In the background, the curved wooden bar counter with tiered liquor bottles and a vintage pinball machine on the right brick wall settle into place with glass clinks and metal rattles, locking every miniature prop firmly into the exact layout, lighting, and composition of Picture 2. Preserve: dollhouse scale, stop-motion animation, taxidermy workbench, plaster molds, green felt pool table, billiard balls, red vinyl booth, mounted deer trophies, wooden bar counter, pinball machine.
+
+overall_soundscape: Wood shavings rustle, heavy timber glide on floorboards, vinyl booth thud, billiard balls violently clacking and rolling into pockets, crisp glassware and bottle rattles.
+
+non_diegetic_music: N/A
+
+
+----------------------------------------------------------------
+miniature01_pair06_backward
+first frame : Bar
+last frame  : Lions & Tigers
+----------------------------------------------------------------
+
+How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 1) aligns with the 5.17-second mark of the target video.
+
+integrated_multimodal_description: [Shot 1] Live-action, hand-crafted stop-motion miniature diorama, continuous single shot, no cuts. The camera holds a steady eye-level view. The scene opens on Picture 1. In energetic, rapid stop-motion increments, billiard balls loudly drop into pockets, the cue stick lifts away with a wooden scrape, and the green-felt pool table glides smoothly out of the foreground to the left with floorboard rattles. The vintage pinball machine on the brick wall and the wooden bar counter track backward into shadows with metallic clatters as the red vinyl booth bench slides off along the left wall. The amber tavern light shifts into monochrome sepia tones. A heavy wooden taxidermy workbench slides into the center foreground with a deep timber rumble, covered with carving tools, plaster armatures, and drying pelts. Along the walls and rafters, mounted animal heads and bird specimens step down onto mounting plaques with sharp wooden raps, and wooden supply shelves lined with specimen jars settle in the background with glass clinks, locking every miniature prop firmly into the exact layout, lighting, and composition of Picture 2. Preserve: dollhouse scale, stop-motion animation, green felt pool table, billiard balls, red vinyl booth, pinball machine, taxidermy workbench, animal pelts, mounted deer heads, plaster molds.
+
+overall_soundscape: Billiard balls violently clacking and thudding into pockets, heavy wooden furniture glide and rumble, plaster cast rattle, wood shavings rustle, sharp glass jar clinks.
+
+non_diegetic_music: N/A
+
