@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "asset": "assets/scifi_core_valley_0001.glb",
+  "look": {
+    "exposure": 1.1,
+    "environment": 0.65,
+    "rotation": -4,
+    "background": "#17232f",
+    "shadows": true,
+    "shadowStrength": 0.65,
+    "bloom": true,
+    "bloomWeight": 0.18
+  },
+  "camera": {
+    "alpha": 1.9671307087235557,
+    "beta": 1.635822652838156,
+    "radius": 153.68205745970747,
+    "target": [
+      0,
+      24,
+      -12
+    ],
+    "fov": 0.7504915783575616
+  },
+  "lights": [
+    {
+      "id": 0,
+      "name": "Yard warm spot",
+      "type": 2,
+      "enabled": true,
+      "intensity": 243.50706293059986,
+      "color": "#FFD298",
+      "position": [
+        -22,
+        7.900000095367432,
+        42
+      ],
+      "direction": [
+        0,
+        -0.9999999999999911,
+        1.3435884046822753e-07
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Yard warm spot.001",
+      "type": 2,
+      "enabled": true,
+      "intensity": 143.2394487827058,
+      "color": "#FFD298",
+      "position": [
+        22,
+        7.900000095367432,
+        42
+      ],
+      "direction": [
+        0,
+        -0.9999999999999911,
+        1.3435884046822753e-07
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Yard warm spot.002",
+      "type": 2,
+      "enabled": true,
+      "intensity": 143.2394487827058,
+      "color": "#FFD298",
+      "position": [
+        -42,
+        7.900000095367432,
+        -12
+      ],
+      "direction": [
+        0,
+        -0.9999999999999911,
+        1.3435884046822753e-07
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Yard warm spot.003",
+      "type": 2,
+      "enabled": true,
+      "intensity": 143.2394487827058,
+      "color": "#FFD298",
+      "position": [
+        42,
+        7.900000095367432,
+        -12
+      ],
+      "direction": [
+        0,
+        -0.9999999999999911,
+        1.3435884046822753e-07
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Late afternoon sun",
+      "type": 1,
+      "enabled": true,
+      "intensity": 1.7,
+      "color": "#FFE9CF",
+      "position": [
+        0,
+        100,
+        0
+      ],
+      "direction": [
+        -0.3698001725910085,
+        -0.924500327169395,
+        -0.09244986433382148
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Cool sky fill",
+      "type": 1,
+      "enabled": true,
+      "intensity": 0.699999988079071,
+      "color": "#A8D0FF",
+      "position": [
+        0,
+        100,
+        0
+      ],
+      "direction": [
+        0.5070925788076981,
+        -0.8451542185399824,
+        0.1690309539765728
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Core cyan wash",
+      "type": 0,
+      "enabled": true,
+      "intensity": 1432.3944878270581,
+      "color": "#41CAFF",
+      "position": [
+        -22,
+        22,
+        18
+      ],
+      "direction": null
+    },
+    {
+      "id": 7,
+      "name": "Core coral wash",
+      "type": 0,
+      "enabled": true,
+      "intensity": 1193.662073189215,
+      "color": "#FF517B",
+      "position": [
+        25,
+        24,
+        -8
+      ],
+      "direction": null
+    }
+  ]
+}

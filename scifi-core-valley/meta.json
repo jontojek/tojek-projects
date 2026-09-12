@@ -1,0 +1,15 @@
+{
+  "title": "Prism Valley \u2014 Interactive Sci-Fi Core",
+  "blurb": "Explore a 60-metre reactor in a mountain valley. Orbit the scene and experiment with its lighting, shadows, and glowing energy rings.",
+  "tags": [
+    "Blender",
+    "Babylon.js",
+    "Procedural 3D"
+  ],
+  "date": "2026-09-11",
+  "cta": "Explore in 3D",
+  "thumb": {
+    "image": "scifi-core-valley/preview.webp",
+    "alt": "Colorful industrial reactor surrounded by mountains, pine trees, worker buildings and cars"
+  }
+}
