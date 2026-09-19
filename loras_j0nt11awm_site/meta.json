@@ -1,0 +1,17 @@
+{
+  "title": "One Face, Two Models — Training a Likeness LoRA",
+  "blurb": "Two adapters from one dataset, trained on the 5090 in an afternoon with Fizgig: a LoKR that holds my face in Krea 2 stills, and a LoRA that carries picture, motion and voice into MiniMax H3. Same trigger word for both. The page shows what it learned from, and the same prompt and seed with the LoRA on and off — the base model gives a different man every time.",
+  "tags": [
+    "LoRA",
+    "Krea 2",
+    "MiniMax-H3",
+    "Fizgig"
+  ],
+  "date": "2026-09-19",
+  "cta": "See the run",
+  "thumb": {
+    "video": "assets/thumb_loras.mp4",
+    "poster": "assets/thumb_loras.jpg",
+    "alt": "Two talking-head clips side by side from the same still and seed: the left with the likeness LoRA on, the right the base model"
+  }
+}

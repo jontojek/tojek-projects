@@ -12,3 +12,8 @@ desktop.ini
 
 # Python
 __pycache__/
+
+# Per-project scratch/working folders (renders, screenshots, temp)
+_renders/
+_scratch/
+_work/
