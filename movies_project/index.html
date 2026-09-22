@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Four AI short films starring my own likeness, written in a chat window and rendered end to end on one local PC.">
+<meta property="og:title" content="Four Films, One PC">
+<meta property="og:description" content="Four AI short films starring my own likeness, written in a chat window and rendered end to end on one local PC.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="media/reel_poster.webp">
+<style>
+  :root{padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px)}
+  html{color-scheme:light}
+  body{margin:0}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>Local Film Pipeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    color-scheme: light;
+    --ground:#f3efe6;        /* call-sheet paper */
+    --panel:#ffffff;
+    --panel-2:#eae5d9;
+    --ink:#171a1f;
+    --ink-soft:#5d6470;
+    --rule:#d9d2c3;
+    --leader:#c33a1c;        /* film-leader red */
+    --gauge:#0f6f72;         /* data teal */
+    --shadow:0 1px 2px rgba(23,26,31,.06), 0 8px 24px -12px rgba(23,26,31,.18);
+    --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+    --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --ground:#0d1014;      /* screening room */
+      --panel:#14181e;
+      --panel-2:#1b212a;
+      --ink:#e9e5db;
+      --ink-soft:#949cab;
+      --rule:#252d38;
+      --leader:#f0552f;
+      --gauge:#5fc9c3;
+      --shadow:0 1px 0 rgba(255,255,255,.03), 0 18px 40px -22px rgba(0,0,0,.9);
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --ground:#0d1014; --panel:#14181e; --panel-2:#1b212a;
+    --ink:#e9e5db; --ink-soft:#949cab; --rule:#252d38;
+    --leader:#f0552f; --gauge:#5fc9c3;
+    --shadow:0 1px 0 rgba(255,255,255,.03), 0 18px 40px -22px rgba(0,0,0,.9);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:var(--body); font-size:16.5px; line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px; margin:0 auto; padding-inline:20px}
+  section{padding-block:clamp(38px,6vw,64px); border-top:1px solid var(--rule)}
+  section:first-of-type{border-top:none}
+  p{margin:0 0 15px; max-width:64ch}
+  a{color:inherit}
+  img{max-width:100%; display:block}
+
+  .eyebrow{
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--ink-soft); margin:0 0 14px;
+  }
+  .eyebrow b{color:var(--leader); font-weight:600}
+  h1{
+    font-family:var(--display); font-weight:800;
+    font-size:clamp(32px,5.6vw,56px); line-height:1.04; letter-spacing:-.022em;
+    margin:0; text-wrap:balance; max-width:18ch;
+  }
+  h2{
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(22px,3.1vw,30px); line-height:1.15; letter-spacing:-.015em;
+    margin:0 0 6px; text-wrap:balance;
+  }
+  .kicker{
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--gauge); margin:0 0 10px;
+  }
+  .lede{font-size:18.5px; max-width:58ch; margin-top:18px}
+
+  /* ---- slate ---- */
+  header{padding-block:clamp(44px,7vw,74px) clamp(26px,4vw,38px)}
+  .slate{
+    margin-top:30px; display:grid; gap:1px; background:var(--rule);
+    border:1px solid var(--rule); border-radius:3px; overflow:hidden;
+    grid-template-columns:repeat(4,1fr);
+  }
+  @media (max-width:560px){ .slate{grid-template-columns:repeat(2,1fr)} }
+  .slate div{background:var(--panel); padding:13px 16px}
+  .slate dt{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--ink-soft); margin:0 0 3px;
+  }
+  .slate dd{
+    margin:0; font-family:var(--display); font-weight:700; font-size:23px;
+    letter-spacing:-.01em; font-variant-numeric:tabular-nums;
+  }
+
+  /* ---- player ---- */
+  .player{margin-top:22px; box-shadow:var(--shadow); border-radius:4px; overflow:hidden;
+          border:1px solid var(--rule); background:#000}
+  .player iframe{display:block; width:100%; aspect-ratio:16/9; border:0}
+  a.thumb{display:block; position:relative; text-decoration:none; background:#000}
+  a.thumb img{width:100%; display:block; opacity:.88; transition:opacity .18s ease}
+  a.thumb:hover img, a.thumb:focus-visible img{opacity:1}
+  a.thumb .play{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  }
+  a.thumb .play span{
+    display:flex; align-items:center; gap:10px;
+    background:rgba(9,11,14,.72); color:#f5f2ea; border:1px solid rgba(245,242,234,.3);
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.1em; text-transform:uppercase;
+    padding:10px 18px; border-radius:2px; backdrop-filter:blur(3px);
+  }
+  a.thumb:hover .play span{background:rgba(9,11,14,.85)}
+  .cap{
+    font-family:var(--mono); font-size:12.5px; color:var(--ink-soft);
+    margin-top:10px; line-height:1.55; max-width:78ch;
+  }
+  .cap a{color:var(--gauge); text-underline-offset:3px}
+
+  /* ---- transcript ---- */
+  .talk{margin-top:22px; border-left:2px solid var(--leader)}
+  .turn{display:grid; grid-template-columns:76px 1fr; gap:18px;
+        padding:12px 0 12px 20px; border-bottom:1px dashed var(--rule)}
+  .turn:last-child{border-bottom:none}
+  @media (max-width:560px){
+    .turn{grid-template-columns:1fr; gap:4px; padding-left:16px}
+  }
+  .who{
+    font-family:var(--mono); font-size:11px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--ink-soft); padding-top:4px;
+  }
+  .who.me{color:var(--leader)}
+  .turn p{margin:0; max-width:56ch}
+  .ideas{display:flex; flex-wrap:wrap; gap:7px; margin-top:9px}
+  .ideas span{
+    font-family:var(--mono); font-size:12px; padding:3px 9px;
+    border:1px solid var(--rule); border-radius:2px; background:var(--panel);
+    color:var(--ink-soft);
+  }
+  .ideas span.pick{border-color:var(--leader); color:var(--leader);
+                   background:transparent; font-weight:500}
+
+  /* ---- steps ---- */
+  .steps{list-style:none; margin:22px 0 0; padding:0; counter-reset:s;
+         display:grid; gap:1px; background:var(--rule);
+         border:1px solid var(--rule); border-radius:3px; overflow:hidden}
+  .steps li{counter-increment:s; background:var(--panel);
+            padding:15px 18px 15px 62px; position:relative}
+  .steps li::before{
+    content:counter(s,decimal-leading-zero); position:absolute; left:18px; top:15px;
+    font-family:var(--mono); font-size:12px; font-weight:600; color:var(--gauge);
+  }
+  .steps b{display:block; font-weight:600; font-size:16.5px; margin-bottom:1px}
+  .steps span{color:var(--ink-soft); font-size:15px}
+  .steps code{font-family:var(--mono); font-size:13px; background:var(--panel-2);
+              padding:1px 5px; border-radius:2px; color:var(--ink)}
+
+  /* ---- films ---- */
+  .films{display:grid; grid-template-columns:repeat(auto-fit,minmax(228px,1fr));
+         gap:18px; margin-top:24px}
+  .film{background:var(--panel); border:1px solid var(--rule); border-radius:3px;
+        overflow:hidden; display:flex; flex-direction:column}
+  .film img{width:100%; aspect-ratio:16/9; object-fit:cover; background:var(--panel-2)}
+  .film .body{padding:13px 15px 15px; display:flex; flex-direction:column; gap:3px; flex:1}
+  .film .slug{font-family:var(--mono); font-size:10.5px; letter-spacing:.12em;
+              text-transform:uppercase; color:var(--ink-soft)}
+  .film h3{font-family:var(--display); font-weight:700; font-size:18px;
+           margin:0; letter-spacing:-.01em}
+  .film .note{font-size:14px; color:var(--ink-soft); margin:2px 0 10px}
+  .film a{margin-top:auto; font-family:var(--mono); font-size:12.5px;
+          color:var(--leader); text-decoration:none; font-weight:500}
+  .film a:hover{text-decoration:underline; text-underline-offset:3px}
+
+  /* ---- before/after ---- */
+  .ba{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:22px}
+  @media (max-width:560px){.ba{grid-template-columns:1fr}}
+  .ba figure{margin:0}
+  .ba img{border:1px solid var(--rule); border-radius:3px; width:100%}
+  .ba figcaption{font-family:var(--mono); font-size:11px; letter-spacing:.12em;
+                 text-transform:uppercase; color:var(--ink-soft); margin-bottom:7px}
+  .ba .after figcaption{color:var(--gauge)}
+
+  /* ---- kit ---- */
+  .kit-wrap{overflow-x:auto; margin-top:20px}
+  table.kit{width:100%; border-collapse:collapse; font-size:15px; min-width:460px}
+  table.kit th{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--ink-soft); text-align:left;
+    font-weight:500; padding:0 14px 8px 0; border-bottom:1px solid var(--rule);
+  }
+  table.kit td{padding:10px 14px 10px 0; border-bottom:1px solid var(--rule); vertical-align:top}
+  table.kit tr:last-child td{border-bottom:none}
+  table.kit td:first-child{font-weight:600; white-space:nowrap}
+  table.kit td:last-child{color:var(--ink-soft); font-family:var(--mono); font-size:13px}
+
+  .stills{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+          gap:12px; margin-top:20px}
+  .stills img{border:1px solid var(--rule); border-radius:3px; width:100%}
+
+  .diagram{margin-top:22px}
+  .diagram img{border:1px solid var(--rule); border-radius:3px; background:var(--panel)}
+
+  footer{border-top:1px solid var(--rule); padding-block:30px 56px;
+         color:var(--ink-soft); font-size:14px}
+  footer .tags{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px}
+  footer .tags span{font-family:var(--mono); font-size:11.5px; letter-spacing:.08em;
+                    border:1px solid var(--rule); border-radius:2px;
+                    padding:3px 9px; color:var(--ink)}
+  footer p{max-width:70ch; margin:0 0 8px; font-size:13.5px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="eyebrow"><b>Personal project</b> &nbsp;·&nbsp; Jon Tojek &nbsp;·&nbsp; September 2026</p>
+    <h1>A pipeline that makes short films.</h1>
+    <p class="lede">Four of them so far, all pastiches. The scene gets picked in a chat
+      window. Everything after that runs on one PC. This page is the process, in order.</p>
+
+    <dl class="slate">
+      <div><dt>Films</dt><dd>4</dd></div>
+      <div><dt>Runtime</dt><dd>1:47</dd></div>
+      <div><dt>Machines</dt><dd>1</dd></div>
+      <div><dt>Cloud cost</dt><dd>$0</dd></div>
+    </dl>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">All four, back to back</p>
+    <h2>The reel</h2>
+    <p>Ripley, The Omen, The Polar Express, Scarface. One minute forty-seven.</p>
+        <div class="player">
+      <iframe src="https://www.youtube-nocookie.com/embed/ILnSWeuc9_o" title="All four films, back to back"
+        loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <p class="cap">1664×960 master, 24&nbsp;fps. Music bed: “Dub Eastern” by Kevin MacLeod
+      (incompetech.com), CC&nbsp;BY&nbsp;4.0.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">Step one</p>
+    <h2>Picking the scene</h2>
+    <p>This part is a conversation, and it is the only part done by hand. Some days I
+      bring a scene. Some days I ask for ten and pick one.</p>
+
+    <div class="talk">
+      <div class="turn">
+        <div class="who me">Jon</div>
+        <div><p>Give me ten movie ideas where I can be the actor, replacing
+          someone.</p></div>
+      </div>
+      <div class="turn">
+        <div class="who">Agent</div>
+        <div>
+          <p>Ten scenes with one lead to replace, each one cuttable into three shots:</p>
+          <div class="ideas">
+            <span class="pick">Ripley · Freddie arrives</span>
+            <span>The Omen · the churchyard</span>
+            <span>Polar Express</span>
+            <span>Scarface · penthouse</span>
+            <span>+ 6 more</span>
+          </div>
+        </div>
+      </div>
+      <div class="turn">
+        <div class="who me">Jon</div>
+        <div><p>Do the Ripley one. The bit where Freddie jumps out of the red car and
+          takes over the table.</p></div>
+      </div>
+      <div class="turn">
+        <div class="who">Agent</div>
+        <div><p>Three shots, one line of dialogue each. Stills coming — three seeds
+          per shot.</p></div>
+      </div>
+      <div class="turn">
+        <div class="who me">Jon</div>
+        <div><p>Take 2, take 3, take 1. Reroll the last one, the sunglasses are wrong.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">Step two</p>
+    <h2>What runs after that</h2>
+    <p>Five stages, each one a script. Nothing moves forward until the last stage is
+      approved. A stage that fails reruns on its own, never the whole film.</p>
+    <ol class="steps">
+      <li><b>Stills</b>
+        <span>Krea 2 draws each shot at 1280×720. A likeness LoRA trained in Fizgig
+          carries the lead character — trigger word <code>j0nt11awm</code>, loaded at 1.15
+          strength. One still per shot gets picked and locked.</span></li>
+      <li><b>Stills become clips</b>
+        <span>MiniMax H3 animates the locked still into about five seconds, and speaks
+          the line in the same pass. Animating a frame that already passed review is the
+          largest quality decision in the chain.</span></li>
+      <li><b>Draft to ship</b>
+        <span>A face refiner sharpens the features, then FlashVSR doubles the resolution
+          to 1664×960. Raw model output is a draft. This stage is what ships.</span></li>
+      <li><b>Titles and the cut</b>
+        <span>Inkscape draws the title cards frame by frame. MLT builds the timeline —
+          12-frame dissolves, a music bed — and FFmpeg levels the mix against EBU R128
+          numbers, so dialogue always sits above the music.</span></li>
+      <li><b>Publish</b>
+        <span>Python uploads the render and writes a sidecar next to the file: video ID,
+          seeds, settings, music credit. Every asset on disk has one.</span></li>
+    </ol>
+
+    <figure class="diagram">
+      <img src="media/diagram.webp" alt="Pipeline diagram: idea, stills, clips, quality pass, titles and edit, publish">
+      <figcaption class="cap">The same thing as a picture. Drawn in tldraw, kept in the
+        project so it changes when the pipeline does.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">What drives it</p>
+    <h2>An agent and a local model</h2>
+    <p>Hermes is the agent. It reads the project files, runs every script above, checks
+      its own output, and writes the notes. Behind it is <b>Qwen 3.8 27B</b>, quantised
+      and running in LM Studio on the same machine as the renders. No API key, no
+      per-token bill, nothing leaves the building.</p>
+    <p>Its rules sit in plain text beside the films — one file for the project, one per
+      movie. A new film inherits what the last four established.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">Four so far</p>
+    <h2>The films</h2>
+    <div class="films">
+      <article class="film">
+        <img src="media/ripely.webp" alt="Still: two men embracing outside an Italian cafe">
+        <div class="body">
+          <div class="slug">Movie 01 · 3 shots</div>
+          <h3>The Talented Mr. Ripley</h3>
+          <p class="note">Freddie crashes the piazza.</p>
+          <a href="https://youtu.be/fpxSwxf_hGs" target="_blank" rel="noopener">Watch on YouTube →</a>
+        </div>
+      </article>
+      <article class="film">
+        <img src="media/omen.webp" alt="Still: a child in a churchyard, The Omen pastiche">
+        <div class="body">
+          <div class="slug">Movie 02 · 3 shots · portrait</div>
+          <h3>The Omen</h3>
+          <p class="note">Damien in the churchyard.</p>
+          <a href="https://youtu.be/QmRdMustDcs" target="_blank" rel="noopener">Watch on YouTube →</a>
+        </div>
+      </article>
+      <article class="film">
+        <img src="media/polar.webp" alt="Still: a boy on a train at night, Polar Express pastiche">
+        <div class="body">
+          <div class="slug">Movie 03 · 4 shots</div>
+          <h3>The Polar Express</h3>
+          <p class="note">Deadpan on the night train.</p>
+          <a href="https://youtu.be/LyKjOXof2Tw" target="_blank" rel="noopener">Watch on YouTube →</a>
+        </div>
+      </article>
+      <article class="film">
+        <img src="media/reel_d.webp" alt="Still: white suit in a penthouse at night, Scarface pastiche">
+        <div class="body">
+          <div class="slug">Movie 04 · 4 shots · 1664×960</div>
+          <h3>Scarface</h3>
+          <p class="note">White suit, bad night.</p>
+          <a href="https://youtu.be/zzsfFj5752U" target="_blank" rel="noopener">Watch on YouTube →</a>
+        </div>
+      </article>
+    </div>
+
+    <p style="margin-top:34px">The four stills movie 04 was built from — one approved
+      frame per shot:</p>
+    <div class="stills">
+      <img src="media/scarface_s01.webp" alt="Still 1, penthouse window at night">
+      <img src="media/scarface_s02.webp" alt="Still 2, the argument at the desk">
+      <img src="media/scarface_s03.webp" alt="Still 3, the snow globe">
+      <img src="media/scarface_s04.webp" alt="Still 4, close-up, deadpan">
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">Why stage three exists</p>
+    <h2>Draft versus ship</h2>
+    <p>Same frame, same second of film. Left is what the video model returns. Right is
+      after the face refiner and the 2× upscale.</p>
+    <div class="ba">
+      <figure>
+        <figcaption>Raw · 832×480</figcaption>
+        <img src="media/quality_before.webp" alt="Frame before the quality pass, soft and low resolution">
+      </figure>
+      <figure class="after">
+        <figcaption>Refined · 1664×960</figcaption>
+        <img src="media/quality_after.webp" alt="Frame after face refiner and upscale, sharper skin and hair detail">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">Everything involved</p>
+    <h2>The kit</h2>
+    <div class="kit-wrap">
+      <table class="kit">
+        <tr><th>Job</th><th>Tool</th><th>Detail</th></tr>
+        <tr><td>Agent</td><td>Hermes</td><td>runs every script, writes every note</td></tr>
+        <tr><td>Model</td><td>Qwen 3.8 27B</td><td>local, LM Studio, Q4_K_M</td></tr>
+        <tr><td>Stills</td><td>Krea 2 Turbo</td><td>1280×720, 8 steps</td></tr>
+        <tr><td>Clips and voice</td><td>MiniMax H3</td><td>832×480, 24 fps, 20 steps</td></tr>
+        <tr><td>Likeness</td><td>Fizgig</td><td>LoRA j0nt11awm @ 1.15</td></tr>
+        <tr><td>Quality</td><td>Face Refiner + FlashVSR</td><td>2× to 1664×960</td></tr>
+        <tr><td>Titles</td><td>Inkscape</td><td>SVG frames → PNG sequence</td></tr>
+        <tr><td>Edit</td><td>MLT + Shotcut</td><td>headless render, 12f dissolves</td></tr>
+        <tr><td>Audio</td><td>FFmpeg</td><td>EBU R128, −15 LUFS</td></tr>
+        <tr><td>Hardware</td><td>RTX 5090</td><td>32 GB VRAM, one box</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="tags">
+      <span>Jon Tojek</span><span>projects.tojek.com</span><span>YouTube @CreativeSocal</span>
+    </div>
+    <p>All four films are AI pastiches made for fun. They are not affiliated with,
+      endorsed by, or connected to the original films or their studios.</p>
+    <p>Music per film credited in each video description. Updated September 2026.</p>
+  </div>
+</footer>
+</body>
+</html>

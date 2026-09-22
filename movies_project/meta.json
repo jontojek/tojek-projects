@@ -1,0 +1,18 @@
+{
+  "title": "A Pipeline That Makes Short Films",
+  "blurb": "Four short film pastiches, made end to end on one PC. The scene gets picked in a chat window; everything after that runs locally — Krea 2 stills, MiniMax H3 clips with dialogue, a face refine and 2x upscale, Inkscape title cards, an MLT cut and an FFmpeg mix, then the upload. Each stage waits for approval before the next one starts. The page walks the loop in order and the reel plays all four back to back.",
+  "tags": [
+    "MiniMax-H3",
+    "Krea 2",
+    "MLT",
+    "Hermes",
+    "Qwen"
+  ],
+  "date": "2026-09-22",
+  "cta": "Watch the reel",
+  "thumb": {
+    "video": "assets/thumb_movies.mp4",
+    "poster": "assets/thumb_movies.jpg",
+    "alt": "Four beats cut together: an embrace outside an Italian cafe, a before and after quality comparison, a boy on a night train, a white suit in a penthouse"
+  }
+}
